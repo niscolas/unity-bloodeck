@@ -1,7 +1,9 @@
 {
-    "name": "Module.Editor",
-    "rootNamespace": "Module.Editor",
-    "references": [],
+    "name": "Bloodeck.Editor",
+    "rootNamespace": "Bloodeck.Editor",
+    "references": [
+        "GUID:909f9565bdabdea4bb1611167d5a7862"
+    ],
     "includePlatforms": [
         "Editor"
     ],

@@ -1,0 +1,19 @@
+{
+    "name": "Qualitas",
+    "rootNamespace": "Qualitas",
+    "references": [
+        "GUID:9104f28baed89644286c65222185ea59",
+        "GUID:49b49c76ee64f6b41bf28ef951cb0e50",
+        "GUID:5b62d86d4de935d4895e4d3ce0177803",
+        "GUID:2654a48786397d2934cffe320ee759a9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

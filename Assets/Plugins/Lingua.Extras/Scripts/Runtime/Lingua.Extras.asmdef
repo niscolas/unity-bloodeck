@@ -1,0 +1,17 @@
+{
+    "name": "Lingua.Extras",
+    "rootNamespace": "Lingua.Extras",
+    "references": [
+        "GUID:a53300cc626f3b044860133bb4ece2a0",
+        "GUID:776d03a35f1b52c4a9aed9f56d7b4229"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

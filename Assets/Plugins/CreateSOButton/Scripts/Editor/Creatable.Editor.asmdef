@@ -1,0 +1,20 @@
+{
+    "name": "Creatable.Editor",
+    "rootNamespace": "Creatable.Editor",
+    "references": [
+        "GUID:57e8aa0bb9f24334f98cf70361a6c574",
+        "GUID:5ae6fd668cc28324780038bb086df3d3",
+        "GUID:9104f28baed89644286c65222185ea59"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

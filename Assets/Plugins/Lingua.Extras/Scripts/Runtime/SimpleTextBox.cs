@@ -8,8 +8,13 @@ namespace Lingua.Extras
     {
         [NaughtyAttributes.ResizableTextArea, SerializeField]
         private string _text;
-        
+
         public string Get(EmptyTextContext context)
+        {
+            return Get();
+        }
+
+        public string Get()
         {
             return _text;
         }

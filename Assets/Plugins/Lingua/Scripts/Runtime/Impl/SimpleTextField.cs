@@ -11,6 +11,11 @@ namespace Lingua
         
         public string Get(EmptyTextContext context)
         {
+            return Get();
+        }
+
+        public string Get()
+        {
             return _text;
         }
     }

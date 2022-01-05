@@ -28,5 +28,5 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          customParameters: -assemblyNames Bloodeck.Test.Editor
+          customParameters: -assemblyNames "Bloodeck.Tests.Editor"
           githubToken: ${{ secrets.GITHUB_TOKEN }}

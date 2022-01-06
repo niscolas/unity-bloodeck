@@ -28,7 +28,7 @@ namespace Bloodeck.Tests.Editor
         [TestCase(2)]
         [TestCase(5)]
         [TestCase(10)]
-        public void TakeDamage_CurrentIs10_ArgIsBetween1And10_CurrentShouldBeCurrentMinusArg(
+        public void TakeDamage_Current10_Max10_ArgBetween1And10_CurrentShouldBeCurrentMinusArg(
             int damageValue)
         {
             _entityHealth.WithMax(10).WithCurrent(10);
@@ -44,7 +44,7 @@ namespace Bloodeck.Tests.Editor
         [TestCase(15)]
         [TestCase(20)]
         [TestCase(100)]
-        public void TakeDamage_CurrentIs10_ArgIsBiggerOrEqualTo10_CurrentShouldBe0(
+        public void TakeDamage_Current10_Max10_ArgBiggerOrEqualTo10_CurrentShouldBe0(
             int damageValue)
         {
             _entityHealth.WithMax(10).WithCurrent(10);
@@ -54,13 +54,62 @@ namespace Bloodeck.Tests.Editor
             _entityHealth.Current.Should().Be(0);
         }
 
-        public void TakeDamage_CurrentIs10_ArgIs0_CurrentShouldBe10()
+        [Test]
+        public void TakeDamage_Current10_Max10_Arg0_CurrentShouldBe10()
         {
             _entityHealth.WithMax(10).WithCurrent(10);
             
             _entityHealth.TakeDamage(0);
 
             _entityHealth.Current.Should().Be(10);
+        }
+        
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        [TestCase(6)]
+        [TestCase(7)]
+        [TestCase(8)]
+        [TestCase(9)]
+        public void Heal_Current1_Max10_ArgBetween0And9_CurrentShouldBeInitialHealthPlusArg(
+            int healValue)
+        {
+            _entityHealth.WithMax(10).WithCurrent(1);
+            
+            _entityHealth.Heal(healValue);
+
+            _entityHealth.Current.Should().Be(1 + healValue);
+        }
+
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        [TestCase(10)]
+        public void Heal_Current10_Max10_ArgBiggerOrEqualTo0_CurrentShouldBe10(
+            int healValue)
+        {
+            _entityHealth.WithMax(10).WithCurrent(10);
+            
+            _entityHealth.Heal(healValue);
+
+            _entityHealth.Current.Should().Be(10);
+        }
+
+        [Test]
+        public void Heal_Current5_Max10_Arg0_CurrentShouldBe5()
+        {
+            
+            _entityHealth.WithMax(10).WithCurrent(5);
+            
+            _entityHealth.Heal(0);
+
+            _entityHealth.Current.Should().Be(5);
         }
     }
 }

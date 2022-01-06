@@ -2,7 +2,7 @@
 
 namespace Bloodeck
 {
-    public class CardInstaller : Installer<CardInstaller>
+    public class CardMonoBehaviourInstaller : Installer<CardMonoBehaviourInstaller>
     {
         public override void InstallBindings()
         {

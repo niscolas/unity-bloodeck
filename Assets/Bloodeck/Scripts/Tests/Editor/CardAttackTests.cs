@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Healthy;
 using NUnit.Framework;
 using Zenject;
 
@@ -17,76 +14,19 @@ namespace Bloodeck.Tests.Editor
         private IEntityHealth _reusableEntityHealth;
 
         [SetUp]
-        public void CommonInstall()
+        public void TestSetup()
         {
-            EntityHealthInstall();
-            CardAttackInstall();
+            EntityProxy.ResetCreationCounter();
+            ZenjectInstall();
+        }
+
+        private void ZenjectInstall()
+        {
+            EntityProxyInstaller.Install(Container);
+            FullEntityHealthProxyInstaller.Install(Container);
+            FullCardAttackProxyInstaller.Install(Container);
+
             Container.Inject(this);
-        }
-
-        private void EntityHealthInstall()
-        {
-            Container
-                .Bind<IHealth>()
-                .FromMethod(context => new HealthController(context.ObjectInstance as IHealth))
-                .AsSingle()
-                .WhenInjectedInto(typeof(EntityHealthProxy))
-                .NonLazy();
-
-            Container
-                .Bind<IDictionary<Type, IEntityComponent>>()
-                .FromInstance(new Dictionary<Type, IEntityComponent>())
-                .NonLazy();
-
-            Container.Bind<IEntityComponents>().To<EntityComponents>().AsSingle().NonLazy();
-
-            Container.Bind<IEntity>()
-                .To<EntityProxy>()
-                .WithArguments("Target Entity")
-                .WhenInjectedInto(typeof(EntityHealthProxy))
-                .NonLazy();
-
-            Container
-                .Bind<IEntityHealth>()
-                .To<EntityHealthProxy>()
-                .AsSingle()
-                .OnInstantiated(
-                    (InjectContext context, IEntityHealth entityHealth) =>
-                    {
-                        entityHealth.SelfEntity.Components.Add(entityHealth);
-                    })
-                .NonLazy();
-        }
-
-        private void CardAttackInstall()
-        {
-            Container
-                .Bind<IEntity>()
-                .To<EntityProxy>()
-                .WithArguments("Card Attack Entity")
-                .WhenInjectedInto(typeof(CardProxy))
-                .NonLazy();
-
-            Container
-                .Bind<IDictionary<Type, ICardComponent>>()
-                .FromInstance(new Dictionary<Type, ICardComponent>())
-                .AsSingle()
-                .NonLazy();
-
-            Container.Bind<ICardComponents>().To<CardComponents>().AsSingle().NonLazy();
-
-            Container.Bind<ICard>().To<CardProxy>().AsSingle().NonLazy();
-
-            Container
-                .Bind<ICardAttack>()
-                .To<CardAttackProxy>()
-                .AsSingle()
-                .OnInstantiated(
-                    (InjectContext context, ICardAttack cardAttack) =>
-                    {
-                        cardAttack.SelfCard.Components.Add(cardAttack);
-                    })
-                .NonLazy();
         }
 
         [TestCase(1)]

@@ -1,5 +1,4 @@
-﻿using System;
-using Creatable;
+﻿using Creatable;
 using NaughtyAttributes;
 using niscolas.UnityUtils.Core;
 using UnityEngine;
@@ -7,13 +6,16 @@ using Zenject;
 
 namespace Bloodeck
 {
-    [Serializable]
+    [AddComponentMenu(Constants.AddComponentMenuPrefix + "Entity")]
     public class EntityMonoBehaviour : CachedMonoBehaviour, IEntity
     {
         [Expandable, Creatable, SerializeField]
         private EntityTemplateSO _template;
-            
-        public IEntityComponents Components { get; }
+
+        [Inject, SerializeField]
+        private EntityComponentsMonoBehaviour _components;
+
+        public IEntityComponents Components => _components;
         
         public string Name => _template.Name;
 

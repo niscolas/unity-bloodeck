@@ -13,7 +13,7 @@ namespace Bloodeck.Tests.Editor
                 .OnInstantiated(
                     (InjectContext context, ICardAttack cardAttack) =>
                     {
-                        cardAttack.SelfCard.Components.Add(cardAttack);
+                        cardAttack.Owner.Components.Add(cardAttack);
                     })
                 .NonLazy();
         }

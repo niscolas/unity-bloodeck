@@ -1,7 +1,4 @@
 ﻿namespace Bloodeck
 {
-    public interface IEntityComponent
-    {
-        IEntity SelfEntity { get; }
-    }
+    public interface IEntityComponent : IComponent<IEntity> { }
 }

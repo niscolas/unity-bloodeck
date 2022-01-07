@@ -55,7 +55,7 @@ namespace Bloodeck
             set => _asIEntityHealth.Min = FormatHealthValue(value);
         }
 
-        public IEntity SelfEntity => _humbleObject.SelfEntity;
+        public IEntity Owner => _humbleObject.Owner;
 
         private readonly IEntityHealth _asIEntityHealth;
 

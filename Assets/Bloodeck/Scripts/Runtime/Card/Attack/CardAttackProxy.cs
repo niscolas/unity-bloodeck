@@ -4,7 +4,7 @@
     {
         public int AttackValue { get; set; }
         
-        public ICard SelfCard { get; }
+        public ICard Owner { get; }
 
         private readonly CardAttackController _controller;
 
@@ -13,7 +13,7 @@
             _controller = new CardAttackController(this);
             
             AttackValue = attackValue;
-            SelfCard = selfCard;
+            Owner = selfCard;
         }
         
         public void Attack(IEntity target)

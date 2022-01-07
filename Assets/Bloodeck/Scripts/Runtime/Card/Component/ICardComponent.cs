@@ -1,7 +1,4 @@
 ﻿namespace Bloodeck
 {
-    public interface ICardComponent
-    {
-        ICard SelfCard { get; }
-    }
+    public interface ICardComponent : IComponent<ICard> { }
 }

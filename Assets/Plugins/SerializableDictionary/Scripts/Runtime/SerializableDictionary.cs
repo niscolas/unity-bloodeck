@@ -16,7 +16,6 @@ namespace SerializableDictionary
         [SerializeField, HideInInspector]
         private bool _keyCollision;
 
-        
         private TKey _defaultKey;
 
         protected SerializableDictionary(TKey defaultKey)

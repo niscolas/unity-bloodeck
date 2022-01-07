@@ -1,21 +1,15 @@
-﻿using niscolas.UnityUtils.Core;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace Bloodeck
 {
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Card Attack")]
-    public class CardAttackMonoBehaviour : CachedMonoBehaviour, ICardAttack
+    public class CardAttackMonoBehaviour : BaseCardComponentMonoBehaviour, ICardAttack
     {
-        [Inject, SerializeField]
-        private CardMonoBehaviour _card;
-
-        public ICard SelfCard => _card;
-
         public int AttackValue
         {
-            get => _card.Template.AttackValue;
-            set => _card.Template.AttackValue = value;
+            get => _owner.Template.AttackValue;
+            set => _owner.Template.AttackValue = value;
         }
 
         [Inject]

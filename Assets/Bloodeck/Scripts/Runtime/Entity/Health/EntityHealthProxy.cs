@@ -37,19 +37,19 @@ namespace Bloodeck
 
         public int Min { get; set; }
 
-        public IEntity SelfEntity { get; }
+        public IEntity Owner { get; }
 
         private readonly EntityHealthController _controller;
 
         public EntityHealthProxy(
-            IEntity selfEntity,
+            IEntity owner,
             int current = 0,
             int max = 0,
             int min = default)
         {
             _controller = new EntityHealthController(this);
 
-            SelfEntity = selfEntity;
+            Owner = owner;
             Current = current;
             Max = max;
             Min = min;

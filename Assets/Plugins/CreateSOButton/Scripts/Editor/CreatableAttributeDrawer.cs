@@ -9,13 +9,13 @@ namespace Creatable.Editor
     [CustomPropertyDrawer(typeof(CreatableAttribute))]
     public class CreatableAttributeDrawer : PropertyDrawer
     {
-        private const float ButtonWidthRatio = 0.05f;
+        private const float ButtonWidth = 20;
         private const float SpacingRatio = 0.01f;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            Rect propertyRect = position.PadRight(position.width * (ButtonWidthRatio + SpacingRatio));
-            Rect buttonRect = position.PadLeft(position.width * (1 - ButtonWidthRatio));
+            Rect propertyRect = position.PadRight(position.width * SpacingRatio + ButtonWidth);
+            Rect buttonRect = position.PadLeft(position.width - ButtonWidth);
 
             Type propertyType = property.GetRealType();
             bool isScriptableObjectField = propertyType.IsSubclassOf(typeof(ScriptableObject));
@@ -39,8 +39,8 @@ namespace Creatable.Editor
             }
 
             string targetPath = EditorUtility.SaveFilePanel(
-                "Select the location of the ScriptableObject", 
-                "Assets", 
+                "Select the location of the ScriptableObject",
+                "Assets",
                 "SO",
                 "asset");
 
@@ -48,10 +48,10 @@ namespace Creatable.Editor
             {
                 return;
             }
-            
+
             Object createdAsset = ScriptableObject.CreateInstance(scriptableObjectType);
             createdAsset.Create(targetPath.AsProjectRelativePath());
-            
+
             targetProperty.objectReferenceValue = createdAsset;
             targetProperty.serializedObject.ApplyModifiedProperties();
             targetProperty.serializedObject.Update();

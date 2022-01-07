@@ -13,7 +13,7 @@ namespace Bloodeck.Tests.Editor
                 .OnInstantiated(
                     (InjectContext context, IEntityHealth entityHealth) =>
                     {
-                        entityHealth.SelfEntity.Components.Add(entityHealth);
+                        entityHealth.Owner.Components.Add(entityHealth);
                     })
                 .NonLazy();
         }

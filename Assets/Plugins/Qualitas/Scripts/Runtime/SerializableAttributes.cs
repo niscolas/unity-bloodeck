@@ -7,7 +7,7 @@ namespace Qualitas
     [Serializable]
     public class SerializableAttributes : IAttributes
     {
-        [ExtractContent, SerializeField]
+        [SerializeField]
         private FullSerializeReferenceSerializableDictionary<IAttributeType, IAttribute> _realContent =
             new FullSerializeReferenceSerializableDictionary<IAttributeType, IAttribute>(new NamedAttributeType("default"));
 

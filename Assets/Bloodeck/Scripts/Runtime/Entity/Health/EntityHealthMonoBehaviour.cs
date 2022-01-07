@@ -1,16 +1,12 @@
 ﻿using Healthy;
-using niscolas.UnityUtils.Core;
 using UnityEngine;
 using Zenject;
 
 namespace Bloodeck
 {
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Entity Health")]
-    public class EntityHealthMonoBehaviour : CachedMonoBehaviour, IEntityHealth
+    public class EntityHealthMonoBehaviour : BaseEntityComponentMonoBehaviour, IEntityHealth
     {
-        [Inject, SerializeField]
-        private EntityMonoBehaviour _selfEntity;
-
         [Inject, SerializeField]
         private HealthMonoBehaviour _health;
 
@@ -49,8 +45,6 @@ namespace Bloodeck
             get => (int) _health.Min;
             set => _health.Min = value;
         }
-
-        public IEntity SelfEntity => _selfEntity;
 
         [Inject]
         private EntityHealthController _controller;

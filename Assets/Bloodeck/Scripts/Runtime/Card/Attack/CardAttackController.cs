@@ -2,7 +2,7 @@
 {
     public class CardAttackController : ICardAttack
     {
-        private IEntity SelfEntity => _humbleObject.SelfCard?.SelfEntity;
+        private IEntity SelfEntity => _humbleObject.Owner?.SelfEntity;
 
         public int AttackValue
         {
@@ -10,7 +10,7 @@
             set => _humbleObject.AttackValue = value;
         }
 
-        public ICard SelfCard => _humbleObject.SelfCard;
+        public ICard Owner => _humbleObject.Owner;
 
         private readonly ICardAttack _humbleObject;
 

@@ -14,15 +14,19 @@ namespace Bloodeck
             _content = content;
         }
 
-        public void Add<T>(T componentInstance) where T : TComponent
+        public void Add<T>(T componentInstance) where T : class, TComponent
         {
             _content.Add(typeof(T), componentInstance);
         }
 
         public bool TryGet<T>(out T value) where T : class, TComponent
         {
+            value = default;
             bool result = _content.TryGetValue(typeof(T), out TComponent foundComponent);
-            value = foundComponent as T;
+            if (result)
+            {
+                value = foundComponent as T;
+            }
 
             return result;
         }

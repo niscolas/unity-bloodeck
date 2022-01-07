@@ -15,12 +15,15 @@ namespace Bloodeck
         [Inject, SerializeField]
         private EntityMonoBehaviour _entity;
 
-        public ICardComponents Components { get; }
-        
+        [Inject, SerializeField]
+        private CardComponentsMonoBehaviour _components;
+
+        public ICardComponents Components => _components;
+
         public int Cost
         {
-            get => _template.Cost;
-            set => throw new System.NotImplementedException();
+            get => _controller.Cost;
+            set => _controller.Cost = value;
         }
 
         public IEntity SelfEntity => _entity;

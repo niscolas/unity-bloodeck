@@ -4,7 +4,11 @@
     {
         public ICardComponents Components => _humbleObject.Components;
 
-        public int Cost => _humbleObject.Cost;
+        public int Cost
+        {
+            get => _humbleObject.Cost;
+            set => _humbleObject.Cost = value;
+        }
 
         public IEntity SelfEntity => _humbleObject.SelfEntity;
 

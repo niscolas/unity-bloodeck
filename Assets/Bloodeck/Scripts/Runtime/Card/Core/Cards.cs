@@ -2,6 +2,8 @@
 
 namespace Bloodeck
 {
-    public class Cards : List<ICard> { }
-    
+    public class Cards : InjectableCollection<ICard>, ICards
+    {
+        public Cards(ICollection<ICard> content) : base(content) { }
+    }
 }

@@ -17,8 +17,12 @@ namespace Bloodeck
 
         public ICardComponents Components { get; }
         
-        public int Cost => _template.Cost;
-        
+        public int Cost
+        {
+            get => _template.Cost;
+            set => throw new System.NotImplementedException();
+        }
+
         public IEntity SelfEntity => _entity;
 
         public CardTemplateSO Template => _template;

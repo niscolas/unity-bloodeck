@@ -3,7 +3,8 @@ using Zenject;
 
 namespace Bloodeck.Tests.Editor
 {
-    public class HealthControllerToIEntityHealthProxyInstaller : Installer<HealthControllerToIEntityHealthProxyInstaller>
+    public class
+        HealthControllerToIEntityHealthProxyInstaller : Installer<HealthControllerToIEntityHealthProxyInstaller>
     {
         public override void InstallBindings()
         {

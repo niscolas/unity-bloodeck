@@ -4,7 +4,7 @@
     {
         ICardComponents Components { get; }
 
-        int Cost { get; }
+        int Cost { get; set; }
 
         IEntity SelfEntity { get; }
     }

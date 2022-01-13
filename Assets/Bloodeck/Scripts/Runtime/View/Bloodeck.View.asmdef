@@ -1,0 +1,18 @@
+{
+    "name": "Bloodeck.View",
+    "rootNamespace": "Bloodeck.View",
+    "references": [
+        "GUID:909f9565bdabdea4bb1611167d5a7862",
+        "GUID:9104f28baed89644286c65222185ea59",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

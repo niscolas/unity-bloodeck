@@ -24,7 +24,7 @@ namespace Bloodeck.Tests.Editor
         {
             EntityProxyInstaller.Install(Container);
             FullEntityHealthProxyInstaller.Install(Container);
-            FullCardAttackProxyInstaller.Install(Container);
+            FullCardAttackInstaller.Install(Container);
 
             Container.Inject(this);
         }

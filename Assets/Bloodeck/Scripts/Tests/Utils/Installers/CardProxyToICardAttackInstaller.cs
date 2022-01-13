@@ -10,7 +10,7 @@ namespace Bloodeck.Tests.Editor
                 .Bind<ICard>()
                 .To<CardProxy>()
                 .AsTransient()
-                .WhenInjectedInto(typeof(ICardAttack))
+                .WhenInjectedInto(typeof(ICardAttackData))
                 .NonLazy();
         }
     }

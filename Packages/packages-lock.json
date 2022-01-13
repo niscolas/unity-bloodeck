@@ -36,7 +36,7 @@
         "com.unity-atoms.unity-atoms-base-atoms": "4.4.3",
         "com.unity-atoms.unity-atoms-core": "4.4.3"
       },
-      "hash": "21e2aea6dcbab2da94c8435e925e062be664a644"
+      "hash": "e029212efce3c1647a44020e459b1fda2fc78b27"
     },
     "com.niscolas.odin-inspector-attributes": {
       "version": "https://github.com/niscolas/odin-inspector-attributes.git",
@@ -45,12 +45,33 @@
       "dependencies": {},
       "hash": "2274ca1071b49f2f920a07f237b252db8d7da46c"
     },
-    "com.niscolas.unity-utils-core": {
-      "version": "https://github.com/niscolas/unity-utils-core.git",
+    "com.niscolas.unity-utils.async": {
+      "version": "https://github.com/niscolas/unity-utils-async.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "bbad640af57d359294c0349410e96024a209ff04"
+      "hash": "cbaf3bb8735837bcfc6e7254327a1ac113959026"
+    },
+    "com.niscolas.unity-utils.core": {
+      "version": "https://github.com/niscolas/unity-utils-core.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.cysharp.unitask": "2.2.5"
+      },
+      "hash": "6ed9221bdc506aa278f87149e627d0deff88f71f"
+    },
+    "com.niscolas.unity-utils.unity-atoms": {
+      "version": "https://github.com/niscolas/unity-utils-unity-atoms.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity-atoms.unity-atoms-base-atoms": "4.4.3",
+        "com.unity-atoms.unity-atoms-core": "4.4.3",
+        "com.unity-atoms.unity-atoms-scene-mgmt": "4.4.3",
+        "com.unity-atoms.unity-atoms-tags": "4.4.3"
+      },
+      "hash": "14cc3052bab2a873e8fe0ed53e3e4c1d2a37dc7d"
     },
     "com.redbluegames.mulligan": {
       "version": "https://github.com/redbluegames/unity-mulligan-renamer.git?path=/Assets/RedBlueGames/MulliganRenamer",

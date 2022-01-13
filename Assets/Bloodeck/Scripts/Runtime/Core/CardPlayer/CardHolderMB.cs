@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Bloodeck
 {
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Card Holder")]
-    public class CardHolderMonoBehaviour : CachedMB //, ICardHolder
+    public class CardHolderMB : CachedMB //, ICardHolder
     {
         public ICards Cards { get; }
     }

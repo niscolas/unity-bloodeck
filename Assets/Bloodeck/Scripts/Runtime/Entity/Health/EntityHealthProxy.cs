@@ -10,7 +10,7 @@ namespace Bloodeck
 
         public bool CanTakeDamage { get; set; } = true;
 
-        float IHealth.Current
+        float IHealthData.Current
         {
             get => Current;
             set => Current = EntityHealthController.FormatHealthValue(value);
@@ -21,7 +21,7 @@ namespace Bloodeck
         [Inject]
         public IHealth Health { get; private set; }
 
-        float IHealth.Max
+        float IHealthData.Max
         {
             get => Max;
             set => Max = EntityHealthController.FormatHealthValue(value);
@@ -29,7 +29,7 @@ namespace Bloodeck
 
         public float Max { get; set; }
 
-        float IHealth.Min
+        float IHealthData.Min
         {
             get => Min;
             set => Min = EntityHealthController.FormatHealthValue(value);

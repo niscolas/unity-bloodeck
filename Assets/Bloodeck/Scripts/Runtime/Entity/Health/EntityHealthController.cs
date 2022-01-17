@@ -23,7 +23,7 @@ namespace Bloodeck
             set => _humbleObject.Current = value;
         }
 
-        float IHealth.Current
+        float IHealthData.Current
         {
             get => _asIEntityHealth.Current;
             set => _asIEntityHealth.Current = FormatHealthValue(value);
@@ -37,7 +37,7 @@ namespace Bloodeck
             set => _humbleObject.Max = value;
         }
 
-        float IHealth.Max
+        float IHealthData.Max
         {
             get => _asIEntityHealth.Max;
             set => _asIEntityHealth.Max = FormatHealthValue(value);
@@ -49,7 +49,7 @@ namespace Bloodeck
             set => _humbleObject.Min = value;
         }
 
-        float IHealth.Min
+        float IHealthData.Min
         {
             get => _asIEntityHealth.Min;
             set => _asIEntityHealth.Min = FormatHealthValue(value);

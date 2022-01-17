@@ -4,6 +4,8 @@ namespace Bloodeck
 {
     public class CardPlayerController : ICardPlayer
     {
+        public ICardPlayerEnvironment Environment => _humbleObject.Environment;
+
         public ICards Cards
         {
             get => _humbleObject.Cards;
@@ -31,7 +33,7 @@ namespace Bloodeck
 
         public bool TryPlaceCard(ICard card, ICardSlot slot)
         {
-            if (!Cards.Contains(card) || !CheckHaveEnergyToPlaceCard(card))
+            if (!CheckCanPlaceCardOnSlot(card, slot))
             {
                 return false;
             }
@@ -46,9 +48,29 @@ namespace Bloodeck
             return wasAbleToPlaceCard;
         }
 
+        private bool CheckCanPlaceCardOnSlot(ICard card, ICardSlot slot)
+        {
+            return CheckHasCard(card) &&
+                   CheckOwnsSlot(slot) &&
+                   CheckHaveEnergyToPlaceCard(card);
+        }
+
+        private bool CheckHasCard(ICard card)
+        {
+            bool result = Cards.Contains(card);
+            return result;
+        }
+
         private bool CheckHaveEnergyToPlaceCard(ICard card)
         {
-            return Energy >= card.Cost;
+            bool result = Energy >= card.Cost;
+            return result;
+        }
+
+        private bool CheckOwnsSlot(ICardSlot slot)
+        {
+            bool result = Environment.Slots.Contains(slot);
+            return result;
         }
 
         private void OnCardSuccessfullyPlaced(ICard card)

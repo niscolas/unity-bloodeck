@@ -32,7 +32,8 @@ namespace Bloodeck
 
         private void Start()
         {
-            _controller.AttackValue = _owner.Template.AttackValue;
+            _owner.Template.Components.TryGet(out ICardAttack cardAttack);
+            _controller.AttackValue = cardAttack.AttackValue;
         }
 
         private void OnDestroy()

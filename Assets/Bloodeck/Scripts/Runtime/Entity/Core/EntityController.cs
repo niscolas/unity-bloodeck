@@ -6,9 +6,11 @@
 
         public string Name => _humbleObject.Name;
 
-        private readonly IEntity _humbleObject;
+        public IEntityTemplate Template => _humbleObject.Template;
 
-        public EntityController(IEntity humbleObject)
+        private readonly IEntityData _humbleObject;
+
+        public EntityController(IEntityData humbleObject)
         {
             _humbleObject = humbleObject;
         }

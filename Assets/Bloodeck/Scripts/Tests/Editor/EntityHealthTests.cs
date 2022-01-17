@@ -12,14 +12,8 @@ namespace Bloodeck.Tests.Editor
         [SetUp]
         public void TestSetup()
         {
-            EntityProxy.ResetCreationCounter();
-            ZenjectInstall();
-        }
-
-        private void ZenjectInstall()
-        {
-            EntityProxyInstaller.Install(Container);
-            FullEntityHealthProxyInstaller.Install(Container);
+            EntityControllerInstaller.Install(Container);
+            EntityHealthControllerInstaller.Install(Container);
 
             Container.Inject(this);
         }
@@ -32,7 +26,7 @@ namespace Bloodeck.Tests.Editor
             int damageValue)
         {
             _entityHealth.WithMax(10).WithCurrent(10);
-            
+
             _entityHealth.TakeDamage(damageValue);
 
             _entityHealth.Current.Should().Be(10 - damageValue);
@@ -48,7 +42,7 @@ namespace Bloodeck.Tests.Editor
             int damageValue)
         {
             _entityHealth.WithMax(10).WithCurrent(10);
-            
+
             _entityHealth.TakeDamage(damageValue);
 
             _entityHealth.Current.Should().Be(0);
@@ -58,12 +52,12 @@ namespace Bloodeck.Tests.Editor
         public void TakeDamage_Current10_Max10_Arg0_CurrentShouldBe10()
         {
             _entityHealth.WithMax(10).WithCurrent(10);
-            
+
             _entityHealth.TakeDamage(0);
 
             _entityHealth.Current.Should().Be(10);
         }
-        
+
         [TestCase(0)]
         [TestCase(1)]
         [TestCase(2)]
@@ -78,7 +72,7 @@ namespace Bloodeck.Tests.Editor
             int healValue)
         {
             _entityHealth.WithMax(10).WithCurrent(1);
-            
+
             _entityHealth.Heal(healValue);
 
             _entityHealth.Current.Should().Be(1 + healValue);
@@ -95,7 +89,7 @@ namespace Bloodeck.Tests.Editor
             int healValue)
         {
             _entityHealth.WithMax(10).WithCurrent(10);
-            
+
             _entityHealth.Heal(healValue);
 
             _entityHealth.Current.Should().Be(10);
@@ -104,9 +98,8 @@ namespace Bloodeck.Tests.Editor
         [Test]
         public void Heal_Current5_Max10_Arg0_CurrentShouldBe5()
         {
-            
             _entityHealth.WithMax(10).WithCurrent(5);
-            
+
             _entityHealth.Heal(0);
 
             _entityHealth.Current.Should().Be(5);

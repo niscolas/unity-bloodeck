@@ -21,7 +21,7 @@ namespace Bloodeck.View
 
         public void UpdateName()
         {
-            _text.SetText(_entity.Template.Name);
+            _text.SetText(_entity.TemplateSO.Name);
         }
     }
 }

@@ -1,7 +1,4 @@
 ﻿namespace Bloodeck
 {
-    public interface ICardGameEnvironment : ICardGameEnvironmentData
-    {
-        
-    }
+    public interface ICardGameEnvironment : ICardGameEnvironmentData { }
 }

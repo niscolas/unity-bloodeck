@@ -10,7 +10,7 @@ namespace Bloodeck
         fileName = DisplayName,
         menuName = Constants.CreateAssetMenuPrefix + DisplayName,
         order = Constants.CreateAssetMenuOrder)]
-    public class EntityTemplateSO : ScriptableObject
+    public class EntityTemplateSO : ScriptableObject, IEntityTemplate
     {
         [ShowAssetPreview(Constants.AssetPreviewSize, Constants.AssetPreviewSize)]
         [SerializeField]
@@ -24,6 +24,8 @@ namespace Bloodeck
 
         [SerializeField]
         private FloatReference _maxHealth = new FloatReference(1);
+
+        public IEntityComponents Components { get; }
 
         public Sprite Icon => _icon;
 

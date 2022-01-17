@@ -4,10 +4,16 @@ namespace Bloodeck.Tests.Utils
 {
     public static class CardExtensions
     {
-        public static ICard Sub_WithCost(this ICard substitute, int value)
+        public static ICard Sub_WithCost(this ICard self, int value)
         {
-            substitute.Cost.Returns(value);
-            return substitute;
+            self.Cost.Returns(value);
+            return self;
+        }
+        
+        public static ICard Sub_WithComponents(this ICard self, ICardComponents value)
+        {
+            self.Components.Returns(value);
+            return self;
         }
     }
 }

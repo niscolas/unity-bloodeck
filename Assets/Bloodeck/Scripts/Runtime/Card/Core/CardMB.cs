@@ -22,7 +22,7 @@ namespace Bloodeck
         [Header(HeaderTitles.Output)]
         [SerializeField]
         private IntReference _costOutput;
-        
+
         public ICardComponents Components => _components;
 
         public int Cost
@@ -33,7 +33,9 @@ namespace Bloodeck
 
         public IEntity SelfEntity => _entity;
 
-        public CardTemplateSO Template => _template;
+        public ICardTemplate Template => _template;
+
+        public CardTemplateSO TemplateSO => _template;
 
         [Inject]
         private CardController _controller;

@@ -36,7 +36,7 @@ namespace Bloodeck
             set => _health.Current = value;
         }
 
-        public IHealth Health => _health;
+        public IHealth HealthController => _health;
 
         public float Max
         {
@@ -55,8 +55,13 @@ namespace Bloodeck
 
         private void Start()
         {
-            _current.Value = _owner.Template.MaxHealth;
-            _max.Value = _owner.Template.MaxHealth;
+            if (!_owner.Template.Components.TryGet(out IEntityHealth entityHealth))
+            {
+                return;
+            }
+
+            _max.Value = entityHealth.Max;
+            _current.Value = _max.Value;
         }
 
         public void TakeDamage(float damageValue, IEntity instigator = null)

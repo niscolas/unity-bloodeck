@@ -1,5 +1,6 @@
 ﻿using System;
 using Healthy;
+using Zenject;
 
 namespace Bloodeck
 {
@@ -17,42 +18,22 @@ namespace Bloodeck
             set => _humbleObject.CanTakeDamage = value;
         }
 
-        float IEntityHealth.Current
+        public float Current
         {
             get => _humbleObject.Current;
-            set => _humbleObject.Current = value;
+            set => _humbleObject.Current = FormatHealthValue(value);
         }
 
-        float IHealthData.Current
-        {
-            get => _asIEntityHealth.Current;
-            set => _asIEntityHealth.Current = FormatHealthValue(value);
-        }
-
-        public IHealth Health => _humbleObject.Health;
-
-        float IEntityHealth.Max
+        public float Max
         {
             get => _humbleObject.Max;
-            set => _humbleObject.Max = value;
+            set => _humbleObject.Max = FormatHealthValue(value);
         }
 
-        float IHealthData.Max
-        {
-            get => _asIEntityHealth.Max;
-            set => _asIEntityHealth.Max = FormatHealthValue(value);
-        }
-
-        float IEntityHealth.Min
+        public float Min
         {
             get => _humbleObject.Min;
-            set => _humbleObject.Min = value;
-        }
-
-        float IHealthData.Min
-        {
-            get => _asIEntityHealth.Min;
-            set => _asIEntityHealth.Min = FormatHealthValue(value);
+            set => _humbleObject.Min = FormatHealthValue(value);
         }
 
         public IEntity Owner => _humbleObject.Owner;
@@ -61,9 +42,12 @@ namespace Bloodeck
 
         private readonly IHealth _asIHealth;
 
-        private readonly IEntityHealth _humbleObject;
+        private readonly IEntityHealthData _humbleObject;
 
-        public EntityHealthController(IEntityHealth humbleObject)
+        [Inject]
+        private IHealth _healthController;
+
+        public EntityHealthController(IEntityHealthData humbleObject)
         {
             _humbleObject = humbleObject;
             _asIEntityHealth = this;
@@ -81,7 +65,7 @@ namespace Bloodeck
             Action<(float, float)> healedWithHistoryCallback = null,
             Action revivedCallback = null)
         {
-            Health.Heal(
+            _healthController.Heal(
                 healValue, instigator, healedWithHistoryCallback, revivedCallback);
         }
 
@@ -96,7 +80,7 @@ namespace Bloodeck
             Action<(float, float)> damageTakenWithHistoryCallback = null,
             Action deathCallback = null)
         {
-            Health.TakeDamage(
+            _healthController.TakeDamage(
                 damageValue, instigator, damageTakenWithHistoryCallback, deathCallback);
         }
 

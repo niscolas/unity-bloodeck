@@ -17,9 +17,11 @@ namespace Bloodeck
 
         public IEntityComponents Components => _components;
 
-        public EntityTemplateSO Template => _template;
-
         public string Name => _template.Name;
+
+        public EntityTemplateSO TemplateSO => _template;
+
+        public IEntityTemplate Template => _template;
 
         [Inject]
         private EntityController _controller;

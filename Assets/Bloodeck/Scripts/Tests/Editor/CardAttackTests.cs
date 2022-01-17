@@ -16,15 +16,8 @@ namespace Bloodeck.Tests.Editor
         [SetUp]
         public void TestSetup()
         {
-            EntityProxy.ResetCreationCounter();
-            ZenjectInstall();
-        }
-
-        private void ZenjectInstall()
-        {
-            EntityProxyInstaller.Install(Container);
-            FullEntityHealthProxyInstaller.Install(Container);
-            FullCardAttackInstaller.Install(Container);
+            EntityHealthControllerInstaller.Install(Container);
+            CardAttackControllerInstaller.Install(Container);
 
             Container.Inject(this);
         }
@@ -42,7 +35,10 @@ namespace Bloodeck.Tests.Editor
         public void Attack_AttackValueBetween0And10_10CurrentHealth_CurrentHealthShouldBeInitialHealthMinusAttackValue(
             int attackValue)
         {
-            _reusableEntityHealth.WithMax(10).WithCurrent(10);
+            _reusableEntityHealth
+                .WhichCanTakeDamage()
+                .WithMax(10)
+                .WithCurrent(10);
             _reusableCardAttack.WithAttackValue(attackValue);
 
             _reusableCardAttack.Attack(_reusableEntityHealth);
@@ -58,7 +54,10 @@ namespace Bloodeck.Tests.Editor
         public void Attack_AttackValueBiggerThan10_10CurrentHealth_CurrentHealthShouldBe0(
             int attackValue)
         {
-            _reusableEntityHealth.WithMax(10).WithCurrent(10);
+            _reusableEntityHealth
+                .WhichCanTakeDamage()
+                .WithMax(10)
+                .WithCurrent(10);
             _reusableCardAttack.WithAttackValue(11);
 
             _reusableCardAttack.Attack(_reusableEntityHealth);

@@ -9,7 +9,7 @@ namespace Bloodeck
         fileName = DisplayName,
         menuName = Constants.CreateAssetMenuPrefix + DisplayName,
         order = Constants.CreateAssetMenuOrder)]
-    public class CardTemplateSO : ScriptableObject
+    public class CardTemplateSO : ScriptableObject, ICardTemplate
     {
         [Expandable, Creatable, SerializeField]
         private EntityTemplateSO _entityTemplate;
@@ -29,7 +29,11 @@ namespace Bloodeck
             set => _attackValue.Value = value;
         }
 
+        public ICardComponents Components { get; }
+
         public int Cost => _cost.Value;
+
+        public IEntity SelfEntity { get; }
 
         public EntityTemplateSO EntityTemplate => _entityTemplate;
 

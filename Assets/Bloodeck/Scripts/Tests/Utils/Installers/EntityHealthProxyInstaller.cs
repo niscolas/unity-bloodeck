@@ -6,16 +6,6 @@ namespace Bloodeck.Tests.Editor
     {
         public override void InstallBindings()
         {
-            Container
-                .Bind<IEntityHealth>()
-                .To<EntityHealthProxy>()
-                .AsTransient()
-                .OnInstantiated(
-                    (InjectContext context, IEntityHealth entityHealth) =>
-                    {
-                        entityHealth.Owner.Components.Add(entityHealth);
-                    })
-                .NonLazy();
         }
     }
 }

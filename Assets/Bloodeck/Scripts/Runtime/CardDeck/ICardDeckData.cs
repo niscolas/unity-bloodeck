@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-
-namespace Bloodeck
+﻿namespace Bloodeck
 {
-    public interface ICardDeckData : ICollection<ICardTemplate>
+    public interface ICardDeckData
     {
-        string Name { get; }
+        ICardFromTemplateFactory CardFromTemplateFactory { get; }
+
+        ICardsFactory CardsFactory { get; }
+
+        ICardTemplates CardTemplates { get; }
     }
 }

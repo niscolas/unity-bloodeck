@@ -21,7 +21,7 @@ namespace Bloodeck.View
 
         public void UpdateDescription()
         {
-            _text.SetText(_entity.TemplateSO.Description.Get());
+            _text.SetText(_entity.TemplateSO.Description);
         }
     }
 }

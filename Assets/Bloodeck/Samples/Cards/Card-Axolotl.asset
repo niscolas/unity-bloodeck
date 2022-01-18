@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a47071f110cf496688f595d2786d37a3, type: 3}
   m_Name: Card-Axolotl
   m_EditorClassIdentifier: 
-  _entityTemplate: {fileID: 11400000, guid: 4344e173bd91bc349ae11d7643651114, type: 2}
+  _selfEntityTemplate: {fileID: 11400000, guid: 4344e173bd91bc349ae11d7643651114, type: 2}
   _rarity: {fileID: 11400000, guid: 247d83183a99da34a9660ee22d80db42, type: 2}
   _attackValue:
     _usage: 0

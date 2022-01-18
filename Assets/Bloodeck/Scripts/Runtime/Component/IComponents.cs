@@ -1,9 +1,6 @@
-﻿namespace Bloodeck
-{
-    public interface IComponents<in TComponent>
-    {
-        void Add<T>(T componentInstance) where T : class, TComponent;
+﻿using System.Collections.Generic;
 
-        bool TryGet<T>(out T value) where T : class, TComponent;
-    }
+namespace Bloodeck
+{
+    public interface IComponents<T> : ITryGettable<T>, ICollection<T> { }
 }

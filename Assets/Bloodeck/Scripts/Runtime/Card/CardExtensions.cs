@@ -1,11 +1,11 @@
-﻿namespace Bloodeck.Card
+﻿namespace Bloodeck
 {
     public static class CardExtensions
     {
-        public static ICard WithCost(this ICard card, int value)
+        public static ICard WithCost(this ICard self, int value)
         {
-            card.Cost = value;
-            return card;
+            self.Cost = value;
+            return self;
         }
     }
 }

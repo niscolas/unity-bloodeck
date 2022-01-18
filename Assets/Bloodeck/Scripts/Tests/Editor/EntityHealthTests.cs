@@ -25,7 +25,7 @@ namespace Bloodeck.Tests.Editor
         public void TakeDamage_Current10_Max10_ArgBetween1And10_CurrentShouldBeCurrentMinusArg(
             int damageValue)
         {
-            _entityHealth.WithMax(10).WithCurrent(10);
+            _entityHealth.WhichCanTakeDamage().WithMax(10).WithCurrent(10);
 
             _entityHealth.TakeDamage(damageValue);
 
@@ -41,7 +41,7 @@ namespace Bloodeck.Tests.Editor
         public void TakeDamage_Current10_Max10_ArgBiggerOrEqualTo10_CurrentShouldBe0(
             int damageValue)
         {
-            _entityHealth.WithMax(10).WithCurrent(10);
+            _entityHealth.WhichCanTakeDamage().WithMax(10).WithCurrent(10);
 
             _entityHealth.TakeDamage(damageValue);
 
@@ -51,7 +51,7 @@ namespace Bloodeck.Tests.Editor
         [Test]
         public void TakeDamage_Current10_Max10_Arg0_CurrentShouldBe10()
         {
-            _entityHealth.WithMax(10).WithCurrent(10);
+            _entityHealth.WhichCanTakeDamage().WithMax(10).WithCurrent(10);
 
             _entityHealth.TakeDamage(0);
 
@@ -71,7 +71,7 @@ namespace Bloodeck.Tests.Editor
         public void Heal_Current1_Max10_ArgBetween0And9_CurrentShouldBeInitialHealthPlusArg(
             int healValue)
         {
-            _entityHealth.WithMax(10).WithCurrent(1);
+            _entityHealth.WhichCanHeal().WithMax(10).WithCurrent(1);
 
             _entityHealth.Heal(healValue);
 
@@ -88,7 +88,7 @@ namespace Bloodeck.Tests.Editor
         public void Heal_Current10_Max10_ArgBiggerOrEqualTo0_CurrentShouldBe10(
             int healValue)
         {
-            _entityHealth.WithMax(10).WithCurrent(10);
+            _entityHealth.WhichCanHeal().WithMax(10).WithCurrent(10);
 
             _entityHealth.Heal(healValue);
 
@@ -98,7 +98,7 @@ namespace Bloodeck.Tests.Editor
         [Test]
         public void Heal_Current5_Max10_Arg0_CurrentShouldBe5()
         {
-            _entityHealth.WithMax(10).WithCurrent(5);
+            _entityHealth.WhichCanHeal().WithMax(10).WithCurrent(5);
 
             _entityHealth.Heal(0);
 

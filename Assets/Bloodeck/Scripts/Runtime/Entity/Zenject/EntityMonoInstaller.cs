@@ -5,7 +5,7 @@ using Zenject;
 namespace Bloodeck
 {
     [AddComponentMenu(Constants.InstallersAddComponentMenuPrefix + "Entity Installer")]
-    public class EntityMBMonoInstaller : MonoInstaller<EntityMBMonoInstaller>
+    public class EntityMonoInstaller : MonoInstaller<EntityMonoInstaller>
     {
         public override void InstallBindings()
         {

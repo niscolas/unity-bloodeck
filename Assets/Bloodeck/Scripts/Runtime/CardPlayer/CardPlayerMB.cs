@@ -30,9 +30,9 @@ namespace Bloodeck
         [Inject]
         private CardPlayerController _controller;
 
-        public void LoadDeck(ICardDeck deck)
+        public void LoadDeckTemplate(ICardDeckTemplate deckTemplate)
         {
-            _controller.LoadDeck(deck);
+            _controller.LoadDeckTemplate(deckTemplate);
         }
 
         public bool TryPlaceCard(ICard card, ICardSlot slot)

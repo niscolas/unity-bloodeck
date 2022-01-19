@@ -31,9 +31,8 @@ namespace Bloodeck
             _humbleObject = humbleObject;
         }
 
-        public void LoadDeck(ICardDeck deck)
+        public void LoadDeckTemplate(ICardDeckTemplate deckTemplate)
         {
-            Cards = deck.Instantiate();
         }
 
         public bool TryPlaceCard(ICard card, ICardSlot slot)

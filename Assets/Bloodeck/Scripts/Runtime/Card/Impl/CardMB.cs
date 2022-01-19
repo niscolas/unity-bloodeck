@@ -33,7 +33,11 @@ namespace Bloodeck
 
         public IEntity SelfEntity => _entity;
 
-        public ICardTemplate Template => _template;
+        public ICardTemplate Template
+        {
+            get => _template;
+            set => _template = value as CardTemplateSO;
+        }
 
         public CardTemplateSO TemplateSO => _template;
 
@@ -48,10 +52,9 @@ namespace Bloodeck
             }
         }
 
-        public void LoadTemplate(CardTemplateSO template)
+        public void LoadTemplate(ICardTemplate template)
         {
-            _template = template;
-            UpdateCost();
+            _controller.LoadTemplate(template);
         }
 
         private bool CheckHasTemplate()

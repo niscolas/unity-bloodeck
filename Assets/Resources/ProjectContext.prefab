@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8059857820568778968}
   - component: {fileID: 3994590581983275385}
   - component: {fileID: 2640990807050035408}
+  - component: {fileID: 4697605612934264759}
+  - component: {fileID: 528639474017365963}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -48,8 +50,10 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 2640990807050035408}
+  - {fileID: 4697605612934264759}
+  - {fileID: 528639474017365963}
   _installerPrefabs: []
-  _parentNewObjectsUnderContext: 1
+  _parentNewObjectsUnderContext: 0
   _editorReflectionBakingCoverageMode: 0
   _buildsReflectionBakingCoverageMode: 0
   _settings:
@@ -74,4 +78,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fe305e93bc24d58a9885dc4221f01bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardPrefab: {fileID: 8626941202574032730, guid: 14803fca99c8e764ca00b4901df455e1, type: 3}
+  _cardPrefab: {fileID: 4246796224052854632, guid: 14803fca99c8e764ca00b4901df455e1, type: 3}
+--- !u!114 &4697605612934264759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6264456494741575700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b046eba06a14af798a9a8abe1d8dc49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardDeckPrefab: {fileID: 1713722334902007286, guid: 2d58d587e04036e44b2050c20d6853f5, type: 3}
+--- !u!114 &528639474017365963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6264456494741575700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb165f0bf2a744de888506e764e23b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

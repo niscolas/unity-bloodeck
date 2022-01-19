@@ -2,6 +2,6 @@
 {
     public interface ICardDeck : ICardDeckData
     {
-        ICards Instantiate();
+        void LoadTemplate(ICardDeckTemplate template);
     }
 }

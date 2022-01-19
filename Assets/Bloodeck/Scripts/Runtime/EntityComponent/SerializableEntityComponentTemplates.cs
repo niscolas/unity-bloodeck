@@ -18,10 +18,7 @@ namespace Bloodeck
 
         public bool TryGet<T>(out T value) where T : IEntityComponentTemplate
         {
-            value = (T) _content
-                .FirstOrDefault(x => x.GetType() == typeof(T));
-
-            return value != null;
+            return _content.TryGetFirstOfType(out value);
         }
 
         public IEnumerator<IEntityComponentTemplate> GetEnumerator()

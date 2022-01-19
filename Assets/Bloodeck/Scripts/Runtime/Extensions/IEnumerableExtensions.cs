@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using niscolas.UnityUtils.Core.Extensions;
 
@@ -23,6 +24,16 @@ namespace Bloodeck
                 }
             });
             return result;
+        }
+
+        public static IEnumerable<TOutput> Map<TInput, TOutput>(
+            this IEnumerable<TInput> self,
+            Func<TInput, TOutput> func)
+        {
+            foreach (TInput input in self)
+            {
+                yield return func(input);
+            }
         }
     }
 }

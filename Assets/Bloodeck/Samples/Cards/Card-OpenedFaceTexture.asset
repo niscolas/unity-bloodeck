@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a47071f110cf496688f595d2786d37a3, type: 3}
+  m_Name: Card-OpenedFaceTexture
+  m_EditorClassIdentifier: 
+  _selfEntityTemplate: {fileID: 11400000, guid: 09b4f04c538c43949b6588bcd1e4900f, type: 2}
+  _rarity: {fileID: 11400000, guid: 247d83183a99da34a9660ee22d80db42, type: 2}
+  _componentTemplates:
+    rid: 2864330471915388928
+  _cost:
+    _usage: 0
+    _value: 3
+    _constant: {fileID: 0}
+    _variable: {fileID: 0}
+    _variableInstancer: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2864330471915388928
+      type: {class: SerializableCardComponentTemplates, ns: Bloodeck, asm: Bloodeck}
+      data:
+        _content:
+        - rid: 2864330471915388929
+    - rid: 2864330471915388929
+      type: {class: SerializableCardAttackTemplate, ns: Bloodeck, asm: Bloodeck}
+      data:
+        _attackValue:
+          _usage: 0
+          _value: 0
+          _constant: {fileID: 0}
+          _variable: {fileID: 0}
+          _variableInstancer: {fileID: 0}

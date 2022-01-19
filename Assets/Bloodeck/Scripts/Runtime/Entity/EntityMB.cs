@@ -25,9 +25,19 @@ namespace Bloodeck
 
         public EntityTemplateSO TemplateSO => _template;
 
-        public IEntityTemplate Template => _template;
+        public IEntityTemplate Template
+        {
+            get => _template;
+            set => _template = value as EntityTemplateSO;
+        }
+
 
         [Inject]
         private EntityController _controller;
+
+        public void LoadTemplate(IEntityTemplate template)
+        {
+            _controller.LoadTemplate(template);
+        }
     }
 }

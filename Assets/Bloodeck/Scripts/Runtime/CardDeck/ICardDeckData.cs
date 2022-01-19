@@ -4,8 +4,8 @@
     {
         ICardFromTemplateFactory CardFromTemplateFactory { get; }
 
-        ICardsFactory CardsFactory { get; }
-
-        ICardTemplates CardTemplates { get; }
+        ICards Cards { get; }
+        
+        ICardDeckTemplate Template { get; set; }
     }
 }

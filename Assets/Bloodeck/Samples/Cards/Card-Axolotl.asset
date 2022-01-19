@@ -14,15 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _selfEntityTemplate: {fileID: 11400000, guid: 4344e173bd91bc349ae11d7643651114, type: 2}
   _rarity: {fileID: 11400000, guid: 247d83183a99da34a9660ee22d80db42, type: 2}
-  _attackValue:
-    _usage: 0
-    _value: 4
-    _constant: {fileID: 0}
-    _variable: {fileID: 0}
-    _variableInstancer: {fileID: 0}
+  _componentTemplates:
+    rid: 2864330471915388928
   _cost:
     _usage: 0
     _value: 3
     _constant: {fileID: 0}
     _variable: {fileID: 0}
     _variableInstancer: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2864330471915388928
+      type: {class: SerializableCardComponentTemplates, ns: Bloodeck, asm: Bloodeck}
+      data:
+        _content:
+        - rid: 2864330471915388929
+    - rid: 2864330471915388929
+      type: {class: SerializableCardAttackTemplate, ns: Bloodeck, asm: Bloodeck}
+      data:
+        _attackValue:
+          _usage: 0
+          _value: 0
+          _constant: {fileID: 0}
+          _variable: {fileID: 0}
+          _variableInstancer: {fileID: 0}

@@ -12,7 +12,7 @@ namespace Bloodeck
 
         public string Name { get; }
 
-        public IEntityTemplate Template { get; }
+        public IEntityTemplate Template { get; set; }
 
         public DefaultEntityData(
             IEntityComponents components,

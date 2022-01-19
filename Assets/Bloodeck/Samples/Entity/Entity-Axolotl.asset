@@ -17,12 +17,8 @@ MonoBehaviour:
     rid: 2864330358926868482
   _description:
     rid: 2864330358926868483
-  _maxHealth:
-    _usage: 0
-    _value: 15
-    _constant: {fileID: 0}
-    _variable: {fileID: 0}
-    _variableInstancer: {fileID: 0}
+  _components:
+    rid: 2864330471915388930
   references:
     version: 2
     RefIds:
@@ -34,3 +30,17 @@ MonoBehaviour:
       type: {class: SimpleTextBox, ns: Lingua.Extras, asm: Lingua.Extras}
       data:
         _text: AXOOOO
+    - rid: 2864330471915388930
+      type: {class: SerializableEntityComponentTemplates, ns: Bloodeck, asm: Bloodeck}
+      data:
+        _content:
+        - rid: 2864330471915388931
+    - rid: 2864330471915388931
+      type: {class: SerializableEntityHealthTemplate, ns: Bloodeck, asm: Bloodeck}
+      data:
+        _max:
+          _usage: 0
+          _value: 0
+          _constant: {fileID: 0}
+          _variable: {fileID: 0}
+          _variableInstancer: {fileID: 0}

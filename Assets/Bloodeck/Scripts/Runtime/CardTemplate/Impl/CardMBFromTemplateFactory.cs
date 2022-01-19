@@ -1,33 +1,37 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
 namespace Bloodeck
 {
-    public class CardMBFromTemplateFactory : PlaceholderFactory<GameObject, CardMB>, ICardFromTemplateFactory
+    public class CardMBFromTemplateFactory : PlaceholderFactory<CardTemplateSO, CardMB>, ICardFromTemplateFactory
     {
-        private readonly GameObject _prefab;
+        private readonly CardMBFactory _cardFactory;
 
-        public CardMBFromTemplateFactory(GameObject prefab)
+        public CardMBFromTemplateFactory(CardMBFactory cardFactory)
         {
-            _prefab = prefab;
+            _cardFactory = cardFactory;
+        }
+
+        public override CardMB Create(CardTemplateSO param)
+        {
+            return Internal_Create(param) as CardMB;
         }
 
         public ICard Create(ICardTemplate template)
         {
-            if (!(template is CardTemplateSO cardTemplateSO))
+            if (!(template is CardTemplateSO templateSO))
             {
                 return default;
             }
 
-            return Create(cardTemplateSO);
+            return Internal_Create(templateSO);
         }
 
-        public CardMB Create(CardTemplateSO template)
+        private CardMB Internal_Create(CardTemplateSO template)
         {
-            CardMB instance = Create(_prefab);
-            instance.LoadTemplate(template);
+            CardMB card = _cardFactory.Create();
+            card.LoadTemplate(template);
 
-            return instance;
+            return card;
         }
     }
 }

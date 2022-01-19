@@ -8,7 +8,7 @@
 
         public IEntity SelfEntity { get; }
 
-        public ICardTemplate Template { get; }
+        public ICardTemplate Template { get; set; }
 
         public DefaultCardData(
             ICardComponents components,

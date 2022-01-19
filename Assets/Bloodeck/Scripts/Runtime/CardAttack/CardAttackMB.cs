@@ -61,6 +61,7 @@ namespace Bloodeck
         {
             return _owner.Template.ComponentTemplates.TryGet(out cardAttack);
         }
+        
 
         private void LoadTemplate()
         {

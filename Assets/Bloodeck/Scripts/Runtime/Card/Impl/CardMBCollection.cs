@@ -15,6 +15,8 @@ namespace Bloodeck
 
         public bool IsReadOnly => false;
 
+        public ICollection<CardMB> AsMBs => _content;
+
         public IEnumerator<ICard> GetEnumerator()
         {
             return _content.GetEnumerator();

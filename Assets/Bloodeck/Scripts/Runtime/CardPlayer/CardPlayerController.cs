@@ -4,13 +4,13 @@ namespace Bloodeck
 {
     public class CardPlayerController : ICardPlayer
     {
-        public ICardDeck Deck
+        public IDeck Deck
         {
             get => _humbleObject.Deck;
             set => _humbleObject.Deck = value;
         }
 
-        public ICardDeckFromTemplateFactory DeckFromTemplateFactory => _humbleObject.DeckFromTemplateFactory;
+        public IDeckFromTemplateFactory DeckFromTemplateFactory => _humbleObject.DeckFromTemplateFactory;
 
         public ICardHand Hand => _humbleObject.Hand;
 
@@ -35,7 +35,7 @@ namespace Bloodeck
             _humbleObject = humbleObject;
         }
 
-        public void LoadDeckTemplate(ICardDeckTemplate deckTemplate)
+        public void LoadDeckTemplate(IDeckTemplate deckTemplate)
         {
             Deck = DeckFromTemplateFactory.Create(deckTemplate);
         }

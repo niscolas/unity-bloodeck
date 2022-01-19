@@ -3,10 +3,10 @@
 namespace Bloodeck
 {
     [CreateAssetMenu(
-        fileName = "CardDeck",
-        menuName = Constants.CreateAssetMenuPrefix + "Card Deck",
+        fileName = "Deck",
+        menuName = Constants.CreateAssetMenuPrefix + "Deck",
         order = Constants.CreateAssetMenuOrder)]
-    public class CardDeckTemplateSO : ScriptableObject, ICardDeckTemplate
+    public class DeckTemplateSO : ScriptableObject, IDeckTemplate
     {
         [SerializeField]
         private CardTemplateSOCollection _cards;

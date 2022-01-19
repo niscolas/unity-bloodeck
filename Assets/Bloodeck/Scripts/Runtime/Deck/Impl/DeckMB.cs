@@ -6,10 +6,10 @@ using Zenject;
 namespace Bloodeck
 {
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Card Deck")]
-    public class CardDeckMB : CachedMB, ICardDeck
+    public class DeckMB : CachedMB, IDeck
     {
         [SerializeField]
-        private CardDeckTemplateSO _template;
+        private DeckTemplateSO _template;
 
         [Header(HeaderTitles.Debug)]
         [SerializeField]
@@ -21,16 +21,16 @@ namespace Bloodeck
         public ICards Cards => _cards;
 
         [Inject]
-        public ICardDeckShuffler Shuffler { get; }
+        public IDeckShuffler Shuffler { get; }
 
-        public ICardDeckTemplate Template
+        public IDeckTemplate Template
         {
             get => _template;
-            set => _template = value as CardDeckTemplateSO;
+            set => _template = value as DeckTemplateSO;
         }
 
         [Inject]
-        private CardDeckController _controller;
+        private DeckController _controller;
 
         [Inject]
         private IDespawnService _despawnService;
@@ -45,7 +45,7 @@ namespace Bloodeck
             LoadTemplate(_template);
         }
 
-        public void LoadTemplate(ICardDeckTemplate template)
+        public void LoadTemplate(IDeckTemplate template)
         {
             DestroyAllCards();
             _controller.LoadTemplate(template);

@@ -1,13 +1,13 @@
 ﻿namespace Bloodeck
 {
-    public interface ICardDeckData
+    public interface IDeckData
     {
         ICardFromTemplateFactory CardFromTemplateFactory { get; }
 
         ICards Cards { get; }
 
-        ICardDeckShuffler Shuffler { get; }
+        IDeckShuffler Shuffler { get; }
 
-        ICardDeckTemplate Template { get; set; }
+        IDeckTemplate Template { get; set; }
     }
 }

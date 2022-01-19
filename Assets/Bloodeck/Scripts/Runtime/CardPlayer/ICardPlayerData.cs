@@ -2,9 +2,9 @@
 {
     public interface ICardPlayerData
     {
-        ICardDeck Deck { get; set; }
+        IDeck Deck { get; set; }
 
-        ICardDeckFromTemplateFactory DeckFromTemplateFactory { get; }
+        IDeckFromTemplateFactory DeckFromTemplateFactory { get; }
 
         ICardHand Hand { get; }
 

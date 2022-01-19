@@ -12,7 +12,7 @@ namespace Bloodeck
         private CardPlayerEnvironmentMB _environment;
 
         [SerializeField]
-        private CardDeckMB _deck;
+        private DeckMB _deck;
 
         [Header(HeaderTitles.Debug)]
         [ReadOnly, SerializeField]
@@ -20,14 +20,14 @@ namespace Bloodeck
 
         public ICardPlayerEnvironment Environment => _environment;
 
-        public ICardDeck Deck
+        public IDeck Deck
         {
             get => _deck;
-            set => _deck = value as CardDeckMB;
+            set => _deck = value as DeckMB;
         }
 
         [Inject]
-        public ICardDeckFromTemplateFactory DeckFromTemplateFactory { get; }
+        public IDeckFromTemplateFactory DeckFromTemplateFactory { get; }
 
         public int Energy { get; set; }
 
@@ -38,7 +38,7 @@ namespace Bloodeck
         [Inject]
         private CardPlayerController _controller;
 
-        public void LoadDeckTemplate(ICardDeckTemplate deckTemplate)
+        public void LoadDeckTemplate(IDeckTemplate deckTemplate)
         {
             _controller.LoadDeckTemplate(deckTemplate);
         }

@@ -2,30 +2,30 @@
 
 namespace Bloodeck
 {
-    public class CardDeckController : ICardDeck
+    public class DeckController : IDeck
     {
         public ICardFromTemplateFactory CardFromTemplateFactory => _humbleObject.CardFromTemplateFactory;
 
         public ICards Cards => _humbleObject.Cards;
 
-        public ICardDeckShuffler Shuffler => _humbleObject.Shuffler;
+        public IDeckShuffler Shuffler => _humbleObject.Shuffler;
 
-        public ICardDeckTemplate Template
+        public IDeckTemplate Template
         {
             get => _humbleObject.Template;
             set => _humbleObject.Template = value;
         }
 
-        public ICardDeckTemplate LoadedTemplate { get; private set; }
+        public IDeckTemplate LoadedTemplate { get; private set; }
 
-        private readonly ICardDeckData _humbleObject;
+        private readonly IDeckData _humbleObject;
 
-        public CardDeckController(ICardDeckData humbleObject)
+        public DeckController(IDeckData humbleObject)
         {
             _humbleObject = humbleObject;
         }
 
-        public void LoadTemplate(ICardDeckTemplate template)
+        public void LoadTemplate(IDeckTemplate template)
         {
             Cards.Clear();
             Template = template;

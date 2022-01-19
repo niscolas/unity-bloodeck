@@ -1,6 +1,6 @@
 ﻿namespace Bloodeck
 {
-    public interface ICardDeckTemplate
+    public interface IDeckTemplate
     {
         ICardTemplates CardTemplates { get; }
     }

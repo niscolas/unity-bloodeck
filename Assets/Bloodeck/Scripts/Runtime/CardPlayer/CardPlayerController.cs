@@ -35,9 +35,10 @@ namespace Bloodeck
             _humbleObject = humbleObject;
         }
 
-        public void LoadDeckTemplate(IDeckTemplate deckTemplate)
+        public void DrawCard()
         {
-            Deck = DeckFromTemplateFactory.Create(deckTemplate);
+            ICard topCard = Deck.DrawFromTop();
+            Hand.Add(topCard);
         }
 
         public bool TryPlaceCard(ICard card, ICardSlot slot)
@@ -57,6 +58,11 @@ namespace Bloodeck
             return wasAbleToPlaceCard;
         }
 
+        public void UseDeckTemplate(IDeckTemplate deckTemplate)
+        {
+            Deck = DeckFromTemplateFactory.Create(deckTemplate);
+        }
+
         private bool CheckCanPlaceCardOnSlot(ICard card, ICardSlot slot)
         {
             return CheckHasCard(card) &&
@@ -66,7 +72,7 @@ namespace Bloodeck
 
         private bool CheckHasCard(ICard card)
         {
-            bool result = Hand.Cards.Contains(card);
+            bool result = Hand.Contains(card);
             return result;
         }
 
@@ -85,7 +91,7 @@ namespace Bloodeck
         private void OnCardSuccessfullyPlaced(ICard card)
         {
             Energy -= card.Cost;
-            Hand.Cards.Remove(card);
+            Hand.Remove(card);
         }
 
         private int ProcessNewEnergyValue(int value)

@@ -7,7 +7,7 @@ namespace Bloodeck.Tests.Utils
     public static class IEnumerableExtensions
     {
         public static TSelf WithGetEnumeratorReturning<T, TSelf>(
-            this TSelf self, IEnumerable<T> content) 
+            this TSelf self, IEnumerable<T> content)
             where TSelf : IEnumerable<T>
         {
             self.GetEnumerator().Returns(_ => content.GetEnumerator());

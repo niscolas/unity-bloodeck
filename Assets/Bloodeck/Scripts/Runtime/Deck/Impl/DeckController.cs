@@ -25,6 +25,19 @@ namespace Bloodeck
             _humbleObject = humbleObject;
         }
 
+        public ICard DrawFromTop()
+        {
+            if (Cards.IsNullOrEmpty())
+            {
+                return default;
+            }
+
+            ICard topCard = Cards[0];
+            Cards.Remove(topCard);
+
+            return topCard;
+        }
+
         public void LoadTemplate(IDeckTemplate template)
         {
             Cards.Clear();

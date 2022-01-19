@@ -2,7 +2,9 @@
 {
     public interface ICardPlayer : ICardPlayerData
     {
-        void LoadDeckTemplate(IDeckTemplate deckTemplate);
+        void DrawCard();
+
+        void UseDeckTemplate(IDeckTemplate deckTemplate);
 
         bool TryPlaceCard(ICard card, ICardSlot slot);
     }

@@ -9,5 +9,6 @@
         IDeckShuffler Shuffler { get; }
 
         IDeckTemplate Template { get; set; }
+
     }
 }

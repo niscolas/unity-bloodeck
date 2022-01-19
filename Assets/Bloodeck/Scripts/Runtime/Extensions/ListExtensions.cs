@@ -54,5 +54,13 @@ namespace Bloodeck
                 return -1;
             }
         }
+
+        public static void ForEach<T>(this IList<T> self, Action<T, int> action)
+        {
+            for (int i = 0; i < self.Count; i++)
+            {
+                action(self[i], i);
+            }
+        }
     }
 }

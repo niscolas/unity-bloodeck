@@ -45,6 +45,11 @@ namespace Bloodeck
             LoadTemplate(_template);
         }
 
+        public ICard DrawFromTop()
+        {
+            return _controller.DrawFromTop();
+        }
+
         public void LoadTemplate(IDeckTemplate template)
         {
             DestroyAllCards();

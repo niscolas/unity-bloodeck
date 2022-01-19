@@ -1,7 +1,4 @@
 ﻿namespace Bloodeck
 {
-    public interface ICardHand : ICardHandData
-    {
-        
-    }
+    public interface ICardHand : ICardHandData { }
 }

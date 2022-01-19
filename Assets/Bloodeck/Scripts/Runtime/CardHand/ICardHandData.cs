@@ -1,7 +1,9 @@
-﻿namespace Bloodeck
+﻿using System.Collections.Generic;
+
+namespace Bloodeck
 {
-    public interface ICardHandData
+    public interface ICardHandData : IList<ICard>
     {
-        ICards Cards { get; }
+        int MaxCardCount { get; set; }
     }
 }

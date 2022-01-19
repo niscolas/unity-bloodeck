@@ -9,6 +9,11 @@ namespace Bloodeck
         public override void InstallBindings()
         {
             Container
+                .Bind<ICardDeckShuffler>()
+                .To<CardDeckShuffler>()
+                .AsSingle();
+
+            Container
                 .Bind<CardDeckController>()
                 .FromMethod(
                     context => new CardDeckController(context.ObjectInstance as ICardDeckData))

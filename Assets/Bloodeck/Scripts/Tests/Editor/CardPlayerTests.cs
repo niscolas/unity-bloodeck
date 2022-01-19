@@ -33,10 +33,16 @@ namespace Bloodeck.Tests.Editor
                 .WithGetEnumeratorReturning(cardList)
                 .WithContainsReturning(cardList);
 
+            ICardHand cardHandSub = Substitute.For<ICardHand>()
+                .Sub_WithCards(cardsSub);
+
+            ICardPlayer cardPlayerSub = Substitute.For<ICardPlayer>()
+                .Sub_WithCardHand(cardHandSub)
+                .Sub_WithEnvironment(cardPlayerEnvironmentSub);
+
             Container
                 .Bind<ICardPlayerData>()
-                .FromInstance(
-                    new CardPlayerData(cardsSub, cardPlayerEnvironmentSub))
+                .FromInstance(cardPlayerSub)
                 .AsTransient()
                 .WhenInjectedInto<CardPlayerController>();
 
@@ -51,7 +57,7 @@ namespace Bloodeck.Tests.Editor
         [Test]
         public void TryPlaceCard_Energy1_CardCost2_ReturnShouldBeFalse()
         {
-            ICard firstCardSub = _cardPlayer.Cards.First().Sub_WithCost(2);
+            ICard firstCardSub = _cardPlayer.Hand.Cards.First().Sub_WithCost(2);
             ICardSlot firstCardSlotSub = _cardPlayer.Environment.Slots.ElementAt(0);
             _cardPlayer.WithEnergy(1);
 
@@ -68,7 +74,7 @@ namespace Bloodeck.Tests.Editor
         public void TryPlaceCard_EnergyEqualToCardCost_ReturnShouldBeTrue(
             int energyAndCardCost)
         {
-            ICard firstCardSub = _cardPlayer.Cards.First().Sub_WithCost(energyAndCardCost);
+            ICard firstCardSub = _cardPlayer.Hand.Cards.First().Sub_WithCost(energyAndCardCost);
             ICardSlot firstCardSlotSub = _cardPlayer.Environment.Slots.ElementAt(0);
             _cardPlayer.WithMaxEnergy(energyAndCardCost).WithEnergy(energyAndCardCost);
 
@@ -81,7 +87,7 @@ namespace Bloodeck.Tests.Editor
         [Test]
         public void TryPlaceCard_Energy1_CardCost1_ReturnShouldBeTrue()
         {
-            ICard firstCardSub = _cardPlayer.Cards.First().Sub_WithCost(1);
+            ICard firstCardSub = _cardPlayer.Hand.Cards.First().Sub_WithCost(1);
             ICardSlot firstCardSlotSub = _cardPlayer.Environment.Slots.ElementAt(0);
             _cardPlayer.WithMaxEnergy(1).WithEnergy(1);
 
@@ -94,7 +100,7 @@ namespace Bloodeck.Tests.Editor
         [Test]
         public void TryPlaceCard_SimpleArgs_EnergyShouldBeInitialEnergyMinusCardCost()
         {
-            ICard firstCardSub = _cardPlayer.Cards.First().Sub_WithCost(3);
+            ICard firstCardSub = _cardPlayer.Hand.Cards.First().Sub_WithCost(3);
             ICardSlot firstCardSlotSub = _cardPlayer.Environment.Slots.ElementAt(0);
             _cardPlayer.WithMaxEnergy(5).WithEnergy(5);
 
@@ -118,7 +124,7 @@ namespace Bloodeck.Tests.Editor
         [Test]
         public void TryPlaceCard_DoesntOwnCardSlotButOwnsCard_ReturnShouldBeFalse()
         {
-            ICard cardSub = _cardPlayer.Cards.First();
+            ICard cardSub = _cardPlayer.Hand.Cards.First();
             ICardSlot cardSlotSub = Substitute.For<ICardSlot>();
 
             _cardPlayer

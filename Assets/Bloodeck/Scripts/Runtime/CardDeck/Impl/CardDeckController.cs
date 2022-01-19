@@ -8,6 +8,8 @@ namespace Bloodeck
 
         public ICards Cards => _humbleObject.Cards;
 
+        public ICardDeckShuffler Shuffler => _humbleObject.Shuffler;
+
         public ICardDeckTemplate Template
         {
             get => _humbleObject.Template;
@@ -34,6 +36,7 @@ namespace Bloodeck
         private void CreateCardFromTemplate(ICardTemplate cardTemplate)
         {
             Cards.Add(CardFromTemplateFactory.Create(cardTemplate));
+            Shuffler.Shuffle(this);
         }
     }
 }

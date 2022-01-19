@@ -5,7 +5,9 @@
         ICardFromTemplateFactory CardFromTemplateFactory { get; }
 
         ICards Cards { get; }
-        
+
+        ICardDeckShuffler Shuffler { get; }
+
         ICardDeckTemplate Template { get; set; }
     }
 }

@@ -4,19 +4,23 @@ namespace Bloodeck
 {
     public class CardPlayerController : ICardPlayer
     {
-        public ICardPlayerEnvironment Environment => _humbleObject.Environment;
-
-        public ICards Cards
+        public ICardDeck Deck
         {
-            get => _humbleObject.Cards;
-            set => _humbleObject.Cards = value;
+            get => _humbleObject.Deck;
+            set => _humbleObject.Deck = value;
         }
+
+        public ICardDeckFromTemplateFactory DeckFromTemplateFactory => _humbleObject.DeckFromTemplateFactory;
+
+        public ICardHand Hand => _humbleObject.Hand;
 
         public int Energy
         {
             get => _humbleObject.Energy;
             set => _humbleObject.Energy = ProcessNewEnergyValue(value);
         }
+
+        public ICardPlayerEnvironment Environment => _humbleObject.Environment;
 
         public int MaxEnergy
         {
@@ -33,6 +37,7 @@ namespace Bloodeck
 
         public void LoadDeckTemplate(ICardDeckTemplate deckTemplate)
         {
+            Deck = DeckFromTemplateFactory.Create(deckTemplate);
         }
 
         public bool TryPlaceCard(ICard card, ICardSlot slot)
@@ -61,7 +66,7 @@ namespace Bloodeck
 
         private bool CheckHasCard(ICard card)
         {
-            bool result = Cards.Contains(card);
+            bool result = Hand.Cards.Contains(card);
             return result;
         }
 
@@ -80,7 +85,7 @@ namespace Bloodeck
         private void OnCardSuccessfullyPlaced(ICard card)
         {
             Energy -= card.Cost;
-            Cards.Remove(card);
+            Hand.Cards.Remove(card);
         }
 
         private int ProcessNewEnergyValue(int value)

@@ -11,6 +11,12 @@ namespace Bloodeck
         [SerializeField]
         private List<CardMB> _content = new List<CardMB>();
 
+        public ICard this[int index]
+        {
+            get => _content[index];
+            set => _content[index] = value as CardMB;
+        }
+
         public int Count => _content.Count;
 
         public bool IsReadOnly => false;
@@ -50,6 +56,21 @@ namespace Bloodeck
         public bool Remove(ICard item)
         {
             return _content.Remove(item as CardMB);
+        }
+
+        public int IndexOf(ICard item)
+        {
+            return _content.IndexOfParentItem(item);
+        }
+
+        public void Insert(int index, ICard item)
+        {
+            _content.InsertParentItem(index, item);
+        }
+
+        public void RemoveAt(int index)
+        {
+            _content.RemoveAt(index);
         }
     }
 }

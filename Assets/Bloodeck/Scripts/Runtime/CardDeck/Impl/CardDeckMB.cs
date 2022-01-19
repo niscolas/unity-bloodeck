@@ -1,5 +1,4 @@
-﻿using System;
-using niscolas.UnityUtils.Core;
+﻿using niscolas.UnityUtils.Core;
 using niscolas.UnityUtils.Core.Extensions;
 using UnityEngine;
 using Zenject;
@@ -16,9 +15,13 @@ namespace Bloodeck
         [SerializeField]
         private CardMBCollection _cards = new CardMBCollection();
 
+        [Inject]
         public ICardFromTemplateFactory CardFromTemplateFactory { get; private set; }
 
         public ICards Cards => _cards;
+
+        [Inject]
+        public ICardDeckShuffler Shuffler { get; }
 
         public ICardDeckTemplate Template
         {
@@ -26,19 +29,11 @@ namespace Bloodeck
             set => _template = value as CardDeckTemplateSO;
         }
 
+        [Inject]
         private CardDeckController _controller;
-        private IDespawnService _despawnService;
 
         [Inject]
-        private void Init(
-            CardMBFromTemplateFactory cardFromTemplateFactory,
-            CardDeckController controller,
-            IDespawnService despawnService)
-        {
-            CardFromTemplateFactory = cardFromTemplateFactory;
-            _controller = controller;
-            _despawnService = despawnService;
-        }
+        private IDespawnService _despawnService;
 
         private void Start()
         {

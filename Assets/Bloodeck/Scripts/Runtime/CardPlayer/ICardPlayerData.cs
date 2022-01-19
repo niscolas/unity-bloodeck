@@ -2,11 +2,15 @@
 {
     public interface ICardPlayerData
     {
-        ICardPlayerEnvironment Environment { get; }
+        ICardDeck Deck { get; set; }
 
-        ICards Cards { get; set; }
+        ICardDeckFromTemplateFactory DeckFromTemplateFactory { get; }
+
+        ICardHand Hand { get; }
 
         int Energy { get; set; }
+
+        ICardPlayerEnvironment Environment { get; }
 
         int MaxEnergy { get; set; }
     }

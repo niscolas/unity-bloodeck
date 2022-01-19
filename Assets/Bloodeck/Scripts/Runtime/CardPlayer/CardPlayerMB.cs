@@ -11,19 +11,27 @@ namespace Bloodeck
         [SerializeField]
         private CardPlayerEnvironmentMB _environment;
 
+        [SerializeField]
+        private CardDeckMB _deck;
+
         [Header(HeaderTitles.Debug)]
         [ReadOnly, SerializeField]
-        private CardMBCollection _cards = new CardMBCollection();
+        private SerializableCardHand _cards = new SerializableCardHand();
 
         public ICardPlayerEnvironment Environment => _environment;
 
-        public ICards Cards
+        public ICardDeck Deck
         {
-            get => _cards;
-            set => _cards = value as CardMBCollection;
+            get => _deck;
+            set => _deck = value as CardDeckMB;
         }
 
+        [Inject]
+        public ICardDeckFromTemplateFactory DeckFromTemplateFactory { get; }
+
         public int Energy { get; set; }
+
+        public ICardHand Hand => _cards;
 
         public int MaxEnergy { get; set; }
 

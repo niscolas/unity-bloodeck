@@ -2,5 +2,5 @@
 
 namespace Bloodeck
 {
-    public interface ICards : ICollection<ICard> { }
+    public interface ICards : IList<ICard> { }
 }

@@ -1,5 +1,6 @@
 ﻿using NaughtyAttributes;
 using niscolas.UnityUtils.Core;
+using niscolas.UnityUtils.Core.Extensions;
 using UnityEngine;
 using Zenject;
 
@@ -9,16 +10,16 @@ namespace Bloodeck
     public class CardPlayerMB : CachedMB, ICardPlayer
     {
         [SerializeField]
-        private CardPlayerEnvironmentMB _environment;
-
-        [SerializeField]
         private DeckMB _deck;
 
         [Header(HeaderTitles.Debug)]
         [ReadOnly, SerializeField]
         private SerializableCardHand _cards = new SerializableCardHand();
 
-        public ICardPlayerEnvironment Environment => _environment;
+        [ShowNativeProperty]
+        private string _environmentDebug => _environment.Value ? _environment.Value.ToString() : "null";
+
+        public ICardPlayerEnvironment Environment => _environment.Value;
 
         public IDeck Deck
         {
@@ -26,10 +27,13 @@ namespace Bloodeck
             set => _deck = value as DeckMB;
         }
 
-        [Inject]
-        public IDeckFromTemplateFactory DeckFromTemplateFactory { get; }
+
+        public IDeckFromTemplateFactory DeckFromTemplateFactory => _deckFromTemplateFactory;
 
         public int Energy { get; set; }
+
+        [Inject]
+        private LazyInject<CardPlayerEnvironmentMB> _environment;
 
         public ICardHand Hand => _cards;
 
@@ -37,6 +41,9 @@ namespace Bloodeck
 
         [Inject]
         private CardPlayerController _controller;
+
+        [Inject]
+        private DeckMBFromTemplateFactory _deckFromTemplateFactory;
 
         public void DrawCard()
         {

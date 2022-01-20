@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b046eba06a14af798a9a8abe1d8dc49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardDeckPrefab: {fileID: 1713722334902007286, guid: 2d58d587e04036e44b2050c20d6853f5, type: 3}
+  _deckPrefab: {fileID: 1713722334902007286, guid: 2d58d587e04036e44b2050c20d6853f5, type: 3}
 --- !u!114 &528639474017365963
 MonoBehaviour:
   m_ObjectHideFlags: 0

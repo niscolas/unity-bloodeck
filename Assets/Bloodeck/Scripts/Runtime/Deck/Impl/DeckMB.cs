@@ -15,8 +15,7 @@ namespace Bloodeck
         [SerializeField]
         private CardMBCollection _cards = new CardMBCollection();
 
-        [Inject]
-        public ICardFromTemplateFactory CardFromTemplateFactory { get; private set; }
+        public ICardFromTemplateFactory CardFromTemplateFactory => _cardFromTemplateFactory;
 
         public ICards Cards => _cards;
 
@@ -28,6 +27,9 @@ namespace Bloodeck
             get => _template;
             set => _template = value as DeckTemplateSO;
         }
+
+        [Inject]
+        private CardMBFromTemplateFactory _cardFromTemplateFactory;
 
         [Inject]
         private DeckController _controller;

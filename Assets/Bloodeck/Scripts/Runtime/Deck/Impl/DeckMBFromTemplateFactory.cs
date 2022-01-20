@@ -2,12 +2,12 @@
 
 namespace Bloodeck
 {
-    public class DeckFromTemplateFactory :
+    public class DeckMBFromTemplateFactory :
         PlaceholderFactory<DeckTemplateSO, DeckMB>, IDeckFromTemplateFactory, IDeckMBFromTemplateFactory
     {
         private readonly DeckMBFactory _deckFactory;
 
-        public DeckFromTemplateFactory(DeckMBFactory deckFactory)
+        public DeckMBFromTemplateFactory(DeckMBFactory deckFactory)
         {
             _deckFactory = deckFactory;
         }

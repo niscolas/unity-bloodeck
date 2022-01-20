@@ -46,12 +46,12 @@ namespace SerializableDictionary
         public void OnBeforeSerialize()
         {
             _listContent.Clear();
-            foreach ((TKey key, TValue value) in this)
+            foreach (KeyValuePair<TKey, TValue> keyValuePair in this)
             {
                 _listContent.Add(new TKeyValuePair
                 {
-                    Key = key,
-                    Value = value
+                    Key = keyValuePair.Key,
+                    Value = keyValuePair.Value
                 });
             }
         }

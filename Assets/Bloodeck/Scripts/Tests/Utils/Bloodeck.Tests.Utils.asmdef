@@ -17,7 +17,8 @@
     "precompiledReferences": [
         "FluentAssertions.dll",
         "NSubstitute.dll",
-        "Zenject-usage.dll"
+        "Zenject-usage.dll",
+        "System.Threading.Tasks.Extensions.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

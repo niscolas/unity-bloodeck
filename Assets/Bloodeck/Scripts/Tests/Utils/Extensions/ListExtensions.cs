@@ -8,23 +8,20 @@ namespace Bloodeck.Tests.Utils
         public static TList WithIndexersOf<TList, T>(this TList self, IList<T> source)
             where TList : IList<T>
         {
-            source.ForEach((x, i) => self[i].Returns(x));
+            self[default].ReturnsForAnyArgs(callInfo =>
+            {
+                int index = callInfo.Arg<int>();
+                return source[index];
+            });
             return self;
         }
 
-        public static TList WithCountOf<TList, T>(this TList self, IList<T> source)
-            where TList : IList<T>
+        public static TList WithListFeaturesOf<TList, T>(this TList self, IList<T> source)
+            where TList : class, IList<T>
         {
-            self.Count.Returns(source.Count);
-            return self;
-        }
-
-        public static TList WithBasicListFeaturesOf<TList, T>(this TList self, IList<T> source)
-            where TList : IList<T>
-        {
-            self.WithGetEnumeratorReturning(source);
-            self.WithCountOf(source);
-            source.ForEach((x, i) => self[i].Returns(x));
+            self
+                .WithCollectionFeaturesOf(source)
+                .WithIndexersOf(source);
             return self;
         }
     }

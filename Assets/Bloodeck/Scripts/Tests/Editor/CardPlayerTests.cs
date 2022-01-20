@@ -21,7 +21,7 @@ namespace Bloodeck.Tests.Editor
 
             IList<ICard> cardList = new List<ICard> {Substitute.For<ICard>()};
             cardPlayerSub.Hand
-                .WithBasicListFeaturesOf(cardList)
+                .WithListFeaturesOf(cardList)
                 .WithContainsReturning(cardList);
 
             ICardSlot cardSlotSub = Substitute.For<ICardSlot>();
@@ -29,7 +29,7 @@ namespace Bloodeck.Tests.Editor
 
             IList<ICardSlot> cardSlotList = new List<ICardSlot> {cardSlotSub};
             cardPlayerSub.Environment.Slots
-                .WithGetEnumeratorReturning(cardSlotList)
+                .WithGetEnumeratorOf(cardSlotList)
                 .WithContainsReturning(cardSlotList);
 
             Container

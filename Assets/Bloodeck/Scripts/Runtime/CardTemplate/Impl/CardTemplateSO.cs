@@ -1,5 +1,7 @@
-﻿using Creatable;
+﻿using System;
+using Creatable;
 using NaughtyAttributes;
+using SerializableDictionary;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
@@ -18,6 +20,12 @@ namespace Bloodeck
         private CardRaritySO _rarity;
 
         [SerializeReference, SubclassSelector]
+        private ICardEffectMap _effectMap = new CardEffectMap();
+
+        [SerializeField]
+        private TestDict _testDicta = new TestDict();
+
+        [SerializeReference, SubclassSelector]
         private ICardComponentTemplates _componentTemplates;
 
         [SerializeField]
@@ -26,6 +34,8 @@ namespace Bloodeck
         public ICardComponentTemplates ComponentTemplates => _componentTemplates;
 
         public int Cost => _cost.Value;
+
+        public ICardEffectMap EffectMap => _effectMap;
 
         public EntityTemplateSO SelfEntityTemplateSO => _selfEntityTemplate;
 

@@ -66,12 +66,12 @@ namespace Bloodeck
 
         private void DestroyAllCards()
         {
-            _cards.AsMBs.ForEach(x => _despawnService.Despawn(x));
+            _cards.Content.ForEach(x => _despawnService.Despawn(x));
         }
 
         private void ParentAllCardsToSelf()
         {
-            _cards.AsMBs.ForEach(x => x.transform.SetParent(_transform));
+            _cards.Content.ForEach(x => x.transform.SetParent(_transform));
         }
     }
 }

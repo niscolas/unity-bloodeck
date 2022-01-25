@@ -1,4 +1,6 @@
-﻿namespace Bloodeck
+﻿using niscolas.UnityUtils.Core.Extensions;
+
+namespace Bloodeck
 {
     public class DeckShuffler : IDeckShuffler
     {

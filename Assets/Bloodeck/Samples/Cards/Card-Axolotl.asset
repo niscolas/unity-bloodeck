@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a47071f110cf496688f595d2786d37a3, type: 3}
   m_Name: Card-Axolotl
   m_EditorClassIdentifier: 
-  _selfEntityTemplate: {fileID: 11400000, guid: 4344e173bd91bc349ae11d7643651114, type: 2}
+  _selfEntityTemplate: {fileID: 11400000, guid: 4344e173bd91bc349ae11d7643651114,
+    type: 2}
   _rarity: {fileID: 11400000, guid: 247d83183a99da34a9660ee22d80db42, type: 2}
   _componentTemplates:
-    rid: 2864330471915388928
+    id: 0
   _cost:
     _usage: 0
     _value: 3
@@ -23,14 +24,14 @@ MonoBehaviour:
     _variable: {fileID: 0}
     _variableInstancer: {fileID: 0}
   references:
-    version: 2
-    RefIds:
-    - rid: 2864330471915388928
+    version: 1
+    00000000:
       type: {class: SerializableCardComponentTemplates, ns: Bloodeck, asm: Bloodeck}
       data:
         _content:
-        - rid: 2864330471915388929
-    - rid: 2864330471915388929
+        - id: 1
+        - id: 2
+    00000001:
       type: {class: SerializableCardAttackTemplate, ns: Bloodeck, asm: Bloodeck}
       data:
         _attackValue:
@@ -39,3 +40,5 @@ MonoBehaviour:
           _constant: {fileID: 0}
           _variable: {fileID: 0}
           _variableInstancer: {fileID: 0}
+    00000002:
+      type: {class: , ns: , asm: }

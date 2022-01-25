@@ -1,6 +1,5 @@
 ﻿using Lingua;
 using Lingua.Extras;
-using Qualitas;
 using UnityEngine;
 using Zenject;
 
@@ -11,11 +10,6 @@ namespace Bloodeck.Editor
     {
         public override void InstallBindings()
         {
-            Container
-                .Bind<IAttributes>()
-                .To<SerializableAttributes>()
-                .AsTransient();
-
             Container
                 .Bind<INoContextText>()
                 .WithId(ZenjectIds.TextFieldId)

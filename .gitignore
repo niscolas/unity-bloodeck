@@ -78,3 +78,4 @@ crashlytics-build.properties
 !**/*/OdinInspector.Attributes.dll
 # Don't ignore the 
 **/*/Sirenix
+**/*/OdinSerializer

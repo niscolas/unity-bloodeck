@@ -2,8 +2,9 @@
 
 namespace Bloodeck
 {
-    public class CardEffectTriggerSO : ScriptableObject, ICardEffectTrigger
-    {
-        
-    }
+    [CreateAssetMenu(
+        fileName = "CardEffectTrigger",
+        menuName = Constants.CreateAssetMenuPrefix + "Card Effect Trigger",
+        order = Constants.CreateAssetMenuOrder)]
+    public class CardEffectTriggerSO : ScriptableObject, ICardEffectTrigger { }
 }

@@ -6,7 +6,7 @@
 
         int Cost { get; }
         
-        ICardEffectMap EffectMap { get; }
+        ICardEffectMap Effects { get; }
 
         IEntityTemplate SelfEntityTemplate { get; }
     }

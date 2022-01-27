@@ -1,6 +1,5 @@
 ﻿using System;
 using SerializableDictionary;
-using UnityEngine;
 
 namespace Bloodeck
 {
@@ -11,17 +10,8 @@ namespace Bloodeck
     {
         protected override ICardEffectTrigger GetDefaultKey()
         {
-            return ScriptableObject.CreateInstance<CardEffectTriggerSO>();
+            return new CardEffectTriggerSOWrapper();
         }
-    }
-    
-    [Serializable]
-    public class TestDict :
-        FullSerializeReferenceSerializableDictionary<ICardEffectTrigger, IEntity>
-    {
-        protected override ICardEffectTrigger GetDefaultKey()
-        {
-            return ScriptableObject.CreateInstance<CardEffectTriggerSO>();
-        }
+
     }
 }

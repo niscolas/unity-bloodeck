@@ -2,8 +2,8 @@
 {
     public interface ICardSlotData
     {
-        ICard Card { get; }
+        ICard Card { get; set; }
         
-        ICardSlotRestrictions CardRestrictions { get; }
+        ICardSlotRestrictions Restrictions { get; }
     }
 }

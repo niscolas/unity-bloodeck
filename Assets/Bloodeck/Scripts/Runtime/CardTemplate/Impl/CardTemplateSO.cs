@@ -18,13 +18,13 @@ namespace Bloodeck
         private CardRaritySO _rarity;
 
         [SerializeField]
+        private IntReference _cost = new IntReference(1);
+
+        [SerializeField]
         private CardEffectMap _effects = new CardEffectMap();
 
         [SerializeReference, SubclassSelector]
         private ICardComponentTemplates _componentTemplates;
-
-        [SerializeField]
-        private IntReference _cost = new IntReference(1);
 
         public ICardComponentTemplates ComponentTemplates => _componentTemplates;
 

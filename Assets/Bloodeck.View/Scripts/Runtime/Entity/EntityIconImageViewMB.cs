@@ -1,17 +1,18 @@
 ﻿using niscolas.UnityUtils.Core;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Bloodeck.View
 {
-    [AddComponentMenu(Constants.AddComponentMenuPrefix + "Entity Icon (Sprite) View")]
-    public class EntityIconSpriteRendererViewMB : CachedMB
+    [AddComponentMenu(Constants.AddComponentMenuPrefix + "Entity Icon (Image) View")]
+    public class EntityIconImageViewMB : CachedMB
     {
         [Inject, SerializeField]
         private EntityMB _entity;
 
         [SerializeField]
-        private SpriteRenderer _spriteRenderer;
+        private Image _image;
 
         private void Start()
         {
@@ -20,7 +21,7 @@ namespace Bloodeck.View
 
         public void UpdateIcon()
         {
-            _spriteRenderer.sprite = _entity.TemplateSO.Icon;
+            _image.sprite = _entity.TemplateSO.Icon;
         }
     }
 }

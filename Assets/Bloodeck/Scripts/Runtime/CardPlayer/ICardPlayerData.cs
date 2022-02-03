@@ -6,12 +6,16 @@
 
         IDeckFromTemplateFactory DeckFromTemplateFactory { get; }
 
-        ICardHand Hand { get; }
-
         int Energy { get; set; }
+
+        int MaxEnergy { get; set; }
 
         ICardPlayerEnvironment Environment { get; }
 
-        int MaxEnergy { get; set; }
+        ICardHand Hand { get; }
+        
+        bool IsMakingMove { get; }
+        
+        bool IsDrawingStartingCards { get; }
     }
 }

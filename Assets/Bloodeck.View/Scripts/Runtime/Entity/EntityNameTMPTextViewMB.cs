@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Bloodeck.View
 {
-    [AddComponentMenu(Constants.AddComponentMenuPrefix + "Entity Name TMP_Text View")]
+    [AddComponentMenu(Constants.AddComponentMenuPrefix + "Entity Name (TMP_Text) View")]
     public class EntityNameTMPTextViewMB : CachedMB
     {
         [Inject, SerializeField]

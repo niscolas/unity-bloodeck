@@ -1,12 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Bloodeck
 {
+    [Serializable]
     public class DefaultCollection<T> : ICollection<T>
     {
-        private readonly List<T> _content = new List<T>();
+        [SerializeField]
+        private List<T> _content = new List<T>();
 
         public int Count => _content.Count;
 

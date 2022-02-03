@@ -7,7 +7,7 @@
         int Cost { get; set; }
 
         IEntity SelfEntity { get; }
-        
+
         ICardTemplate Template { get; set; }
     }
 }

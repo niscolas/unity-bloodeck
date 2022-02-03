@@ -13,7 +13,7 @@ namespace Bloodeck
 
         [Header(HeaderTitles.Debug)]
         [SerializeField]
-        private CardMBCollection _cards = new CardMBCollection();
+        private SerializableCardMBCollection _cards = new SerializableCardMBCollection();
 
         public ICardFromTemplateFactory CardFromTemplateFactory => _cardFromTemplateFactory;
 

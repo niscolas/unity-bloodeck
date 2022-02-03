@@ -1,4 +1,4 @@
-﻿using UnityAtoms.Tags;
+﻿using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using Zenject;
 
@@ -7,11 +7,16 @@ namespace Bloodeck
     [AddComponentMenu(Constants.InstallersAddComponentMenuPrefix + "Card Player Installer")]
     public class CardPlayerMonoInstaller : MonoInstaller<CardPlayerMonoInstaller>
     {
+        [SerializeField]
+        private StringReference _environmentId;
+
         public override void InstallBindings()
         {
+            CardPlayerEnvironmentMB environment = CardPlayerEnvironmentIdMB.WithId(_environmentId.Value).Item;
+
             Container
                 .Bind<CardPlayerEnvironmentMB>()
-                .FromMethod(FindTaggedEnvironment)
+                .FromInstance(environment)
                 .AsSingle()
                 .WhenInjectedInto(typeof(CardPlayerMB));
 
@@ -31,25 +36,6 @@ namespace Bloodeck
                 .Bind<CardPlayerMB>()
                 .FromComponentInHierarchy()
                 .AsSingle();
-        }
-
-        private CardPlayerEnvironmentMB FindTaggedEnvironment(InjectContext context)
-        {
-            CardPlayerMB cardPlayer = (CardPlayerMB) context.ObjectInstance;
-
-            if (!(cardPlayer.TryGetComponent(out CardPlayerEnvironmentLoaderByTagMB envLoader)))
-            {
-                return default;
-            }
-
-            GameObject possibleEnv = AtomTags.FindByTag(envLoader.TargetEnvironmentTag);
-
-            if (!possibleEnv.TryGetComponent(out CardPlayerEnvironmentMB cardPlayerEnvironment))
-            {
-                return default;
-            }
-
-            return cardPlayerEnvironment;
         }
     }
 }

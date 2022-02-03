@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using niscolas.UnityUtils.Core;
 using niscolas.UnityUtils.Core.Extensions;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace Bloodeck
 {
-    [Serializable]
-    public struct SerializableCardHand : ICardHand
+    public class CardHandMB : CachedMB, ICardHand
     {
         [SerializeField]
-        private CardMBCollection _cards;
+        private SerializableCardMBCollection _cards;
 
         [SerializeField]
         private IntReference _maxCardCount;
+
+        public event Action<ICard> Added;
+        public event Action<ICard> Removed;
 
         public int Count => _cards.Count;
 
@@ -31,6 +34,8 @@ namespace Bloodeck
             get => _cards[index];
             set => _cards[index] = value as CardMB;
         }
+
+        public ICollection<CardMB> AsMBs => _cards.AsMBs;
 
         public IEnumerator<ICard> GetEnumerator()
         {
@@ -50,6 +55,7 @@ namespace Bloodeck
             }
 
             _cards.AddParentItem(item);
+            Added?.Invoke(item);
         }
 
         public void Clear()
@@ -69,7 +75,9 @@ namespace Bloodeck
 
         public bool Remove(ICard item)
         {
-            return _cards.RemoveParentItem(item);
+            bool result = _cards.RemoveParentItem(item);
+            Removed?.Invoke(item);
+            return result;
         }
 
         public int IndexOf(ICard item)

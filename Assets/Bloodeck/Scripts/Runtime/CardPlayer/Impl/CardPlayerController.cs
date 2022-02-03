@@ -14,6 +14,10 @@ namespace Bloodeck
 
         public ICardHand Hand => _humbleObject.Hand;
 
+        public bool IsMakingMove => _humbleObject.IsMakingMove;
+
+        public bool IsDrawingStartingCards => _humbleObject.IsDrawingStartingCards;
+
         public int Energy
         {
             get => _humbleObject.Energy;

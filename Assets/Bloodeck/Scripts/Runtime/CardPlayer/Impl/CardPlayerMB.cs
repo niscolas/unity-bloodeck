@@ -1,6 +1,6 @@
 ﻿using NaughtyAttributes;
 using niscolas.UnityUtils.Core;
-using niscolas.UnityUtils.Core.Extensions;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using Zenject;
 
@@ -12,9 +12,15 @@ namespace Bloodeck
         [SerializeField]
         private DeckMB _deck;
 
+        [SerializeField]
+        private BoolReference _isMakingMove = new BoolReference(false);
+
+        [SerializeField]
+        private BoolReference _isDrawingInitialCards = new BoolReference(false);
+
         [Header(HeaderTitles.Debug)]
         [ReadOnly, SerializeField]
-        private SerializableCardHand _cards = new SerializableCardHand();
+        private CardHandMB _cards = new CardHandMB();
 
         [ShowNativeProperty]
         private string _environmentDebug => _environment.Value ? _environment.Value.ToString() : "null";
@@ -27,7 +33,6 @@ namespace Bloodeck
             set => _deck = value as DeckMB;
         }
 
-
         public IDeckFromTemplateFactory DeckFromTemplateFactory => _deckFromTemplateFactory;
 
         public int Energy { get; set; }
@@ -36,6 +41,10 @@ namespace Bloodeck
         private LazyInject<CardPlayerEnvironmentMB> _environment;
 
         public ICardHand Hand => _cards;
+
+        public bool IsMakingMove => _isMakingMove.Value;
+
+        public bool IsDrawingStartingCards => _isDrawingInitialCards.Value;
 
         public int MaxEnergy { get; set; }
 

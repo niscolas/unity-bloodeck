@@ -9,10 +9,8 @@ namespace Bloodeck
     {
         public override void InstallBindings()
         {
-            Container
-                .Bind<IDespawnService>()
-                .To<UnityDestroyService>()
-                .AsSingle();
+            Container.Bind<ISpawnService>().To<UnityInstantiateService>().AsSingle();
+            Container.Bind<IDespawnService>().To<UnityDestroyService>().AsSingle();
         }
     }
 }

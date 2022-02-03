@@ -1,5 +1,4 @@
-﻿using Healthy;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace Bloodeck
@@ -13,7 +12,7 @@ namespace Bloodeck
                 .Bind<EntityMB>()
                 .FromComponentInHierarchy(false)
                 .AsSingle();
-           
+
             Container
                 .Bind<EntityComponentMB>()
                 .FromComponentsInHierarchy(null, false)
@@ -21,11 +20,6 @@ namespace Bloodeck
 
             Container
                 .Bind<EntityComponentsMB>()
-                .FromComponentInHierarchy(false)
-                .AsSingle();
-
-            Container
-                .Bind<HealthMB>()
                 .FromComponentInHierarchy(false)
                 .AsSingle();
 

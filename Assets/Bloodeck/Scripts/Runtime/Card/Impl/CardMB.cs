@@ -1,6 +1,7 @@
 ﻿using Creatable;
 using NaughtyAttributes;
 using niscolas.UnityUtils.Core;
+using niscolas.UnityUtils.Core.Extensions;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using Zenject;
@@ -11,7 +12,7 @@ namespace Bloodeck
     public class CardMB : CachedMB, ICard
     {
         [Expandable, Creatable, SerializeField]
-        private CardTemplateSO _template;
+        private CardTemplateSO _templateToLoad;
 
         [Inject, SerializeField]
         private EntityMB _entity;
@@ -22,6 +23,10 @@ namespace Bloodeck
         [Header(HeaderTitles.Output)]
         [SerializeField]
         private IntReference _costOutput;
+
+        [Header(HeaderTitles.Debug)]
+        [ReadOnly, SerializeField]
+        private CardTemplateSO _loadedTemplate;
 
         public ICardComponents Components => _components;
 
@@ -35,36 +40,60 @@ namespace Bloodeck
 
         public ICardTemplate Template
         {
-            get => _template;
-            set => _template = value as CardTemplateSO;
+            get => _loadedTemplate;
+            set => _loadedTemplate = value as CardTemplateSO;
         }
 
-        public CardTemplateSO TemplateSO => _template;
+        public CardTemplateSO TemplateSO => _loadedTemplate;
 
         [Inject]
         private CardController _controller;
 
-        private void Start()
+        private bool _hasAwakened;
+
+        protected override void Awake()
         {
-            if (CheckHasTemplate())
+            base.Awake();
+
+            if (CheckHasTemplateToLoad())
             {
-                UpdateCost();
+                Internal_LoadTemplate(_templateToLoad);
             }
+
+            _hasAwakened = true;
         }
 
         public void LoadTemplate(ICardTemplate template)
         {
-            _controller.LoadTemplate(template);
+            if (_hasAwakened)
+            {
+                Internal_LoadTemplate(template);
+            }
+            else
+            {
+                _templateToLoad = (CardTemplateSO) template;
+            }
         }
 
         private bool CheckHasTemplate()
         {
-            return _template;
+            return _loadedTemplate;
+        }
+
+        private bool CheckHasTemplateToLoad()
+        {
+            return !_templateToLoad.IsUnityNull();
+        }
+
+        private void Internal_LoadTemplate(ICardTemplate template)
+        {
+            _controller.LoadTemplate(template);
+            UpdateCost();
         }
 
         private void UpdateCost()
         {
-            _costOutput.Value = _template.Cost;
+            _costOutput.Value = _loadedTemplate.Cost;
         }
     }
 }

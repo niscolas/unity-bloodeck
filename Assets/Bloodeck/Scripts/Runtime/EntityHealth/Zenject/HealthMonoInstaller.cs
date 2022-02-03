@@ -11,7 +11,7 @@ namespace Bloodeck
         {
             Container
                 .Bind<HealthMB>()
-                .FromComponentInHierarchy()
+                .FromComponentInHierarchy(false)
                 .AsSingle();
         }
     }

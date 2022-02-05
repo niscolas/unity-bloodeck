@@ -1,4 +1,5 @@
-﻿using niscolas.UnityUtils.Core.Extensions;
+﻿using System;
+using niscolas.UnityUtils.Core.Extensions;
 
 namespace Bloodeck
 {
@@ -34,20 +35,47 @@ namespace Bloodeck
 
         public void LoadTemplate(IDeckTemplate template)
         {
-            Cards.Clear();
-            template.CardTemplates.ForEach(CreateCardFromTemplate);
+            LoadTemplate(template, null);
+        }
+
+        public void LoadTemplate(IDeckTemplate template, Action<ICard> cardCreatedCallback)
+        {
+            Clear();
+            CreateCards(template, cardCreatedCallback);
+            Shuffle();
             SetTemplate(template);
         }
 
-        private void CreateCardFromTemplate(ICardTemplate cardTemplate)
+        private void Clear()
         {
-            Cards.Add(CardFromTemplateFactory.Create(cardTemplate));
-            Shuffler.Shuffle(this);
+            Cards.Clear();
+        }
+
+        private ICard CreateCardFromTemplate(ICardTemplate cardTemplate)
+        {
+            ICard cardInstance = CardFromTemplateFactory.Create(cardTemplate);
+            Cards.Add(cardInstance);
+
+            return cardInstance;
+        }
+
+        private void CreateCards(IDeckTemplate template, Action<ICard> cardCreatedCallback)
+        {
+            template.CardTemplates.ForEach(cardTemplate =>
+            {
+                ICard cardInstance = CreateCardFromTemplate(cardTemplate);
+                cardCreatedCallback?.Invoke(cardInstance);
+            });
         }
 
         private void SetTemplate(IDeckTemplate template)
         {
             _humbleObject.SetHumbleObjectLoadedTemplate(template);
+        }
+
+        private void Shuffle()
+        {
+            Shuffler.Shuffle(this);
         }
     }
 }

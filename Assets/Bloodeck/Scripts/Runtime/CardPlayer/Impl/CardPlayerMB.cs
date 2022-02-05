@@ -1,5 +1,4 @@
-﻿using System;
-using NaughtyAttributes;
+﻿using NaughtyAttributes;
 using niscolas.UnityUtils.Core;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
@@ -10,8 +9,11 @@ namespace Bloodeck
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Card Player")]
     public class CardPlayerMB : CachedMB, ICardPlayer
     {
-        [SerializeField]
+        [Inject, SerializeField]
         private DeckMB _deck;
+
+        [Inject, SerializeField]
+        private CardHandMB _hand;
 
         [SerializeField]
         private FloatReference _drawCardIntervalSeconds = new FloatReference(0.1f);
@@ -25,9 +27,6 @@ namespace Bloodeck
 
         [SerializeField]
         private BoolReference _isDrawingInitialCards = new BoolReference(false);
-
-        [ReadOnly, SerializeField]
-        private CardHandMB _cards = new CardHandMB();
 
         [ShowNativeProperty]
         private string _environmentDebug => _environment.Value ? _environment.Value.ToString() : "null";
@@ -47,7 +46,7 @@ namespace Bloodeck
         [Inject]
         private LazyInject<CardPlayerEnvironmentMB> _environment;
 
-        public ICardHand Hand => _cards;
+        public ICardHand Hand => _hand;
 
         public bool IsMakingMove => _isMakingMove.Value;
 

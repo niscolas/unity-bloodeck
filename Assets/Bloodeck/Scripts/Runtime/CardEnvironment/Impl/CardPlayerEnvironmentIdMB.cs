@@ -7,6 +7,6 @@ namespace Bloodeck
     public class CardPlayerEnvironmentIdMB :
         IdMB<CardPlayerEnvironmentMB,
             CardPlayerEnvironmentIdMB,
-            CardPlayerEnvironmentMBCollection,
+            SerializableCardPlayerEnvironmentMBCollection,
             List<CardPlayerEnvironmentIdMB>> { }
 }

@@ -1,13 +1,11 @@
-﻿using System;
-using NaughtyAttributes;
+﻿using NaughtyAttributes;
 using niscolas.UnityUtils.Core;
-using niscolas.UnityUtils.Core.Extensions;
 using UnityEngine;
 using Zenject;
 
 namespace Bloodeck
 {
-    [AddComponentMenu(Constants.AddComponentMenuPrefix + "Card Deck")]
+    [AddComponentMenu(Constants.AddComponentMenuPrefix + "Deck")]
     public class DeckMB : CachedMB, IDeck, IDeckHumbleObject
     {
         [SerializeField]
@@ -54,7 +52,7 @@ namespace Bloodeck
         public void LoadTemplate(IDeckTemplate template)
         {
             DestroyAllCards();
-            _controller.LoadTemplate(template);
+            _controller.LoadTemplate(template, OnCardCreated);
             ParentAllCardsToSelf();
         }
 
@@ -76,6 +74,12 @@ namespace Bloodeck
         private void LoadTemplateToLoad()
         {
             LoadTemplate(_templateToLoad);
+        }
+
+        private void OnCardCreated(ICard card)
+        {
+            CardMB cardMB = (CardMB) card;
+            cardMB.gameObject.SetActive(false);
         }
 
         private void ParentAllCardsToSelf()

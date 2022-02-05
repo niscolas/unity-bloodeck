@@ -13,8 +13,6 @@ namespace Bloodeck
             set => _humbleObject.Deck = value;
         }
 
-        public IDeckFromTemplateFactory DeckFromTemplateFactory => _humbleObject.DeckFromTemplateFactory;
-
         public ICardHand Hand => _humbleObject.Hand;
 
         public bool IsMakingMove => _humbleObject.IsMakingMove;
@@ -76,7 +74,7 @@ namespace Bloodeck
 
         public void UseDeckTemplate(IDeckTemplate deckTemplate)
         {
-            Deck = DeckFromTemplateFactory.Create(deckTemplate);
+            Deck.LoadTemplate(deckTemplate);
         }
 
         private bool CheckCanPlaceCardOnSlot(ICard card, ICardSlot slot)

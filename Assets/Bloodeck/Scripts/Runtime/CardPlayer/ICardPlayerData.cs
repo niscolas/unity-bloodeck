@@ -4,8 +4,6 @@
     {
         IDeck Deck { get; set; }
 
-        IDeckFromTemplateFactory DeckFromTemplateFactory { get; }
-
         int Energy { get; set; }
 
         int MaxEnergy { get; set; }

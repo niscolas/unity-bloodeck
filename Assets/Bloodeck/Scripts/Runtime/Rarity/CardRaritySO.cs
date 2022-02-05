@@ -10,7 +10,7 @@ namespace Bloodeck
         order = Constants.CreateAssetMenuOrder)]
     public class CardRaritySO : ScriptableObject
     {
-        [Inject(Id = ZenjectIds.TextFieldId), SerializeReference]
+        [Inject(Id = ZenjectIds.TextFieldId), SerializeReference, SubclassSelector]
         private INoContextText _displayName;
     }
 }

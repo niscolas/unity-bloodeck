@@ -12,6 +12,6 @@ namespace Bloodeck
 
         string Name { get; }
 
-        IEntityTemplate Template { get; set; }
+        IEntityTemplate LoadedTemplate { get; }
     }
 }

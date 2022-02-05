@@ -12,23 +12,24 @@
 
         public IEntity SelfEntity => _humbleObject.SelfEntity;
 
-        public ICardTemplate Template
-        {
-            get => _humbleObject.Template;
-            set => _humbleObject.Template = value;
-        }
+        public ICardTemplate LoadedTemplate => _humbleObject.LoadedTemplate;
 
-        private readonly ICardData _humbleObject;
+        private readonly ICardHumbleObject _humbleObject;
 
-        public CardController(ICardData humbleObject)
+        public CardController(ICardHumbleObject humbleObject)
         {
             _humbleObject = humbleObject;
         }
 
         public void LoadTemplate(ICardTemplate template)
         {
-            Template = template;
             SelfEntity.LoadTemplate(template.SelfEntityTemplate);
+            SetTemplate(template);
+        }
+
+        private void SetTemplate(ICardTemplate template)
+        {
+            _humbleObject.SetHumbleObjectLoadedTemplate(template);
         }
     }
 }

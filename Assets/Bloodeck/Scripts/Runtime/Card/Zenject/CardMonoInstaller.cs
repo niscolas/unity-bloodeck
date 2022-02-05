@@ -25,9 +25,9 @@ namespace Bloodeck
                 .Bind<CardController>()
                 .FromMethod(
                     context =>
-                        new CardController(context.ObjectInstance as ICard))
+                        new CardController(context.ObjectInstance as CardMB))
                 .AsSingle()
-                .WhenInjectedInto(typeof(ICard));
+                .WhenInjectedInto(typeof(CardMB));
         }
     }
 }

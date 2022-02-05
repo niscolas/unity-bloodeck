@@ -1,7 +1,7 @@
-﻿using Creatable;
+﻿using System;
+using Creatable;
 using NaughtyAttributes;
 using niscolas.UnityUtils.Core;
-using niscolas.UnityUtils.Core.Extensions;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using Zenject;
@@ -9,7 +9,7 @@ using Zenject;
 namespace Bloodeck
 {
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Card")]
-    public class CardMB : CachedMB, ICard
+    public class CardMB : CachedMB, ICard, ICardHumbleObject
     {
         [Expandable, Creatable, SerializeField]
         private CardTemplateSO _templateToLoad;
@@ -38,57 +38,40 @@ namespace Bloodeck
 
         public IEntity SelfEntity => _entity;
 
-        public ICardTemplate Template
-        {
-            get => _loadedTemplate;
-            set => _loadedTemplate = value as CardTemplateSO;
-        }
+        public ICardTemplate LoadedTemplate => _loadedTemplate;
 
         public CardTemplateSO TemplateSO => _loadedTemplate;
 
         [Inject]
         private CardController _controller;
 
-        private bool _hasAwakened;
-
-        protected override void Awake()
+        private void Start()
         {
-            base.Awake();
-
-            if (CheckHasTemplateToLoad())
+            if (CheckShouldLoadTemplate())
             {
-                Internal_LoadTemplate(_templateToLoad);
+                LoadTemplateToLoad();
             }
-
-            _hasAwakened = true;
         }
 
         public void LoadTemplate(ICardTemplate template)
         {
-            if (_hasAwakened)
-            {
-                Internal_LoadTemplate(template);
-            }
-            else
-            {
-                _templateToLoad = (CardTemplateSO) template;
-            }
-        }
-
-        private bool CheckHasTemplate()
-        {
-            return _loadedTemplate;
-        }
-
-        private bool CheckHasTemplateToLoad()
-        {
-            return !_templateToLoad.IsUnityNull();
-        }
-
-        private void Internal_LoadTemplate(ICardTemplate template)
-        {
             _controller.LoadTemplate(template);
             UpdateCost();
+        }
+
+        public void SetHumbleObjectLoadedTemplate(ICardTemplate template)
+        {
+            _loadedTemplate = template as CardTemplateSO;
+        }
+
+        private bool CheckShouldLoadTemplate()
+        {
+            return _templateToLoad && _templateToLoad != _loadedTemplate;
+        }
+
+        private void LoadTemplateToLoad()
+        {
+            LoadTemplate(_templateToLoad);
         }
 
         private void UpdateCost()

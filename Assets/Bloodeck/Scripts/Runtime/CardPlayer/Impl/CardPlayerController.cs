@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using niscolas.UnityUtils.Async;
+using niscolas.UnityUtils.Core.Extensions;
+using UnityEngine;
 
 namespace Bloodeck
 {
@@ -17,6 +20,10 @@ namespace Bloodeck
         public bool IsMakingMove => _humbleObject.IsMakingMove;
 
         public bool IsDrawingStartingCards => _humbleObject.IsDrawingStartingCards;
+
+        public float DrawCardIntervalSeconds => _humbleObject.DrawCardIntervalSeconds;
+
+        public int InitialDrawCardsCount => _humbleObject.InitialDrawCardsCount;
 
         public int Energy
         {
@@ -43,6 +50,11 @@ namespace Bloodeck
         {
             ICard topCard = Deck.DrawFromTop();
             Hand.Add(topCard);
+        }
+
+        public void DrawInitialCards()
+        {
+            DrawInitialCardsAsync().Forget();
         }
 
         public bool TryPlaceCard(ICard card, ICardSlot slot)
@@ -90,6 +102,15 @@ namespace Bloodeck
         {
             bool result = Environment.Slots.Contains(slot);
             return result;
+        }
+
+        private async UniTaskVoid DrawInitialCardsAsync()
+        {
+            for (int i = 0; i < InitialDrawCardsCount; i++)
+            {
+                DrawCard();
+                await Await.Seconds(DrawCardIntervalSeconds);
+            }
         }
 
         private void OnCardSuccessfullyPlaced(ICard card)

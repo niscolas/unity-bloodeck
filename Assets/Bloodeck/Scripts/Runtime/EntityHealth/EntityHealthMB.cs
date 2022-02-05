@@ -78,7 +78,7 @@ namespace Bloodeck
 
         private bool TryGetTemplate(out IEntityHealthTemplate entityHealth)
         {
-            return _owner.Template.ComponentTemplates.TryGet(out entityHealth);
+            return _owner.LoadedTemplate.ComponentTemplates.TryGet(out entityHealth);
         }
     }
 }

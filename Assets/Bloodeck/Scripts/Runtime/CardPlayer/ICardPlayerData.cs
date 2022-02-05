@@ -17,5 +17,9 @@
         bool IsMakingMove { get; }
         
         bool IsDrawingStartingCards { get; }
+        
+        float DrawCardIntervalSeconds { get; }
+        
+        int InitialDrawCardsCount { get; }
     }
 }

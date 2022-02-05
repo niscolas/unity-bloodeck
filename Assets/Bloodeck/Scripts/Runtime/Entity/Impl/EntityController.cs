@@ -12,22 +12,23 @@ namespace Bloodeck
 
         public string Name => _humbleObject.Name;
 
-        public IEntityTemplate Template
-        {
-            get => _humbleObject.Template;
-            set => _humbleObject.Template = value;
-        }
+        public IEntityTemplate LoadedTemplate => _humbleObject.LoadedTemplate;
 
-        private readonly IEntityData _humbleObject;
+        private readonly IEntityHumbleObject _humbleObject;
 
-        public EntityController(IEntityData humbleObject)
+        public EntityController(IEntityHumbleObject humbleObject)
         {
             _humbleObject = humbleObject;
         }
 
         public void LoadTemplate(IEntityTemplate template)
         {
-            Template = template;
+            SetTemplate(template);
+        }
+
+        private void SetTemplate(IEntityTemplate template)
+        {
+            _humbleObject.SetLoadedTemplate(template);
         }
     }
 }

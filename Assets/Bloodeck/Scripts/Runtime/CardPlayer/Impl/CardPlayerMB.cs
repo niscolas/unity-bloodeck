@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+﻿using System;
+using NaughtyAttributes;
 using niscolas.UnityUtils.Core;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
@@ -13,12 +14,18 @@ namespace Bloodeck
         private DeckMB _deck;
 
         [SerializeField]
+        private FloatReference _drawCardIntervalSeconds = new FloatReference(0.1f);
+
+        [SerializeField]
+        private IntReference _initialDrawCardCount = new IntReference(4);
+
+        [Header(HeaderTitles.Debug)]
+        [SerializeField]
         private BoolReference _isMakingMove = new BoolReference(false);
 
         [SerializeField]
         private BoolReference _isDrawingInitialCards = new BoolReference(false);
 
-        [Header(HeaderTitles.Debug)]
         [ReadOnly, SerializeField]
         private CardHandMB _cards = new CardHandMB();
 
@@ -46,6 +53,10 @@ namespace Bloodeck
 
         public bool IsDrawingStartingCards => _isDrawingInitialCards.Value;
 
+        public float DrawCardIntervalSeconds => _drawCardIntervalSeconds.Value;
+
+        public int InitialDrawCardsCount => _initialDrawCardCount.Value;
+
         public int MaxEnergy { get; set; }
 
         [Inject]
@@ -54,9 +65,19 @@ namespace Bloodeck
         [Inject]
         private DeckMBFromTemplateFactory _deckFromTemplateFactory;
 
+        private void Start()
+        {
+            DrawInitialCards();
+        }
+
         public void DrawCard()
         {
             _controller.DrawCard();
+        }
+
+        public void DrawInitialCards()
+        {
+            _controller.DrawInitialCards();
         }
 
         public void UseDeckTemplate(IDeckTemplate deckTemplate)

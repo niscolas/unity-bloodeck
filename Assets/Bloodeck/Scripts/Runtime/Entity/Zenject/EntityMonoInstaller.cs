@@ -33,9 +33,9 @@ namespace Bloodeck
 
             Container
                 .Bind<EntityController>()
-                .FromMethod(injectContext => new EntityController(injectContext.ObjectInstance as IEntity))
+                .FromMethod(injectContext => new EntityController(injectContext.ObjectInstance as IEntityHumbleObject))
                 .AsSingle()
-                .WhenInjectedInto(typeof(IEntity));
+                .WhenInjectedInto(typeof(IEntityHumbleObject));
         }
     }
 }

@@ -8,6 +8,6 @@
 
         IEntity SelfEntity { get; }
 
-        ICardTemplate Template { get; set; }
+        ICardTemplate LoadedTemplate { get; }
     }
 }

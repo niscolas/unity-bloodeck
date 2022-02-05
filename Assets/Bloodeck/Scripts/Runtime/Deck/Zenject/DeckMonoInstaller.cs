@@ -8,17 +8,14 @@ namespace Bloodeck
     {
         public override void InstallBindings()
         {
-            Container
-                .Bind<IDeckShuffler>()
-                .To<DeckShuffler>()
-                .AsSingle();
+            Container.Bind<IDeckShuffler>().To<DeckShuffler>().AsSingle();
 
             Container
                 .Bind<DeckController>()
                 .FromMethod(
-                    context => new DeckController(context.ObjectInstance as IDeckData))
+                    context => new DeckController(context.ObjectInstance as IDeckHumbleObject))
                 .AsSingle()
-                .WhenInjectedInto(typeof(IDeck));
+                .WhenInjectedInto(typeof(IDeckHumbleObject));
         }
     }
 }

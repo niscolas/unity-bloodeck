@@ -8,7 +8,7 @@
 
         public IEntity SelfEntity { get; }
 
-        public ICardTemplate Template { get; set; }
+        public ICardTemplate LoadedTemplate { get; set; }
 
         public DefaultCardData(
             ICardComponents components,
@@ -19,7 +19,7 @@
             Components = components;
             Cost = cost;
             SelfEntity = selfEntity;
-            Template = template;
+            LoadedTemplate = template;
         }
     }
 }

@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: CardRarity-Common
   m_EditorClassIdentifier: 
   _displayName:
-    rid: 2864330220654559234
+    id: 0
   references:
-    version: 2
-    RefIds:
-    - rid: 2864330220654559234
+    version: 1
+    00000000:
       type: {class: SimpleTextField, ns: Lingua, asm: Lingua}
       data:
         _text: Common

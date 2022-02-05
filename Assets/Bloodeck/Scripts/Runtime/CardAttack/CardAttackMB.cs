@@ -25,13 +25,9 @@ namespace Bloodeck
         [Inject]
         private CardAttackController _controller;
 
-        protected override void Awake()
-        {
-            _controller.AttackValueChanged += Controller_OnAttackValueChanged;
-        }
-
         private void Start()
         {
+            _controller.AttackValueChanged += Controller_OnAttackValueChanged;
             LoadTemplate();
         }
 
@@ -59,9 +55,9 @@ namespace Bloodeck
 
         private bool TryGetTemplate(out ICardAttackTemplate cardAttack)
         {
-            return _owner.Template.ComponentTemplates.TryGet(out cardAttack);
+            return _owner.LoadedTemplate.ComponentTemplates.TryGet(out cardAttack);
         }
-        
+
 
         private void LoadTemplate()
         {

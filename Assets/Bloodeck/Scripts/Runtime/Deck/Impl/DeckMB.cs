@@ -1,4 +1,6 @@
-﻿using niscolas.UnityUtils.Core;
+﻿using System;
+using NaughtyAttributes;
+using niscolas.UnityUtils.Core;
 using niscolas.UnityUtils.Core.Extensions;
 using UnityEngine;
 using Zenject;
@@ -6,14 +8,17 @@ using Zenject;
 namespace Bloodeck
 {
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Card Deck")]
-    public class DeckMB : CachedMB, IDeck
+    public class DeckMB : CachedMB, IDeck, IDeckHumbleObject
     {
         [SerializeField]
-        private DeckTemplateSO _template;
+        private DeckTemplateSO _templateToLoad;
 
         [Header(HeaderTitles.Debug)]
-        [SerializeField]
+        [ReadOnly, SerializeField]
         private SerializableCardMBCollection _cards = new SerializableCardMBCollection();
+
+        [ReadOnly, SerializeField]
+        private DeckTemplateSO _loadedTemplate;
 
         public ICardFromTemplateFactory CardFromTemplateFactory => _cardFromTemplateFactory;
 
@@ -22,11 +27,7 @@ namespace Bloodeck
         [Inject]
         public IDeckShuffler Shuffler { get; }
 
-        public IDeckTemplate Template
-        {
-            get => _template;
-            set => _template = value as DeckTemplateSO;
-        }
+        public IDeckTemplate LoadedTemplate => _loadedTemplate;
 
         [Inject]
         private CardMBFromTemplateFactory _cardFromTemplateFactory;
@@ -39,12 +40,10 @@ namespace Bloodeck
 
         private void Start()
         {
-            if (CheckHasLoadedTemplate())
+            if (CheckShouldLoadTemplate())
             {
-                return;
+                LoadTemplateToLoad();
             }
-
-            LoadTemplate(_template);
         }
 
         public ICard DrawFromTop()
@@ -59,14 +58,24 @@ namespace Bloodeck
             ParentAllCardsToSelf();
         }
 
-        private bool CheckHasLoadedTemplate()
+        public void SetHumbleObjectLoadedTemplate(IDeckTemplate template)
         {
-            return !_controller.LoadedTemplate.IsUnityNull();
+            _loadedTemplate = template as DeckTemplateSO;
+        }
+
+        private bool CheckShouldLoadTemplate()
+        {
+            return _templateToLoad && _templateToLoad != _loadedTemplate;
         }
 
         private void DestroyAllCards()
         {
             _cards.Content.ForEach(x => _despawnService.Despawn(x));
+        }
+
+        private void LoadTemplateToLoad()
+        {
+            LoadTemplate(_templateToLoad);
         }
 
         private void ParentAllCardsToSelf()

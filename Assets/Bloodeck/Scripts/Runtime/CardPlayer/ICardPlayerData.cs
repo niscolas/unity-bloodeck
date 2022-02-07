@@ -11,13 +11,15 @@
         ICardPlayerEnvironment Environment { get; }
 
         ICardHand Hand { get; }
-        
+
         bool IsMakingMove { get; }
-        
+
+        bool HasDrawnInitialCards { get; }
+
         bool IsDrawingStartingCards { get; }
-        
+
         float DrawCardIntervalSeconds { get; }
-        
+
         int InitialDrawCardsCount { get; }
     }
 }

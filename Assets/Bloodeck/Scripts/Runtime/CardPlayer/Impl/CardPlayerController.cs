@@ -1,6 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
 using niscolas.UnityUtils.Async;
-using niscolas.UnityUtils.Core.Extensions;
 using UnityEngine;
 
 namespace Bloodeck
@@ -16,6 +15,8 @@ namespace Bloodeck
         public ICardHand Hand => _humbleObject.Hand;
 
         public bool IsMakingMove => _humbleObject.IsMakingMove;
+
+        public bool HasDrawnInitialCards => _humbleObject.HasDrawnInitialCards;
 
         public bool IsDrawingStartingCards => _humbleObject.IsDrawingStartingCards;
 
@@ -37,9 +38,9 @@ namespace Bloodeck
             set => _humbleObject.MaxEnergy = value;
         }
 
-        private readonly ICardPlayerData _humbleObject;
+        private readonly ICardPlayerHumbleObject _humbleObject;
 
-        public CardPlayerController(ICardPlayerData humbleObject)
+        public CardPlayerController(ICardPlayerHumbleObject humbleObject)
         {
             _humbleObject = humbleObject;
         }
@@ -109,6 +110,8 @@ namespace Bloodeck
                 DrawCard();
                 await Await.Seconds(DrawCardIntervalSeconds);
             }
+
+            SetHasDrawnInitialCards(true);
         }
 
         private void OnCardSuccessfullyPlaced(ICard card)
@@ -120,6 +123,11 @@ namespace Bloodeck
         private int ProcessNewEnergyValue(int value)
         {
             return Mathf.Clamp(value, 0, MaxEnergy);
+        }
+
+        private void SetHasDrawnInitialCards(bool value)
+        {
+            _humbleObject.SetHasDrawnInitialCards(value);
         }
     }
 }

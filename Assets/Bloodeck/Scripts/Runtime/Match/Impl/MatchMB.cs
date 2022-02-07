@@ -3,14 +3,7 @@ using UnityEngine;
 
 namespace Bloodeck
 {
-    public enum MatchState
-    {
-        NotStarted,
-        OnGoing,
-        Victory,
-        Defeat
-    }
-
+    [AddComponentMenu(Constants.AddComponentMenuPrefix + "Match")]
     public class MatchMB : CachedMB, IMatch
     {
         [SerializeField]

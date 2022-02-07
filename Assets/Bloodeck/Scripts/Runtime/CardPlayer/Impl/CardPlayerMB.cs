@@ -7,7 +7,7 @@ using Zenject;
 namespace Bloodeck
 {
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Card Player")]
-    public class CardPlayerMB : CachedMB, ICardPlayer
+    public class CardPlayerMB : CachedMB, ICardPlayer, ICardPlayerHumbleObject
     {
         [Inject, SerializeField]
         private DeckMB _deck;
@@ -22,6 +22,9 @@ namespace Bloodeck
         private IntReference _initialDrawCardCount = new IntReference(4);
 
         [Header(HeaderTitles.Debug)]
+        [SerializeField]
+        private BoolReference _hasDrawnInitialCards = new BoolReference(false);
+
         [SerializeField]
         private BoolReference _isMakingMove = new BoolReference(false);
 
@@ -44,11 +47,19 @@ namespace Bloodeck
         [Inject]
         private LazyInject<CardPlayerEnvironmentMB> _environment;
 
+
         public ICardHand Hand => _hand;
 
-        public bool IsMakingMove => _isMakingMove.Value;
+        public bool IsMakingMove
+        {
+            get => _isMakingMove.Value;
+            set => _isMakingMove.Value = value;
+        }
+
 
         public bool IsDrawingStartingCards => _isDrawingInitialCards.Value;
+
+        public bool HasDrawnInitialCards => _hasDrawnInitialCards.Value;
 
         public float DrawCardIntervalSeconds => _drawCardIntervalSeconds.Value;
 
@@ -82,6 +93,11 @@ namespace Bloodeck
         public bool TryPlaceCard(ICard card, ICardSlot slot)
         {
             return _controller.TryPlaceCard(card, slot);
+        }
+
+        public void SetHasDrawnInitialCards(bool value)
+        {
+            _hasDrawnInitialCards.Value = value;
         }
     }
 }

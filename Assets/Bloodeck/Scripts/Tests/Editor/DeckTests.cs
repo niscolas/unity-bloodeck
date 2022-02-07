@@ -18,12 +18,12 @@ namespace Bloodeck.Tests.Editor
         [SetUp]
         public void TestSetup()
         {
-            IDeckData deckDataSub = Substitute.For<IDeckData>();
+            IDeckHumbleObject deckDataSub = Substitute.For<IDeckHumbleObject>();
 
             deckDataSub.Cards.WithListFeaturesOf(_cardList);
 
             Container
-                .Bind<IDeckData>()
+                .Bind<IDeckHumbleObject>()
                 .FromInstance(deckDataSub)
                 .AsSingle()
                 .WhenInjectedInto(typeof(IDeck));

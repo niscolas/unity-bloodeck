@@ -6,7 +6,7 @@ using Zenject;
 namespace Bloodeck
 {
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Deck")]
-    public class DeckMB : CachedMB, IDeck, IDeckHumbleObject
+    public class DeckMB : CachedMB, IDeck, IDeckHumbleObject, ITemplatable<DeckTemplateSO>
     {
         [SerializeField]
         private DeckTemplateSO _templateToLoad;
@@ -25,6 +25,10 @@ namespace Bloodeck
         [Inject]
         public IDeckShuffler Shuffler { get; }
 
+        public DeckTemplateSO TemplateToLoad => _templateToLoad;
+
+        DeckTemplateSO ITemplatable<DeckTemplateSO>.LoadedTemplate => _loadedTemplate;
+
         public IDeckTemplate LoadedTemplate => _loadedTemplate;
 
         [Inject]
@@ -36,12 +40,17 @@ namespace Bloodeck
         [Inject]
         private IDespawnService _despawnService;
 
+        private IDeck _asIDeck;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _asIDeck = this;
+        }
+
         private void Start()
         {
-            if (CheckShouldLoadTemplate())
-            {
-                LoadTemplateToLoad();
-            }
+            SimpleTemplateLoader<DeckTemplateSO>.InitializationLoadTemplate(this);
         }
 
         public ICard DrawFromTop()
@@ -61,19 +70,14 @@ namespace Bloodeck
             _loadedTemplate = template as DeckTemplateSO;
         }
 
-        private bool CheckShouldLoadTemplate()
+        public void LoadTemplate(DeckTemplateSO template)
         {
-            return _templateToLoad && _templateToLoad != _loadedTemplate;
+            _asIDeck.LoadTemplate(template);
         }
 
         private void DestroyAllCards()
         {
             _cards.Content.ForEach(x => _despawnService.Despawn(x));
-        }
-
-        private void LoadTemplateToLoad()
-        {
-            LoadTemplate(_templateToLoad);
         }
 
         private void OnCardCreated(ICard card)

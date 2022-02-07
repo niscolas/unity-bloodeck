@@ -9,31 +9,21 @@ namespace Bloodeck
         public override void InstallBindings()
         {
             Container
-                .Bind<EntityMB>()
-                .FromComponentInHierarchy(false)
-                .AsSingle();
-
-            Container
                 .Bind<EntityComponentMB>()
                 .FromComponentsInHierarchy(null, false)
                 .AsSingle();
 
             Container
-                .Bind<EntityComponentsMB>()
-                .FromComponentInHierarchy(false)
-                .AsSingle();
-
-            Container
                 .Bind<EntityHealthController>()
                 .FromMethod(
-                    context =>
-                        new EntityHealthController(context.ObjectInstance as IEntityHealth))
+                    ctx => new EntityHealthController(ctx.ObjectInstance as IEntityHealth))
                 .AsSingle()
                 .WhenInjectedInto(typeof(IEntityHealth));
 
             Container
                 .Bind<EntityController>()
-                .FromMethod(injectContext => new EntityController(injectContext.ObjectInstance as IEntityHumbleObject))
+                .FromMethod(
+                    ctx => new EntityController(ctx.ObjectInstance as IEntityHumbleObject))
                 .AsSingle()
                 .WhenInjectedInto(typeof(IEntityHumbleObject));
         }

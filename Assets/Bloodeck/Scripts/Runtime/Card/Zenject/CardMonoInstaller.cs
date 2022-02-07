@@ -8,11 +8,7 @@ namespace Bloodeck
     {
         public override void InstallBindings()
         {
-            Container.Bind<CardMB>().FromComponentInHierarchy(false).AsSingle();
-
             Container.Bind<CardComponentMB>().FromComponentsInHierarchy(null, false).AsSingle();
-
-            Container.Bind<CardComponentsMB>().FromComponentInHierarchy(false).AsSingle();
 
             Container.Bind<CardAttackController>()
                 .FromMethod(

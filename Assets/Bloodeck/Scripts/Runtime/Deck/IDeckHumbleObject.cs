@@ -1,7 +1,4 @@
 ﻿namespace Bloodeck
 {
-    public interface IDeckHumbleObject : IDeckData
-    {
-        void SetHumbleObjectLoadedTemplate(IDeckTemplate template);
-    }
+    public interface IDeckHumbleObject : IDeckData, ITemplateHumbleObject<IDeckTemplate> { }
 }

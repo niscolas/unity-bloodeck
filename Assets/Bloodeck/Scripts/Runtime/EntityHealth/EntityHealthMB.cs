@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Bloodeck
 {
-    [AddComponentMenu(Constants.AddComponentMenuPrefix + "Entity Health")]
+    [AddComponentMenu(Constants.AddComponentMenuPrefix + DisplayName)]
     public class EntityHealthMB : EntityComponentMB, IEntityHealth
     {
         [Inject, SerializeField]
@@ -46,6 +46,8 @@ namespace Bloodeck
             get => _health.Min;
             set => _health.Min = value;
         }
+
+        public const string DisplayName = "Entity Health";
 
         [Inject]
         private EntityHealthController _controller;

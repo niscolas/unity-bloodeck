@@ -1,5 +1,4 @@
-﻿using niscolas.UnityUtils.Core.Extensions;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace Bloodeck
@@ -17,17 +16,7 @@ namespace Bloodeck
                             ((CardPlayerEnvironmentMB) context.ObjectInstance)
                             .GetComponentsInChildren<CardSlotMB>()))
                 .AsSingle()
-                .When(context =>
-                {
-                    if (context.ObjectInstance is CardPlayerEnvironmentMB cardPlayerEnvironment)
-                    {
-                        return cardPlayerEnvironment.Slots.IsNullOrEmpty();
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                });
+                .WhenInjectedInto<CardPlayerEnvironmentMB>();
         }
     }
 }

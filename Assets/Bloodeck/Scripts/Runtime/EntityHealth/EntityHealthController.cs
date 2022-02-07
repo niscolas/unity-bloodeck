@@ -38,10 +38,10 @@ namespace Bloodeck
 
         public IEntity Owner => _humbleObject.Owner;
 
+        public const string DisplayName = EntityHealthMB.DisplayName + " Controller";
+
         private readonly IEntityHealth _asIEntityHealth;
-
         private readonly IHealth _asIHealth;
-
         private readonly IEntityHealthData _humbleObject;
 
         [Inject]

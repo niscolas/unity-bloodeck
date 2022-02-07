@@ -39,8 +39,6 @@ namespace Bloodeck
             set => _deck = value as DeckMB;
         }
 
-        public IDeckFromTemplateFactory DeckFromTemplateFactory => _deckFromTemplateFactory;
-
         public int Energy { get; set; }
 
         [Inject]
@@ -60,9 +58,6 @@ namespace Bloodeck
 
         [Inject]
         private CardPlayerController _controller;
-
-        [Inject]
-        private DeckMBFromTemplateFactory _deckFromTemplateFactory;
 
         private void Start()
         {

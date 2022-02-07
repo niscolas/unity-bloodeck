@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using niscolas.UnityUtils.Core;
+using niscolas.UnityUtils.Core.Extensions;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
@@ -24,15 +25,27 @@ namespace Bloodeck
         public static readonly TCollection Items = new TCollection();
         public static readonly TSelfCollection All = new TSelfCollection();
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void RuntimeInit()
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        private static void SceneInit()
         {
             Items.Clear();
             All.Clear();
+            
+            TSelf[] all = FindObjectsOfType<TSelf>();
+            all.ForEach(x =>
+            {
+                Items.Add(x.Item);
+                All.Add(x);
+            });
         }
 
         private void OnEnable()
         {
+            if (All.Contains(this))
+            {
+                return;
+            }
+
             Items.Add(_item);
             All.Add((TSelf) this);
         }

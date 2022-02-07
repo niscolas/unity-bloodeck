@@ -28,7 +28,7 @@ namespace Bloodeck
 
         private void SetTemplate(IEntityTemplate template)
         {
-            _humbleObject.SetLoadedTemplate(template);
+            _humbleObject.SetHumbleObjectLoadedTemplate(template);
         }
     }
 }

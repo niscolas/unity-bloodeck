@@ -1,6 +1,4 @@
-﻿using System;
-using Creatable;
-using NaughtyAttributes;
+﻿using NaughtyAttributes;
 using niscolas.UnityUtils.Core;
 using UnityEngine;
 using Zenject;
@@ -8,17 +6,17 @@ using Zenject;
 namespace Bloodeck
 {
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Entity")]
-    public class EntityMB : CachedMB, IEntity, IEntityHumbleObject
+    public class EntityMB : CachedMB, IEntity, IEntityHumbleObject, ITemplatable<IEntityTemplate>
     {
-        [Expandable, Creatable, SerializeField]
-        private EntityTemplateSO _templateToLoad;
+        [SerializeReference]
+        private IEntityTemplate _templateToLoad;
 
         [Inject, SerializeField]
         private EntityComponentsMB _components;
 
         [Header(HeaderTitles.Debug)]
-        [ReadOnly, SerializeField]
-        private EntityTemplateSO _loadedTemplate;
+        [ReadOnly, SerializeReference]
+        private IEntityTemplate _loadedTemplate;
 
         public IEntityComponents Components => _components;
 
@@ -28,19 +26,16 @@ namespace Bloodeck
 
         public string Name => _loadedTemplate.Name;
 
-        public IEntityTemplate LoadedTemplate => _loadedTemplate;
+        public IEntityTemplate TemplateToLoad => _templateToLoad;
 
-        public EntityTemplateSO TemplateSO => _loadedTemplate;
+        public IEntityTemplate LoadedTemplate => _loadedTemplate;
 
         [Inject]
         private EntityController _controller;
 
         private void Start()
         {
-            if (CheckShouldLoadTemplate())
-            {
-                LoadTemplateToLoad();
-            }
+            SimpleTemplateLoader<IEntityTemplate>.InitializationLoadTemplate(this);
         }
 
         public void LoadTemplate(IEntityTemplate template)
@@ -48,19 +43,9 @@ namespace Bloodeck
             _controller.LoadTemplate(template);
         }
 
-        public void SetLoadedTemplate(IEntityTemplate template)
+        public void SetHumbleObjectLoadedTemplate(IEntityTemplate template)
         {
-            _loadedTemplate = template as EntityTemplateSO;
-        }
-
-        private void LoadTemplateToLoad()
-        {
-            LoadTemplate(_templateToLoad);
-        }
-
-        private bool CheckShouldLoadTemplate()
-        {
-            return _templateToLoad && _templateToLoad != _loadedTemplate;
+            _loadedTemplate = template;
         }
     }
 }

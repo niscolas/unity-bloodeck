@@ -20,7 +20,7 @@ namespace Bloodeck.View
 
         public void UpdateIcon()
         {
-            _spriteRenderer.sprite = _entity.TemplateSO.Icon;
+            _spriteRenderer.sprite = _entity.LoadedTemplate.Icon;
         }
     }
 }

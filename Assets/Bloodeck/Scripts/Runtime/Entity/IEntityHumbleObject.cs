@@ -1,7 +1,4 @@
 ﻿namespace Bloodeck
 {
-    public interface IEntityHumbleObject : IEntityData
-    {
-        void SetLoadedTemplate(IEntityTemplate template);
-    }
+    public interface IEntityHumbleObject : IEntityData, ITemplateHumbleObject<IEntityTemplate> { }
 }

@@ -9,7 +9,7 @@ using Zenject;
 namespace Bloodeck
 {
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Card")]
-    public class CardMB : CachedMB, ICard, ICardHumbleObject
+    public class CardMB : CachedMB, ICard, ICardHumbleObject, ITemplatable<CardTemplateSO>
     {
         [Expandable, Creatable, SerializeField]
         private CardTemplateSO _templateToLoad;
@@ -40,17 +40,24 @@ namespace Bloodeck
 
         public ICardTemplate LoadedTemplate => _loadedTemplate;
 
-        public CardTemplateSO TemplateSO => _loadedTemplate;
+        public CardTemplateSO TemplateToLoad => _templateToLoad;
+
+        CardTemplateSO ITemplatable<CardTemplateSO>.LoadedTemplate => _loadedTemplate;
 
         [Inject]
         private CardController _controller;
 
+        private ICard _asICard;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _asICard = this;
+        }
+
         private void Start()
         {
-            if (CheckShouldLoadTemplate())
-            {
-                LoadTemplateToLoad();
-            }
+            SimpleTemplateLoader<CardTemplateSO>.InitializationLoadTemplate(this);
         }
 
         public void LoadTemplate(ICardTemplate template)
@@ -64,14 +71,9 @@ namespace Bloodeck
             _loadedTemplate = template as CardTemplateSO;
         }
 
-        private bool CheckShouldLoadTemplate()
+        public void LoadTemplate(CardTemplateSO template)
         {
-            return _templateToLoad && _templateToLoad != _loadedTemplate;
-        }
-
-        private void LoadTemplateToLoad()
-        {
-            LoadTemplate(_templateToLoad);
+            _asICard.LoadTemplate(template);
         }
 
         private void UpdateCost()

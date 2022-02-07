@@ -1,5 +1,4 @@
 ﻿using Creatable;
-using NaughtyAttributes;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
@@ -11,10 +10,10 @@ namespace Bloodeck
         order = Constants.CreateAssetMenuOrder)]
     public class CardTemplateSO : ScriptableObject, ICardTemplate
     {
-        [Expandable, Creatable, SerializeField]
-        private EntityTemplateSO _selfEntityTemplate;
+        [SerializeReference, SubclassSelector]
+        private IEntityTemplate _selfEntityTemplate;
 
-        [Expandable, Creatable, SerializeField]
+        [Creatable, SerializeField]
         private CardRaritySO _rarity;
 
         [SerializeField]
@@ -31,8 +30,6 @@ namespace Bloodeck
         public int Cost => _cost.Value;
 
         public ICardEffectMap Effects => _effects;
-
-        public EntityTemplateSO SelfEntityTemplateSO => _selfEntityTemplate;
 
         public IEntityTemplate SelfEntityTemplate => _selfEntityTemplate;
     }

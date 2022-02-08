@@ -27,7 +27,20 @@ namespace Bloodeck
 
         public Sprite Icon => _icon;
 
-        public string Name => _name.Get();
+        public string Name
+        {
+            get
+            {
+                string name = _name.Get();
+
+                if (string.IsNullOrEmpty(name))
+                {
+                    return name;
+                }
+
+                return _name.Get();
+            }
+        }
 
         public string Description => _description.Get();
     }

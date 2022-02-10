@@ -9,6 +9,8 @@ namespace Bloodeck
         public override void InstallBindings()
         {
             Container.Bind<CardComponentMB>().FromComponentsInHierarchy(null, false).AsSingle();
+            
+            Container.Bind<CardGameEnvironmentMB>().FromInstance(FindObjectOfType<CardGameEnvironmentMB>());
 
             Container.Bind<CardAttackController>()
                 .FromMethod(

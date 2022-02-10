@@ -47,6 +47,11 @@ namespace Bloodeck
 
         public void DrawCard()
         {
+            if (Deck.Cards.Count == 0)
+            {
+                return;
+            }
+
             ICard topCard = Deck.DrawFromTop();
             Hand.Add(topCard);
         }

@@ -23,6 +23,8 @@ namespace Bloodeck
 
         public ICardSlotRestrictions Restrictions => _restrictions;
 
+        public bool HasCard => _card;
+
         [Inject]
         private CardSlotController _controller;
 

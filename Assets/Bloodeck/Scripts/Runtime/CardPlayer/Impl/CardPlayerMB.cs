@@ -31,9 +31,6 @@ namespace Bloodeck
         [SerializeField]
         private BoolReference _isDrawingInitialCards = new BoolReference(false);
 
-        [ShowNativeProperty]
-        private string _environmentDebug => _environment.Value ? _environment.Value.ToString() : "null";
-
         public ICardPlayerEnvironment Environment => _environment.Value;
 
         public IDeck Deck

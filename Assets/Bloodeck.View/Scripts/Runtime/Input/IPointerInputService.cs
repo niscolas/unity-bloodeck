@@ -2,7 +2,7 @@
 
 namespace Bloodeck.View
 {
-    public interface IMouseInputService
+    public interface IPointerInputService
     {
         float PositionX { get; }
         

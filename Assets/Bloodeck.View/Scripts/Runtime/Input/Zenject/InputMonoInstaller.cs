@@ -8,7 +8,7 @@ namespace Bloodeck.View
     {
         public override void InstallBindings()
         {
-            Container.Bind<IMouseInputService>().To<MouseInputService>().AsSingle();
+            Container.Bind<IPointerInputService>().To<PointerInputService>().AsSingle();
         }
     }
 }

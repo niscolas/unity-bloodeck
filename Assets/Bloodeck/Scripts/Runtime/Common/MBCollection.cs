@@ -7,6 +7,10 @@ namespace Bloodeck
     [Serializable]
     public class MBCollection<TBase, TChild> : ParentCollection<TBase, TChild>, ICollection<TChild> where TChild : TBase
     {
+        public MBCollection() { }
+        public MBCollection(IEnumerable<TChild> content) : base(content) { }
+        public MBCollection(params TChild[] content) : base(content) { }
+
         IEnumerator<TChild> IEnumerable<TChild>.GetEnumerator()
         {
             return _content.GetEnumerator();

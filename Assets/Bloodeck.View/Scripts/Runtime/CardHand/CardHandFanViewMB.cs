@@ -1,4 +1,6 @@
-﻿using niscolas.UnityUtils.Core;
+﻿using System;
+using niscolas.UnityUtils.Core;
+using niscolas.UnityUtils.Core.Extensions;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using Zenject;
@@ -8,22 +10,10 @@ namespace Bloodeck.View
     [AddComponentMenu(Constants.AddComponentMenuPrefix + DisplayName)]
     public class CardHandFanViewMB : CachedMB
     {
+        [Header(HeaderTitles.Settings)]
         [SerializeField]
-        private CardHandMB _cardHand;
+        private FloatReference _hiddenPositionOffset = new FloatReference(100f);
 
-        [Inject, SerializeField]
-        private MatchMB _match;
-
-        [Inject, SerializeField]
-        private CardPlayerMB _player;
-
-        [Inject, SerializeField]
-        private CardViewerMB _cardViewer;
-
-        [Inject, SerializeField]
-        private CardDraggerMB _cardDragger;
-
-        [Header("[Settings]")]
         [SerializeField]
         private FloatReference _speed = new FloatReference(13f);
 
@@ -42,18 +32,27 @@ namespace Bloodeck.View
         [SerializeField]
         private Vector3Reference _initialPosition = new Vector3Reference(Vector3.zero);
 
-        [Header("[Colors]")]
         [SerializeField]
         private Color _selectedColor;
 
         [SerializeField]
         private Color _notSelectedColor;
 
-        [SerializeField]
-        public bool isSetting = false;
+        [Header(HeaderTitles.Injections)]
+        [Inject, SerializeField]
+        private CardHandMB _cardHand;
 
-        [HideInInspector]
-        public int selectedIndex;
+        [Inject, SerializeField]
+        private MatchMB _match;
+
+        [Inject, SerializeField]
+        private CardPlayerMB _player;
+
+        [Inject, SerializeField]
+        private CardViewerMB _cardViewer;
+
+        [Inject, SerializeField]
+        private CardDraggerMB _cardDragger;
 
         private Vector3 InitialPosition => _initialPosition.Value;
 
@@ -64,6 +63,9 @@ namespace Bloodeck.View
         [Inject]
         private IUnityTimeService _timeService;
 
+        private Vector3 _hiddenPosition;
+        private int _selectedIndex;
+
         [Inject]
         private void Init(CardHandMB cardHand)
         {
@@ -72,10 +74,30 @@ namespace Bloodeck.View
             _cardHand.Removed += CardHand_OnRemoved;
         }
 
+        private void Start()
+        {
+            _initialPosition.Value = _transform.position;
+            _hiddenPosition = _transform.TransformPoint(Vector3.down * _hiddenPositionOffset.Value);
+        }
+
         private void Update()
         {
+            Legacy_Update();
+        }
+
+        private void Legacy_Update()
+        {
+            for (int i = 0; i < _cardHand.Count; i++)
+            {
+                DeployableCardMB deployableCard = _dataMap[_cardHand[i]].DeployableCard;
+                if (deployableCard.IsDeployed || deployableCard.IsDeploying)
+                {
+                    _cardHand.Remove(_cardHand[i]);
+                }
+            }
+
             // Limit the selection:
-            selectedIndex = Mathf.Clamp(selectedIndex, 0, _cardHand.Count - 1);
+            _selectedIndex = Mathf.Clamp(_selectedIndex, 0, _cardHand.Count - 1);
 
             if (_cardHand.Count > 0)
             {
@@ -90,6 +112,12 @@ namespace Bloodeck.View
                 for (int i = 0; i < _cardHand.Count; i++)
                 {
                     CardMB currentCard = _dataMap[_cardHand[i]].CardMB;
+                    DraggableCardMB draggableCard = _dataMap[_cardHand[i]].DraggableCard;
+                    if (draggableCard.IsBeingDragged)
+                    {
+                        continue;
+                    }
+
                     HoverableCardMB hoverableCard = _dataMap[_cardHand[i]].HoverableCard;
                     EntityGraphicMB cardFrameImageView = _dataMap[_cardHand[i]].Graphic;
                     Transform cardTransform = currentCard.transform;
@@ -115,7 +143,7 @@ namespace Bloodeck.View
                         nudgeThisCard *= _yFactor + (i == 0 || i == _cardHand.Count - 1 ? _yFactor * 0.5f : 0);
 
                         cardTransform.localPosition = Vector3.Lerp(
-                            currentCard.transform.localPosition,
+                            cardTransform.localPosition,
                             new Vector3(
                                 (curIndPos * (i + 1)) - ((curIndPos / 2) * (_cardHand.Count + 1)),
                                 (hoverableCard.IsBeingHovered && !_cardViewer.IsViewing
@@ -125,8 +153,10 @@ namespace Bloodeck.View
                     }
                     else
                     {
-                        cardTransform.localPosition = Vector3.Lerp(cardTransform.localPosition,
-                            new Vector3(0, _yFactor), _timeService.DeltaTime * _speed);
+                        cardTransform.localPosition = Vector3.Lerp(
+                            cardTransform.localPosition,
+                            new Vector3(0, _yFactor),
+                            _timeService.DeltaTime * _speed);
                     }
 
 
@@ -145,44 +175,37 @@ namespace Bloodeck.View
                     }
 
                     // Card's Coloring:
-                    cardFrameImageView.Color = Color.Lerp(cardFrameImageView.Color,
+                    cardFrameImageView.Color = Color.Lerp(
+                        cardFrameImageView.Color,
                         hoverableCard.IsBeingHovered && !_cardViewer.IsViewing ? _selectedColor : _notSelectedColor,
                         Time.deltaTime * _speed);
 
-
-                    // Tell all the cards if they are currently selected:
-                    // currentCard.selected = i == selectedIndex;
-
-                    // Others:
-                    cardTransform.SetParent(transform);
+                    ScaleCard(i);
                 }
-
-                AllCardsScaling();
             }
 
-            // States:
-            if (!isSetting && _initialPosition != new Vector3())
+            if (_match.State != MatchState.NotStarted)
             {
-                if (_match.State != MatchState.NotStarted)
+                if (CheckIsLinkedPlayerTurn() || !_player.IsDrawingStartingCards)
                 {
-                    if (CheckIsLinkedPlayerTurn() || !_player.IsDrawingStartingCards)
-                    {
-                        transform.position = Vector3.Lerp(transform.position,
-                            _player.IsMakingMove || _cardDragger.IsDragging
-                                ? new Vector3(InitialPosition.x, InitialPosition.y - 100, InitialPosition.z)
-                                : InitialPosition, Time.deltaTime * 10);
-                    }
-                    else
-                    {
-                        transform.position = Vector3.Lerp(transform.position,
-                            new Vector3(InitialPosition.x, InitialPosition.y - 100, InitialPosition.z),
-                            _timeService.DeltaTime * 10);
-                    }
+                    _transform.position = Vector3.Lerp(
+                        _transform.position,
+                        _player.IsMakingMove || _cardDragger.IsDragging
+                            ? _hiddenPosition
+                            : InitialPosition,
+                        _timeService.DeltaTime * 10);
                 }
                 else
                 {
-                    transform.position = new Vector3(InitialPosition.x, InitialPosition.y - 100, InitialPosition.z);
+                    _transform.position = Vector3.Lerp(
+                        _transform.position,
+                        _hiddenPosition,
+                        _timeService.DeltaTime * 10);
                 }
+            }
+            else
+            {
+                _transform.position = _hiddenPosition;
             }
         }
 
@@ -192,29 +215,16 @@ namespace Bloodeck.View
             _cardHand.Removed -= CardHand_OnRemoved;
         }
 
-        private void OnDrawGizmos()
+        private void ScaleCard(int i)
         {
-            Gizmos.color = Color.cyan;
+            Transform cardTransform = _dataMap[_cardHand[i]].CardMB.transform;
+            HoverableCardMB hoverableCard = _dataMap[_cardHand[i]].HoverableCard;
 
-            if (isSetting && _initialPosition != new Vector3())
-            {
-                Gizmos.DrawLine(transform.position, _initialPosition);
-            }
-        }
-
-        private void AllCardsScaling()
-        {
-            for (int i = 0; i < _cardHand.Count; i++)
-            {
-                Transform cardTransform = _dataMap[_cardHand[i]].CardMB.transform;
-                HoverableCardMB hoverableCard = _dataMap[_cardHand[i]].HoverableCard;
-
-                cardTransform.localScale = Vector3.Lerp(
-                    cardTransform.localScale,
-                    hoverableCard.IsBeingHovered && !_cardViewer.IsViewing
-                        ? new Vector3(0.8f, 0.8f, 0.8f)
-                        : new Vector3(0.7f, 0.7f, 0.7f), Time.deltaTime * _speed);
-            }
+            cardTransform.localScale = Vector3.Lerp(
+                cardTransform.localScale,
+                hoverableCard.IsBeingHovered && !_cardViewer.IsViewing
+                    ? new Vector3(0.8f, 0.8f, 0.8f)
+                    : new Vector3(0.7f, 0.7f, 0.7f), Time.deltaTime * _speed);
         }
 
         private void CardHand_OnAdded(ICard card)
@@ -223,10 +233,13 @@ namespace Bloodeck.View
             _dataMap.Add(card, new CardHandFanData
             {
                 CardMB = cardMB,
+                DeployableCard = cardMB.GetComponentInChildren<DeployableCardMB>(),
+                DraggableCard = cardMB.GetComponentInChildren<DraggableCardMB>(),
                 Graphic = cardMB.GetComponentInChildren<EntityIconImageViewMB>(),
                 HoverableCard = cardMB.GetComponentInChildren<HoverableCardMB>()
             });
 
+            cardMB.transform.SetParent(_transform);
             cardMB.gameObject.SetActive(true);
         }
 
@@ -239,26 +252,5 @@ namespace Bloodeck.View
         {
             return (CardPlayerMB) _match.CurrentTurn.Player == _player;
         }
-
-        // public void Deselect()
-        // {
-        //     selectedIndex = -1;
-        // }
-
-        // public void RemoveCard(V_Card card)
-        // {
-        //     _cardHand.Remove(card);
-        // }
-        //
-        // public void AddCardNew(V_Card card)
-        // {
-        //     V_Card c = Instantiate(card, transform) as V_Card;
-        //     _cardHand.Add(c);
-        // }
-        //
-        // public void AddCardExisting(V_Card card)
-        // {
-        //     _cardHand.Add(card);
-        // }
     }
 }

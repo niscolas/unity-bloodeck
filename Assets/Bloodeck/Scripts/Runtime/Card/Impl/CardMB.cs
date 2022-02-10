@@ -18,7 +18,7 @@ namespace Bloodeck
         [SerializeField]
         private FloatReference _destroyDelaySeconds = new FloatReference(0.5f);
 
-        [Header("[Injections]")]
+        [Header(HeaderTitles.Injections)]
         [Inject, SerializeField]
         private EntityMB _entity;
 

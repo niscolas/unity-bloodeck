@@ -1,16 +1,12 @@
-﻿using niscolas.UnityUtils.Core;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
 namespace Bloodeck.View
 {
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Card Slot Availability (Image) View")]
-    public class CardSlotAvailabilityImageViewMB : CachedMB
+    public class CardSlotAvailabilityImageViewMB : CardSlotAvailabilityViewMB
     {
-        [SerializeField]
-        private CardSlotMB _cardSlot;
-
         [SerializeField]
         private Image _image;
 
@@ -20,26 +16,31 @@ namespace Bloodeck.View
         [SerializeField, ColorUsage(true, true)]
         private Color _unavailableColor;
 
+        [Header(HeaderTitles.Injections)]
+        [Inject, SerializeField]
+        private CardSlotMB _selfCardSlot;
+
         [Header(HeaderTitles.Debug)]
         [SerializeField, ColorUsage(true, true)]
         private Color _initialColor;
 
         [Inject]
-        private HeldCard _heldCard;
+        private CardDraggerMB _cardDragger;
 
         private void Start()
         {
             _initialColor = _image.color;
         }
 
-        private void OnMouseEnter()
+        public override void Check()
         {
-            if (!enabled)
+            if (_selfCardSlot.HasCard)
             {
+                ResetState();
                 return;
             }
 
-            if (_cardSlot.CanPlaceCard(_heldCard.Value))
+            if (_selfCardSlot.CanPlaceCard(_cardDragger.DraggedCard))
             {
                 UseAvailableColor();
             }
@@ -49,14 +50,9 @@ namespace Bloodeck.View
             }
         }
 
-        private void OnMouseExit()
+        public override void ResetState()
         {
-            if (!enabled)
-            {
-                return;
-            }
-
-            ResetToInitialColor();
+            _image.color = _initialColor;
         }
 
         private void UseAvailableColor()
@@ -67,11 +63,6 @@ namespace Bloodeck.View
         private void UseUnavailableColor()
         {
             _image.color = _unavailableColor;
-        }
-
-        private void ResetToInitialColor()
-        {
-            _image.color = _initialColor;
         }
     }
 }

@@ -12,7 +12,20 @@ namespace Bloodeck.View
         private FloatReference _dragSpeed = new FloatReference(10f);
 
         [SerializeField]
+        private Vector3Reference _dragPositionOffset = new Vector3Reference(new Vector3(0, 0, -2));
+
+        [SerializeField]
         private BoolReference _isBeingDragged = new BoolReference();
+
+        [Header(HeaderTitles.Injections)]
+        [Inject, SerializeField]
+        private CardMB _selfCard;
+
+        [Inject, SerializeField]
+        private CardDeployerMB _cardDeployer;
+
+        [Inject, SerializeField]
+        private CardGameEnvironmentMB _cardGameEnvironment;
 
         public event Action<bool> DragStateChanged;
 
@@ -27,12 +40,26 @@ namespace Bloodeck.View
         }
 
         [Inject]
+        private CardDraggerMB _cardDragger;
+
+        [Inject]
         private IUnityTimeService _timeService;
 
         [Inject]
-        private IMouseInputService _mouseInputService;
+        private IPointerInputService _pointerInputService;
 
-        public void Drag()
+        private void Update()
+        {
+            Drag();
+        }
+
+        public void BeginDrag()
+        {
+            _cardDragger.BeginDrag(_selfCard);
+            IsBeingDragged = true;
+        }
+
+        private void Drag()
         {
             if (IsBeingDragged)
             {
@@ -40,15 +67,28 @@ namespace Bloodeck.View
             }
         }
 
-        public void DragRaw()
+        private void DragRaw()
         {
             _transform.position = Vector3.Lerp(
                 _transform.position,
-                _mouseInputService.Position,
+                GetDragPosition(),
                 _timeService.DeltaTime * _dragSpeed.Value);
 
             // _transform.SetParent(GameReference.tableObject, false);
-            // _transform.rotation = GameReference.tableObject.rotation;
+            _transform.rotation = _cardGameEnvironment.transform.rotation;
+        }
+
+        private Vector3 GetDragPosition()
+        {
+            Vector3 result = _cardDeployer.GetPositionOnTable();
+            result += _transform.TransformVector(_dragPositionOffset);
+            return result;
+        }
+
+        public void EndDrag()
+        {
+            _cardDragger.EndDrag();
+            IsBeingDragged = false;
         }
     }
 }

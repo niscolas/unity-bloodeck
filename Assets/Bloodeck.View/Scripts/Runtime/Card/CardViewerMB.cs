@@ -48,7 +48,7 @@ namespace Bloodeck.View
         private IDespawnService _despawnService;
 
         [Inject]
-        private IMouseInputService _mouseInputService;
+        private IPointerInputService _pointerInputService;
 
         private CardMB _currentViewing; // Temporary duplicate of "cardToView" for viewing...
         private float _rotationX = 0;
@@ -58,11 +58,11 @@ namespace Bloodeck.View
 
         private void Update()
         {
-            _rotationX -= _mouseInputService.PositionX * 4;
+            _rotationX -= _pointerInputService.PositionX * 4;
             _rotationX = Mathf.Clamp(_rotationX, -_limit, _limit);
             _rX = Mathf.Lerp(_rX, _rotationX, Time.deltaTime * _speed); // Final rotation for y
 
-            _rotationY += _mouseInputService.PositionY * 4;
+            _rotationY += _pointerInputService.PositionY * 4;
             _rotationY = Mathf.Clamp(_rotationY, -_limit, _limit);
             _rY = Mathf.Lerp(_rY, _rotationY, Time.deltaTime * _speed); // Final rotation for x
 

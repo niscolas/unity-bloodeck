@@ -21,5 +21,7 @@
         float DrawCardIntervalSeconds { get; }
 
         int InitialDrawCardsCount { get; }
+        
+        int CardDrawCost { get; }
     }
 }

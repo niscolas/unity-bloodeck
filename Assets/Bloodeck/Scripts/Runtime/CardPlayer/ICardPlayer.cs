@@ -2,7 +2,8 @@
 {
     public interface ICardPlayer : ICardPlayerData
     {
-        void DrawCard();
+        void DrawCard(bool useEnergy = true);
+        void DrawCardRaw(bool useEnergy = true);
 
         void DrawInitialCards();
 

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Bloodeck
+﻿namespace Bloodeck
 {
-    public interface ICardEffectMap : IDictionary<ICardEffectTrigger, ICardEffects> { }
+    public interface ICardEffectMap
+    {
+        bool TryGetValue(ICardEffectTrigger key, out ICardEffects value);
+        void Trigger(ICardEffectTrigger trigger, IEntities rawTargets, ICard card);
+    }
 }

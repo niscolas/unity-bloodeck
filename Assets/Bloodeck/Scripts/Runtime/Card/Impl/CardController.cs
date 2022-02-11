@@ -16,6 +16,14 @@ namespace Bloodeck
 
         public IEntity SelfEntity => _humbleObject.SelfEntity;
 
+        public ICardEffectMap Effects => _humbleObject.Effects;
+
+        public ICardPlayer Owner
+        {
+            get => _humbleObject.Owner;
+            set => _humbleObject.Owner = value;
+        }
+
         public ICardTemplate LoadedTemplate => _humbleObject.LoadedTemplate;
 
         private readonly ICardHumbleObject _humbleObject;

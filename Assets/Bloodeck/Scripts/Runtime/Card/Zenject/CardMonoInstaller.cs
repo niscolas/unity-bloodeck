@@ -8,7 +8,7 @@ namespace Bloodeck
     {
         public override void InstallBindings()
         {
-            Container.Bind<CardComponentMB>().FromComponentsInHierarchy(null, false).AsSingle();
+            Container.Bind<CardComponentMB>().FromComponentsInHierarchy().AsSingle();
             
             Container.Bind<CardGameEnvironmentMB>().FromInstance(FindObjectOfType<CardGameEnvironmentMB>());
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Lingua;
+using Lingua.Extras;
 using NaughtyAttributes;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
@@ -17,10 +18,10 @@ namespace Bloodeck
         [Inject(Id = ZenjectIds.TextFieldId), SerializeReference, SubclassSelector]
         private INoContextText _name;
 
-        [Inject, SerializeReference, SubclassSelector]
+        [Inject(Id = ZenjectIds.TextBoxId), SerializeReference, SubclassSelector]
         private INoContextText _description;
 
-        [SerializeReference, SubclassSelector]
+        [Inject, SerializeReference, SubclassSelector]
         private IEntityComponentTemplates _components;
 
         public IEntityComponentTemplates ComponentTemplates => _components;

@@ -13,5 +13,7 @@ namespace Bloodeck
         string Name { get; }
 
         IEntityTemplate LoadedTemplate { get; }
+        
+        ITeam Team { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using niscolas.UnityUtils.Async;
+using niscolas.UnityUtils.Core.Extensions;
 using UnityEngine;
 
 namespace Bloodeck
@@ -24,6 +25,8 @@ namespace Bloodeck
 
         public int InitialDrawCardsCount => _humbleObject.InitialDrawCardsCount;
 
+        public int CardDrawCost => _humbleObject.CardDrawCost;
+
         public int Energy
         {
             get => _humbleObject.Energy;
@@ -45,15 +48,24 @@ namespace Bloodeck
             _humbleObject = humbleObject;
         }
 
-        public void DrawCard()
+        public void DrawCard(bool useEnergy = true)
         {
-            if (Deck.Cards.Count == 0)
+            if (CheckCanDrawCard())
             {
                 return;
             }
 
+            DrawCardRaw(useEnergy);
+        }
+
+        public void DrawCardRaw(bool useEnergy = true)
+        {
             ICard topCard = Deck.DrawFromTop();
             Hand.Add(topCard);
+            if (useEnergy)
+            {
+                DecreaseEnergyByCardDrawCost();
+            }
         }
 
         public void DrawInitialCards()
@@ -72,7 +84,7 @@ namespace Bloodeck
 
             if (wasAbleToPlaceCard)
             {
-                OnCardSuccessfullyPlaced(card);
+                OnCardDeployed(card);
             }
 
             return wasAbleToPlaceCard;
@@ -81,6 +93,24 @@ namespace Bloodeck
         public void UseDeckTemplate(IDeckTemplate deckTemplate)
         {
             Deck.LoadTemplate(deckTemplate);
+            SetDeckCardsOwner();
+        }
+
+        private bool CheckCanDrawCard()
+        {
+            return Energy < CardDrawCost ||
+                   Deck.Cards.CheckIsEmpty() ||
+                   Hand.CheckIsFull();
+        }
+
+        private void DecreaseEnergyByCardDrawCost()
+        {
+            Energy -= CardDrawCost;
+        }
+
+        private void SetDeckCardsOwner()
+        {
+            Deck.Cards.ForEach(x => x.Owner = (ICardPlayer) _humbleObject);
         }
 
         private bool CheckCanPlaceCardOnSlot(ICard card, ICardSlot slot)
@@ -112,14 +142,14 @@ namespace Bloodeck
         {
             for (int i = 0; i < InitialDrawCardsCount; i++)
             {
-                DrawCard();
+                DrawCard(false);
                 await Await.Seconds(DrawCardIntervalSeconds);
             }
 
             SetHasDrawnInitialCards(true);
         }
 
-        private void OnCardSuccessfullyPlaced(ICard card)
+        private void OnCardDeployed(ICard card)
         {
             Energy -= card.Cost;
             Hand.Remove(card);

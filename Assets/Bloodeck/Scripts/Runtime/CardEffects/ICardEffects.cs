@@ -2,5 +2,9 @@
 
 namespace Bloodeck
 {
-    public interface ICardEffects : ICollection<ICardEffect> { }
+    public interface ICardEffects : ICollection<ICardEffectSystem>
+    {
+        IEntityFilters TargetFilters { get; }
+        void Trigger(IEntities rawTargets, ICard card);
+    }
 }

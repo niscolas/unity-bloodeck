@@ -63,6 +63,7 @@ namespace Bloodeck.View
         [SerializeField]
         private SelectableCardSlotMB _selectableCardSlot;
 
+        public event Action DeployStarted;
         public event Action Deployed;
 
         public bool HasSelectedSlot => _slot;
@@ -86,7 +87,7 @@ namespace Bloodeck.View
 
         private void Start()
         {
-            _initialScale = _transform.localScale;
+            _initialScale = Vector3.one;
         }
 
         private void FixedUpdate()
@@ -113,10 +114,18 @@ namespace Bloodeck.View
             }
         }
 
-        public void BeginDeploy()
+        public bool TryBeginDeploy()
         {
+            if (!_card.Owner.TryPlaceCard(_card, _slot))
+            {
+                return false;
+            }
+
+            DeployStarted?.Invoke();
             _isDeploying.Value = true;
             _selectableCardSlot.Deselect();
+
+            return true;
         }
 
         private void HandleScaling()
@@ -156,13 +165,20 @@ namespace Bloodeck.View
                 return;
             }
 
-            _slot = hit.collider.GetComponentInChildren<CardSlotMB>();
-            if (!_slot)
+            CardSlotMB slotHit = hit.collider.GetComponentInChildren<CardSlotMB>();
+            if (!slotHit)
             {
                 ResetSelectedCardSlot();
                 return;
             }
 
+            if (slotHit == _slot)
+            {
+                return;
+            }
+
+            ResetSelectedCardSlot();
+            _slot = slotHit;
             _selectableCardSlot = _slot.GetComponentInChildren<SelectableCardSlotMB>();
             _selectableCardSlot.Select();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using niscolas.UnityUtils.Core;
 using niscolas.UnityUtils.Core.Extensions;
 using UnityAtoms.BaseAtoms;
@@ -38,7 +39,13 @@ namespace Bloodeck.View
         [SerializeField]
         private Color _notSelectedColor;
 
+        [SerializeField]
+        private Transform _cardsParent;
+
         [Header(HeaderTitles.Injections)]
+        [Inject, SerializeField]
+        private DeckMB _deck;
+
         [Inject, SerializeField]
         private CardHandMB _cardHand;
 
@@ -55,6 +62,8 @@ namespace Bloodeck.View
         private CardDraggerMB _cardDragger;
 
         private Vector3 InitialPosition => _initialPosition.Value;
+
+        private int Count => _dataMap.Count;
 
         public const string DisplayName = "Card Hand (Fan) View";
 
@@ -87,43 +96,35 @@ namespace Bloodeck.View
 
         private void Legacy_Update()
         {
-            for (int i = 0; i < _cardHand.Count; i++)
-            {
-                DeployableCardMB deployableCard = _dataMap[_cardHand[i]].DeployableCard;
-                if (deployableCard.IsDeployed || deployableCard.IsDeploying)
-                {
-                    _cardHand.Remove(_cardHand[i]);
-                }
-            }
-
             // Limit the selection:
-            _selectedIndex = Mathf.Clamp(_selectedIndex, 0, _cardHand.Count - 1);
+            _selectedIndex = Mathf.Clamp(_selectedIndex, 0, Count - 1);
 
-            if (_cardHand.Count > 0)
+            if (Count > 0)
             {
                 // Calcutate the spread and the Y for card's positioning:
-                float curIndPos = _spread / _cardHand.Count;
+                float curIndPos = _spread / Count;
                 float initY = -1f * (_yFactor / 2f);
-                float curY = _yFactor / (_cardHand.Count - 1);
+                float curY = _yFactor / (Count - 1);
                 // Calculate the rotation of the cards:
                 float initTilt = -1f * (_tilt / 2f);
-                float curTilt = _tilt / (_cardHand.Count - 1);
+                float curTilt = _tilt / (Count - 1);
 
-                for (int i = 0; i < _cardHand.Count; i++)
+                int i = 0;
+                foreach (KeyValuePair<ICard, CardHandFanData> dataEntry in _dataMap)
                 {
-                    CardMB currentCard = _dataMap[_cardHand[i]].CardMB;
-                    DraggableCardMB draggableCard = _dataMap[_cardHand[i]].DraggableCard;
+                    CardMB currentCard = dataEntry.Value.CardMB;
+                    DraggableCardMB draggableCard = dataEntry.Value.DraggableCard;
                     if (draggableCard.IsBeingDragged)
                     {
                         continue;
                     }
 
-                    HoverableCardMB hoverableCard = _dataMap[_cardHand[i]].HoverableCard;
-                    EntityGraphicMB cardFrameImageView = _dataMap[_cardHand[i]].Graphic;
+                    HoverableCardMB hoverableCard = dataEntry.Value.HoverableCard;
+                    EntityGraphicMB cardFrameImageView = dataEntry.Value.Graphic;
                     Transform cardTransform = currentCard.transform;
 
                     // Card Depth Tweaking:
-                    if (_cardHand.Count > 1)
+                    if (Count > 1)
                     {
                         if (hoverableCard.IsBeingHovered)
                         {
@@ -136,16 +137,16 @@ namespace Bloodeck.View
                     }
 
                     // Card's Positioning:
-                    if (_cardHand.Count > 1)
+                    if (Count > 1)
                     {
                         float yForThisCard = initY + (i * curY);
                         float nudgeThisCard = Mathf.Abs(yForThisCard);
-                        nudgeThisCard *= _yFactor + (i == 0 || i == _cardHand.Count - 1 ? _yFactor * 0.5f : 0);
+                        nudgeThisCard *= _yFactor + (i == 0 || i == Count - 1 ? _yFactor * 0.5f : 0);
 
                         cardTransform.localPosition = Vector3.Lerp(
                             cardTransform.localPosition,
                             new Vector3(
-                                (curIndPos * (i + 1)) - ((curIndPos / 2) * (_cardHand.Count + 1)),
+                                (curIndPos * (i + 1)) - ((curIndPos / 2) * (Count + 1)),
                                 (hoverableCard.IsBeingHovered && !_cardViewer.IsViewing
                                     ? _hoverHeight - nudgeThisCard
                                     : -nudgeThisCard)),
@@ -161,7 +162,7 @@ namespace Bloodeck.View
 
 
                     // Card's Rotation:
-                    if (_cardHand.Count > 1)
+                    if (Count > 1)
                     {
                         float tiltForThisCard = initTilt + (i * curTilt);
                         cardTransform.localRotation = Quaternion.RotateTowards(
@@ -180,7 +181,8 @@ namespace Bloodeck.View
                         hoverableCard.IsBeingHovered && !_cardViewer.IsViewing ? _selectedColor : _notSelectedColor,
                         Time.deltaTime * _speed);
 
-                    ScaleCard(i);
+                    ScaleCard(dataEntry.Value);
+                    i++;
                 }
             }
 
@@ -215,10 +217,10 @@ namespace Bloodeck.View
             _cardHand.Removed -= CardHand_OnRemoved;
         }
 
-        private void ScaleCard(int i)
+        private void ScaleCard(CardHandFanData dataEntry)
         {
-            Transform cardTransform = _dataMap[_cardHand[i]].CardMB.transform;
-            HoverableCardMB hoverableCard = _dataMap[_cardHand[i]].HoverableCard;
+            Transform cardTransform = dataEntry.CardMB.transform;
+            HoverableCardMB hoverableCard = dataEntry.HoverableCard;
 
             cardTransform.localScale = Vector3.Lerp(
                 cardTransform.localScale,
@@ -239,12 +241,13 @@ namespace Bloodeck.View
                 HoverableCard = cardMB.GetComponentInChildren<HoverableCardMB>()
             });
 
-            cardMB.transform.SetParent(_transform);
+            cardMB.transform.SetParent(_cardsParent);
             cardMB.gameObject.SetActive(true);
         }
 
         private void CardHand_OnRemoved(ICard card)
         {
+            _dataMap[card].CardMB.transform.SetParent(_deck.transform);
             _dataMap.Remove(card);
         }
 

@@ -74,7 +74,6 @@ namespace Bloodeck.View
                 GetDragPosition(),
                 _timeService.DeltaTime * _dragSpeed.Value);
 
-            // _transform.SetParent(GameReference.tableObject, false);
             _transform.rotation = _cardGameEnvironment.transform.rotation;
         }
 

@@ -34,7 +34,10 @@ namespace Bloodeck
         private UnityEvent _onDestroyed;
 
         [Header(HeaderTitles.Debug)]
-        [ReadOnly, SerializeField]
+        [SerializeField]
+        private CardPlayerMB _owner;
+
+        [SerializeField]
         private CardTemplateSO _loadedTemplate;
 
         public event Action Destroyed;
@@ -43,11 +46,19 @@ namespace Bloodeck
 
         public int Cost
         {
-            get => _controller.Cost;
-            set => _controller.Cost = value;
+            get => _costOutput.Value;
+            set => _costOutput.Value = value;
         }
 
         public IEntity SelfEntity => _entity;
+
+        public ICardEffectMap Effects => _loadedTemplate.Effects;
+
+        public ICardPlayer Owner
+        {
+            get => _owner;
+            set => _owner = value as CardPlayerMB;
+        }
 
         public ICardTemplate LoadedTemplate => _loadedTemplate;
 
@@ -73,6 +84,7 @@ namespace Bloodeck
         {
             _controller.Destroyed += OnDestroyed;
             SimpleTemplateLoader<CardTemplateSO>.InitializationLoadTemplate(this);
+            OnTemplateLoaded();
         }
 
         private void OnDestroy()
@@ -110,16 +122,16 @@ namespace Bloodeck
 
         private void OnTemplateLoaded()
         {
-            UpdateCost();
-            UpdateGameObjectName();
+            SyncCostWithTemplate();
+            SyncGameObjectNameWithTemplate();
         }
 
-        private void UpdateCost()
+        private void SyncCostWithTemplate()
         {
-            _costOutput.Value = _loadedTemplate.Cost;
+            Cost = _loadedTemplate.Cost;
         }
 
-        private void UpdateGameObjectName()
+        private void SyncGameObjectNameWithTemplate()
         {
             name = $"Card-{_loadedTemplate.SelfEntityTemplate.Name}";
         }

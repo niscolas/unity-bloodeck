@@ -1,5 +1,7 @@
-﻿using NaughtyAttributes;
+﻿using System;
 using niscolas.UnityUtils.Core;
+using niscolas.UnityUtils.Core.Extensions;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using Zenject;
 
@@ -11,11 +13,14 @@ namespace Bloodeck
         [SerializeField]
         private DeckTemplateSO _templateToLoad;
 
+        [SerializeField]
+        private IntReference _count = new IntReference();
+
         [Header(HeaderTitles.Debug)]
-        [ReadOnly, SerializeField]
+        [SerializeField]
         private SerializableCardMBCollection _cards = new SerializableCardMBCollection();
 
-        [ReadOnly, SerializeField]
+        [SerializeField]
         private DeckTemplateSO _loadedTemplate;
 
         public ICardFromTemplateFactory CardFromTemplateFactory => _cardFromTemplateFactory;
@@ -50,7 +55,13 @@ namespace Bloodeck
 
         private void Start()
         {
+            _cards.Changed += Cards_OnChanged;
             SimpleTemplateLoader<DeckTemplateSO>.InitializationLoadTemplate(this);
+        }
+
+        private void OnDestroy()
+        {
+            _cards.Changed -= Cards_OnChanged;
         }
 
         public ICard DrawFromTop()
@@ -75,9 +86,19 @@ namespace Bloodeck
             _asIDeck.LoadTemplate(template);
         }
 
+        private void Cards_OnChanged()
+        {
+            UpdateCountOutput();
+        }
+
+        private void UpdateCountOutput()
+        {
+            _count.Value = _cards.Count;
+        }
+
         private void DestroyAllCards()
         {
-            _cards.Content.ForEach(x => _despawnService.Despawn(x));
+            _cards.AsMBs.ForEach(x => _despawnService.Despawn(x));
         }
 
         private void OnCardCreated(ICard card)
@@ -88,7 +109,7 @@ namespace Bloodeck
 
         private void ParentAllCardsToSelf()
         {
-            _cards.Content.ForEach(x => x.transform.SetParent(_transform));
+            _cards.AsMBs.ForEach(x => x.transform.SetParent(_transform));
         }
     }
 }

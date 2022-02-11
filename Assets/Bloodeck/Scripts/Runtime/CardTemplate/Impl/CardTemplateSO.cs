@@ -1,6 +1,7 @@
 ﻿using Creatable;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
+using Zenject;
 
 namespace Bloodeck
 {
@@ -10,7 +11,7 @@ namespace Bloodeck
         order = Constants.CreateAssetMenuOrder)]
     public class CardTemplateSO : ScriptableObject, ICardTemplate
     {
-        [SerializeReference, SubclassSelector]
+        [Inject, SerializeReference, SubclassSelector]
         private IEntityTemplate _selfEntityTemplate;
 
         [Creatable, SerializeField]
@@ -19,11 +20,11 @@ namespace Bloodeck
         [SerializeField]
         private IntReference _cost = new IntReference(1);
 
-        [SerializeField]
-        private CardEffectMap _effects = new CardEffectMap();
+        [Inject, SerializeReference, SubclassSelector]
+        private ICardEffectMap _effects;
 
-        [SerializeReference, SubclassSelector]
-        private ICardComponentTemplates _componentTemplates;
+        [Inject, SerializeReference, SubclassSelector]
+        private ICardComponentTemplates _componentTemplates = new SerializableCardComponentTemplates();
 
         public ICardComponentTemplates ComponentTemplates => _componentTemplates;
 

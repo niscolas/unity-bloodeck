@@ -27,13 +27,11 @@ namespace Bloodeck.View
 
         public void Select()
         {
-            _cardDeployer.SelectedCardSlot = _selfCardSlot;
             NotifySelected();
         }
 
         public void Deselect()
         {
-            _cardDeployer.SelectedCardSlot = default;
             NotifyDeselected();
         }
 

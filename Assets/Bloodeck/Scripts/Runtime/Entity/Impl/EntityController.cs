@@ -14,6 +14,8 @@ namespace Bloodeck
 
         public IEntityTemplate LoadedTemplate => _humbleObject.LoadedTemplate;
 
+        public ITeam Team => _humbleObject.Team;
+
         private readonly IEntityHumbleObject _humbleObject;
 
         public EntityController(IEntityHumbleObject humbleObject)

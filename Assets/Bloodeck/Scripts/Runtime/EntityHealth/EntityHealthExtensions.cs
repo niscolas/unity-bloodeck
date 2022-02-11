@@ -2,6 +2,11 @@
 {
     public static class EntityHealthExtensions
     {
+        public static void TakeRelativeDamage(this IEntityHealth self, float ratio, IEntity instigator = null)
+        {
+            self.TakeDamage(self.Max * ratio, instigator);
+        }
+
         public static IEntityHealth WhichCanHeal(this IEntityHealth self, bool value = true)
         {
             self.CanHeal = value;

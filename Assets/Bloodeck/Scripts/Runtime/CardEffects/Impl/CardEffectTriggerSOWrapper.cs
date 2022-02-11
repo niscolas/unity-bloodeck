@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Bloodeck
 {
     [Serializable]
-    public struct CardEffectTriggerSOWrapper : ICardEffectTrigger
+    public class CardEffectTriggerSOWrapper : ICardEffectTrigger, IEquatable<CardEffectTriggerSOWrapper>
     {
         [SerializeField]
         private CardEffectTriggerSO _trigger;
@@ -15,12 +15,23 @@ namespace Bloodeck
             {
                 return _trigger == otherWrapper._trigger;
             }
-            else if (obj is CardEffectTriggerSO otherTrigger)
+
+            if (obj is CardEffectTriggerSO otherTrigger)
             {
                 return _trigger == otherTrigger;
             }
 
             return false;
+        }
+
+        public bool Equals(CardEffectTriggerSOWrapper other)
+        {
+            return Equals(_trigger, other._trigger);
+        }
+
+        public override int GetHashCode()
+        {
+            return _trigger != null ? _trigger.GetHashCode() : 0;
         }
     }
 }

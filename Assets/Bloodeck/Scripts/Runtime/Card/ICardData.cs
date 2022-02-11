@@ -8,6 +8,10 @@
 
         IEntity SelfEntity { get; }
 
+        ICardEffectMap Effects { get; }
+
+        ICardPlayer Owner { get; set; }
+
         ICardTemplate LoadedTemplate { get; }
     }
 }

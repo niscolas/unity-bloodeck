@@ -1,5 +1,4 @@
-﻿using NaughtyAttributes;
-using niscolas.UnityUtils.Core;
+﻿using niscolas.UnityUtils.Core;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using Zenject;
@@ -9,17 +8,27 @@ namespace Bloodeck
     [AddComponentMenu(Constants.AddComponentMenuPrefix + "Card Player")]
     public class CardPlayerMB : CachedMB, ICardPlayer, ICardPlayerHumbleObject
     {
-        [Inject, SerializeField]
-        private DeckMB _deck;
-
-        [Inject, SerializeField]
-        private CardHandMB _hand;
-
         [SerializeField]
         private FloatReference _drawCardIntervalSeconds = new FloatReference(0.1f);
 
         [SerializeField]
         private IntReference _initialDrawCardCount = new IntReference(4);
+
+        [SerializeField]
+        private IntReference _energy = new IntReference(1);
+
+        [SerializeField]
+        private IntReference _maxEnergy = new IntReference();
+
+        [SerializeField]
+        private IntReference _cardDrawCost = new IntReference();
+
+        [Header(HeaderTitles.Injections)]
+        [Inject, SerializeField]
+        private DeckMB _deck;
+
+        [Inject, SerializeField]
+        private CardHandMB _hand;
 
         [Header(HeaderTitles.Debug)]
         [SerializeField]
@@ -39,11 +48,20 @@ namespace Bloodeck
             set => _deck = value as DeckMB;
         }
 
-        public int Energy { get; set; }
+        public int CardDrawCost
+        {
+            get => _cardDrawCost.Value;
+            set => _cardDrawCost.Value = value;
+        }
+
+        public int Energy
+        {
+            get => _energy.Value;
+            set => _energy.Value = value;
+        }
 
         [Inject]
         private LazyInject<CardPlayerEnvironmentMB> _environment;
-
 
         public ICardHand Hand => _hand;
 
@@ -53,7 +71,6 @@ namespace Bloodeck
             set => _isMakingMove.Value = value;
         }
 
-
         public bool IsDrawingStartingCards => _isDrawingInitialCards.Value;
 
         public bool HasDrawnInitialCards => _hasDrawnInitialCards.Value;
@@ -62,7 +79,11 @@ namespace Bloodeck
 
         public int InitialDrawCardsCount => _initialDrawCardCount.Value;
 
-        public int MaxEnergy { get; set; }
+        public int MaxEnergy
+        {
+            get => _maxEnergy.Value;
+            set => _maxEnergy.Value = value;
+        }
 
         [Inject]
         private CardPlayerController _controller;
@@ -72,9 +93,14 @@ namespace Bloodeck
             DrawInitialCards();
         }
 
-        public void DrawCard()
+        public void DrawCard(bool useEnergy = true)
         {
-            _controller.DrawCard();
+            _controller.DrawCard(useEnergy);
+        }
+
+        public void DrawCardRaw(bool useEnergy = true)
+        {
+            _controller.DrawCardRaw(useEnergy);
         }
 
         public void DrawInitialCards()

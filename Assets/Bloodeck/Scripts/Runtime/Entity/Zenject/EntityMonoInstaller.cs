@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Healthy;
+using UnityEngine;
 using Zenject;
 
 namespace Bloodeck
@@ -8,15 +9,24 @@ namespace Bloodeck
     {
         public override void InstallBindings()
         {
+            Container.Bind<EntityComponentMB>().FromComponentsInHierarchy().AsSingle();
+
             Container
-                .Bind<EntityComponentMB>()
-                .FromComponentsInHierarchy(null, false)
+                .Bind<IHealth>()
+                .To<HealthController>()
+                .FromMethod(
+                    ctx => new HealthController(ctx.ObjectInstance as IHealthData))
                 .AsSingle();
 
             Container
                 .Bind<EntityHealthController>()
                 .FromMethod(
-                    ctx => new EntityHealthController(ctx.ObjectInstance as IEntityHealth))
+                    ctx =>
+                    {
+                       EntityHealthController controller = new EntityHealthController(ctx.ObjectInstance as IEntityHealth);
+                       Container.QueueForInject(controller);
+                       return controller;
+                    })
                 .AsSingle()
                 .WhenInjectedInto(typeof(IEntityHealth));
 

@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Bloodeck
+﻿namespace Bloodeck
 {
     public interface ICardEffectSystem
     {
-        void Apply(IEnumerable<IEntity> targets, ICard instigator);
+        void Apply(IEntities targets, ICard instigator);
     }
 }

@@ -2,7 +2,6 @@
 {
     public interface ICardEffect
     {
-        IEntityFilters TargetFilters { get; }
         ICardEffectSystem System { get; }
     }
 }

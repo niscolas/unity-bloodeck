@@ -20,9 +20,6 @@ namespace Bloodeck
             Container
                 .BindFactory<Object, DeckMB, DeckMBFactory>()
                 .FromFactory<PrefabFactory<DeckMB>>();
-
-            Container
-                .BindFactory<DeckTemplateSO, DeckMB, DeckMBFromTemplateFactory>();
         }
     }
 }

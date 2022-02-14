@@ -23,7 +23,12 @@ namespace Bloodeck
         [SerializeField]
         private IntReference _cardDrawCost = new IntReference();
 
+        [SerializeField]
+        private TeamTypeSO _team;
+
         [Header(HeaderTitles.Injections)]
+        [Inject, SerializeField]
+        private EntityMB _selfEntity;
         [Inject, SerializeField]
         private DeckMB _deck;
 
@@ -42,6 +47,8 @@ namespace Bloodeck
 
         public ICardPlayerEnvironment Environment => _environment.Value;
 
+        public IEntity SelfEntity => _selfEntity;
+
         public IDeck Deck
         {
             get => _deck;
@@ -53,6 +60,8 @@ namespace Bloodeck
             get => _cardDrawCost.Value;
             set => _cardDrawCost.Value = value;
         }
+
+        public ITeam Team => _team;
 
         public int Energy
         {

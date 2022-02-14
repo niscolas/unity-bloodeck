@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Bloodeck
 {
     public class EntityController : IEntity
     {
+        public event Action Destroyed;
+
         public IEntityComponents Components => _humbleObject.Components;
 
         public string Description => _humbleObject.Description;
@@ -14,7 +17,11 @@ namespace Bloodeck
 
         public IEntityTemplate LoadedTemplate => _humbleObject.LoadedTemplate;
 
-        public ITeam Team => _humbleObject.Team;
+        public ITeam Team
+        {
+            get => _humbleObject.Team;
+            set => _humbleObject.Team = value;
+        }
 
         private readonly IEntityHumbleObject _humbleObject;
 
@@ -28,9 +35,19 @@ namespace Bloodeck
             SetTemplate(template);
         }
 
+        public void Destroy(IEntity instigator)
+        {
+            NotifyDestroyed();
+        }
+
         private void SetTemplate(IEntityTemplate template)
         {
             _humbleObject.SetHumbleObjectLoadedTemplate(template);
+        }
+
+        private void NotifyDestroyed()
+        {
+            Destroyed?.Invoke();
         }
     }
 }

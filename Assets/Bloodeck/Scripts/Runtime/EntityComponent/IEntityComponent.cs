@@ -1,4 +1,4 @@
 ﻿namespace Bloodeck
 {
-    public interface IEntityComponent : IComponent<IEntity> { }
+    public interface IEntityComponent : IEntityComponentData { }
 }

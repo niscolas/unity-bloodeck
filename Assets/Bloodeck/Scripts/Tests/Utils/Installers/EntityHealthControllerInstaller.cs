@@ -14,14 +14,14 @@ namespace Bloodeck.Tests.Editor
                 .AsTransient();
 
             Container
-                .Bind<IEntityHealthData>()
+                .Bind<IEntityHealthComponentData>()
                 .FromSubstitute()
                 .AsTransient()
-                .WhenInjectedInto(typeof(EntityHealthController));
+                .WhenInjectedInto(typeof(EntityHealthComponentController));
 
             Container
-                .Bind<IEntityHealth>()
-                .To<EntityHealthController>()
+                .Bind<IEntityHealthComponent>()
+                .To<EntityHealthComponentController>()
                 .AsTransient();
         }
     }

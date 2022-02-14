@@ -7,6 +7,8 @@ namespace Bloodeck
 {
     public class CardPlayerController : ICardPlayer
     {
+        public IEntity SelfEntity => _humbleObject.SelfEntity;
+
         public IDeck Deck
         {
             get => _humbleObject.Deck;
@@ -75,19 +77,14 @@ namespace Bloodeck
 
         public bool TryPlaceCard(ICard card, ICardSlot slot)
         {
-            if (!CheckCanPlaceCardOnSlot(card, slot))
+            if (!CheckCanPlaceCardOnSlot(card, slot) ||
+                !card.Deployable.TryDeploy(slot))
             {
                 return false;
             }
 
-            bool wasAbleToPlaceCard = slot.TrySetCard(card);
-
-            if (wasAbleToPlaceCard)
-            {
-                OnCardDeployed(card);
-            }
-
-            return wasAbleToPlaceCard;
+            OnCardDeployed(card);
+            return true;
         }
 
         public void UseDeckTemplate(IDeckTemplate deckTemplate)
@@ -99,7 +96,7 @@ namespace Bloodeck
         private bool CheckCanDrawCard()
         {
             return Energy < CardDrawCost ||
-                   Deck.Cards.CheckIsEmpty() ||
+                   Deck.CheckIsEmpty() ||
                    Hand.CheckIsFull();
         }
 
@@ -110,7 +107,7 @@ namespace Bloodeck
 
         private void SetDeckCardsOwner()
         {
-            Deck.Cards.ForEach(x => x.Owner = (ICardPlayer) _humbleObject);
+            Deck.ForEach(x => x.Owner = (ICardPlayer) _humbleObject);
         }
 
         private bool CheckCanPlaceCardOnSlot(ICard card, ICardSlot slot)

@@ -39,18 +39,18 @@ namespace Bloodeck.Tests.Editor
         [Test]
         public void DrawFromTop_DeckWithSingleCard_ShouldBeEmpty()
         {
-            _deck.Cards.Add(Substitute.For<ICard>());
+            _deck.Add(Substitute.For<ICard>());
 
             _deck.DrawFromTop();
 
-            _deck.Cards.Count.Should().Be(0);
+            _deck.Count.Should().Be(0);
         }
 
         [Test]
         public void DrawFromTop_DeckWithSingleCard_ReturnShouldBeTheCard()
         {
             ICard expected = Substitute.For<ICard>();
-            _deck.Cards.Add(expected);
+            _deck.Add(expected);
 
             ICard actual = _deck.DrawFromTop();
 
@@ -63,9 +63,9 @@ namespace Bloodeck.Tests.Editor
             ICard topCard = Substitute.For<ICard>();
             ICard middleCard = Substitute.For<ICard>();
             ICard bottomCard = Substitute.For<ICard>();
-            _deck.Cards.Add(topCard);
-            _deck.Cards.Add(middleCard);
-            _deck.Cards.Add(bottomCard);
+            _deck.Add(topCard);
+            _deck.Add(middleCard);
+            _deck.Add(bottomCard);
 
             ICard actual = _deck.DrawFromTop();
 

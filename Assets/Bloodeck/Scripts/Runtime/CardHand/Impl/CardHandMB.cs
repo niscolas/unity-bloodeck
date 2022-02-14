@@ -177,9 +177,9 @@ namespace Bloodeck
             ExtractCardFromHandComponent(card).UnlinkHand();
         }
 
-        private static CardFromHandMB ExtractCardFromHandComponent(ICard card)
+        private static CardInHandMB ExtractCardFromHandComponent(ICard card)
         {
-            return ((CardMB) card).GetComponentInChildren<CardFromHandMB>();
+            return ((CardMB) card).GetComponentInChildren<CardInHandMB>();
         }
     }
 }

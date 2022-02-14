@@ -7,14 +7,14 @@ namespace Bloodeck.Tests.Editor
         public override void InstallBindings()
         {
             Container
-                .Bind<ICardAttackData>()
+                .Bind<IEntityAttackComponentData>()
                 .FromSubstitute()
                 .AsTransient()
-                .WhenInjectedInto(typeof(CardAttackController));
+                .WhenInjectedInto(typeof(EntityAttackComponentController));
 
             Container
-                .Bind<ICardAttack>()
-                .To<CardAttackController>()
+                .Bind<IEntityAttackComponent>()
+                .To<EntityAttackComponentController>()
                 .AsTransient();
         }
     }

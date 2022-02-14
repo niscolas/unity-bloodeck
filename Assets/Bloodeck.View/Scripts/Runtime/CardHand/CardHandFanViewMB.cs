@@ -235,7 +235,7 @@ namespace Bloodeck.View
             _dataMap.Add(card, new CardHandFanData
             {
                 CardMB = cardMB,
-                DeployableCard = cardMB.GetComponentInChildren<DeployableCardMB>(),
+                DeployableCard = cardMB.GetComponentInChildren<DeployableCardViewMB>(),
                 DraggableCard = cardMB.GetComponentInChildren<DraggableCardMB>(),
                 Graphic = cardMB.GetComponentInChildren<EntityIconImageViewMB>(),
                 HoverableCard = cardMB.GetComponentInChildren<HoverableCardMB>()

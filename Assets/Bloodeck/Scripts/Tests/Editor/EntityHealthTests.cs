@@ -7,7 +7,7 @@ namespace Bloodeck.Tests.Editor
     public class EntityHealthTests : ZenjectUnitTestFixture
     {
         [Inject]
-        private IEntityHealth _entityHealth;
+        private IEntityHealthComponent _entityHealthComponent;
 
         [SetUp]
         public void TestSetup()
@@ -25,11 +25,11 @@ namespace Bloodeck.Tests.Editor
         public void TakeDamage_Current10_Max10_ArgBetween1And10_CurrentShouldBeCurrentMinusArg(
             int damageValue)
         {
-            _entityHealth.WhichCanTakeDamage().WithMax(10).WithCurrent(10);
+            _entityHealthComponent.WhichCanTakeDamage().WithMax(10).WithCurrent(10);
 
-            _entityHealth.TakeDamage(damageValue);
+            _entityHealthComponent.TakeDamage(damageValue);
 
-            _entityHealth.Current.Should().Be(10 - damageValue);
+            _entityHealthComponent.Current.Should().Be(10 - damageValue);
         }
 
         [TestCase(10)]
@@ -41,21 +41,21 @@ namespace Bloodeck.Tests.Editor
         public void TakeDamage_Current10_Max10_ArgBiggerOrEqualTo10_CurrentShouldBe0(
             int damageValue)
         {
-            _entityHealth.WhichCanTakeDamage().WithMax(10).WithCurrent(10);
+            _entityHealthComponent.WhichCanTakeDamage().WithMax(10).WithCurrent(10);
 
-            _entityHealth.TakeDamage(damageValue);
+            _entityHealthComponent.TakeDamage(damageValue);
 
-            _entityHealth.Current.Should().Be(0);
+            _entityHealthComponent.Current.Should().Be(0);
         }
 
         [Test]
         public void TakeDamage_Current10_Max10_Arg0_CurrentShouldBe10()
         {
-            _entityHealth.WhichCanTakeDamage().WithMax(10).WithCurrent(10);
+            _entityHealthComponent.WhichCanTakeDamage().WithMax(10).WithCurrent(10);
 
-            _entityHealth.TakeDamage(0);
+            _entityHealthComponent.TakeDamage(0);
 
-            _entityHealth.Current.Should().Be(10);
+            _entityHealthComponent.Current.Should().Be(10);
         }
 
         [TestCase(0)]
@@ -71,11 +71,11 @@ namespace Bloodeck.Tests.Editor
         public void Heal_Current1_Max10_ArgBetween0And9_CurrentShouldBeInitialHealthPlusArg(
             int healValue)
         {
-            _entityHealth.WhichCanHeal().WithMax(10).WithCurrent(1);
+            _entityHealthComponent.WhichCanHeal().WithMax(10).WithCurrent(1);
 
-            _entityHealth.Heal(healValue);
+            _entityHealthComponent.Heal(healValue);
 
-            _entityHealth.Current.Should().Be(1 + healValue);
+            _entityHealthComponent.Current.Should().Be(1 + healValue);
         }
 
         [TestCase(0)]
@@ -88,21 +88,21 @@ namespace Bloodeck.Tests.Editor
         public void Heal_Current10_Max10_ArgBiggerOrEqualTo0_CurrentShouldBe10(
             int healValue)
         {
-            _entityHealth.WhichCanHeal().WithMax(10).WithCurrent(10);
+            _entityHealthComponent.WhichCanHeal().WithMax(10).WithCurrent(10);
 
-            _entityHealth.Heal(healValue);
+            _entityHealthComponent.Heal(healValue);
 
-            _entityHealth.Current.Should().Be(10);
+            _entityHealthComponent.Current.Should().Be(10);
         }
 
         [Test]
         public void Heal_Current5_Max10_Arg0_CurrentShouldBe5()
         {
-            _entityHealth.WhichCanHeal().WithMax(10).WithCurrent(5);
+            _entityHealthComponent.WhichCanHeal().WithMax(10).WithCurrent(5);
 
-            _entityHealth.Heal(0);
+            _entityHealthComponent.Heal(0);
 
-            _entityHealth.Current.Should().Be(5);
+            _entityHealthComponent.Current.Should().Be(5);
         }
     }
 }

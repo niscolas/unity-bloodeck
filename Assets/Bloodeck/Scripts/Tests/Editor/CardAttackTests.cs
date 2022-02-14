@@ -8,10 +8,10 @@ namespace Bloodeck.Tests.Editor
     public class CardAttackTests : ZenjectUnitTestFixture
     {
         [Inject]
-        private ICardAttack _reusableCardAttack;
+        private IEntityAttackComponent _reusableCardAttack;
 
         [Inject]
-        private IEntityHealth _reusableEntityHealth;
+        private IEntityHealthComponent _reusableEntityHealthComponent;
 
         [SetUp]
         public void TestSetup()
@@ -35,15 +35,15 @@ namespace Bloodeck.Tests.Editor
         public void Attack_AttackValueBetween0And10_10CurrentHealth_CurrentHealthShouldBeInitialHealthMinusAttackValue(
             int attackValue)
         {
-            _reusableEntityHealth
+            _reusableEntityHealthComponent
                 .WhichCanTakeDamage()
                 .WithMax(10)
                 .WithCurrent(10);
             _reusableCardAttack.WithAttackValue(attackValue);
 
-            _reusableCardAttack.Attack(_reusableEntityHealth);
+            _reusableCardAttack.Attack(_reusableEntityHealthComponent);
 
-            _reusableEntityHealth.Current.Should().Be(10 - attackValue);
+            _reusableEntityHealthComponent.Current.Should().Be(10 - attackValue);
         }
 
         [TestCase(11)]
@@ -54,15 +54,15 @@ namespace Bloodeck.Tests.Editor
         public void Attack_AttackValueBiggerThan10_10CurrentHealth_CurrentHealthShouldBe0(
             int attackValue)
         {
-            _reusableEntityHealth
+            _reusableEntityHealthComponent
                 .WhichCanTakeDamage()
                 .WithMax(10)
                 .WithCurrent(10);
             _reusableCardAttack.WithAttackValue(11);
 
-            _reusableCardAttack.Attack(_reusableEntityHealth);
+            _reusableCardAttack.Attack(_reusableEntityHealthComponent);
 
-            _reusableEntityHealth.Current.Should().Be(0);
+            _reusableEntityHealthComponent.Current.Should().Be(0);
         }
     }
 }

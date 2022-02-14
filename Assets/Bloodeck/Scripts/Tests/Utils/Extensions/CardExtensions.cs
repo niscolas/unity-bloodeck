@@ -9,11 +9,5 @@ namespace Bloodeck.Tests.Utils
             self.Cost.Returns(value);
             return self;
         }
-        
-        public static ICard Sub_WithComponents(this ICard self, ICardComponents value)
-        {
-            self.Components.Returns(value);
-            return self;
-        }
     }
 }

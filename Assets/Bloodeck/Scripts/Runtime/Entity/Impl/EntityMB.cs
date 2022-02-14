@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using NaughtyAttributes;
 using niscolas.UnityUtils.Core;
 using niscolas.UnityUtils.Core.Extensions;
@@ -27,6 +26,8 @@ namespace Bloodeck
         [ShowNativeProperty]
         private int _allEntitiesCountDebug => GetAllEntitiesCount();
 
+        public event Action Destroyed;
+
         public IEntityComponents Components => _components;
 
         public string Description => _loadedTemplate.Description;
@@ -39,13 +40,20 @@ namespace Bloodeck
 
         public IEntityTemplate LoadedTemplate => _loadedTemplate;
 
-        public ITeam Team => _team;
+        public ITeam Team
+        {
+            get => _team;
+            set => _team = value as TeamTypeSO;
+        }
 
         [Inject]
         private EntityController _controller;
 
         [Inject(Id = ZenjectIds.AllEntitiesId)]
         private IEntities _allEntities;
+
+        [Inject]
+        private IDespawnService _despawnService;
 
         private void Start()
         {
@@ -61,11 +69,29 @@ namespace Bloodeck
         public void LoadTemplate(IEntityTemplate template)
         {
             _controller.LoadTemplate(template);
+            OnTemplateLoaded();
+        }
+
+        public void Destroy(IEntity instigator = null)
+        {
+            _controller.Destroy(instigator);
+            _despawnService.Despawn(_gameObject);
         }
 
         public void SetHumbleObjectLoadedTemplate(IEntityTemplate template)
         {
             _loadedTemplate = template;
+        }
+
+        private void OnTemplateLoaded()
+        {
+            CallTemplateNotifierCallbackReceivers();
+        }
+
+        private void CallTemplateNotifierCallbackReceivers()
+        {
+            GetComponentsInChildren<IEntityTemplateLoadedCallbackReceiver>()
+                .ForEach(x => x.OnEntityTemplateLoaded());
         }
 
         private int GetAllEntitiesCount()

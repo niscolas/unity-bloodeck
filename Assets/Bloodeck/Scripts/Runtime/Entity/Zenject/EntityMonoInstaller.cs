@@ -18,17 +18,25 @@ namespace Bloodeck
                     ctx => new HealthController(ctx.ObjectInstance as IHealthData))
                 .AsSingle();
 
+            Container.Bind<EntityAttackComponentController>()
+                .FromMethod(
+                    context =>
+                        new EntityAttackComponentController(context.ObjectInstance as IEntityAttackComponent))
+                .AsSingle()
+                .WhenInjectedInto(typeof(IEntityAttackComponent));
+
             Container
-                .Bind<EntityHealthController>()
+                .Bind<EntityHealthComponentController>()
                 .FromMethod(
                     ctx =>
                     {
-                       EntityHealthController controller = new EntityHealthController(ctx.ObjectInstance as IEntityHealth);
-                       Container.QueueForInject(controller);
-                       return controller;
+                        EntityHealthComponentController controller =
+                            new EntityHealthComponentController(ctx.ObjectInstance as IEntityHealthComponent);
+                        Container.QueueForInject(controller);
+                        return controller;
                     })
                 .AsSingle()
-                .WhenInjectedInto(typeof(IEntityHealth));
+                .WhenInjectedInto(typeof(IEntityHealthComponent));
 
             Container
                 .Bind<EntityController>()

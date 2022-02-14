@@ -1,4 +1,7 @@
 ﻿namespace Bloodeck
 {
-    public interface IEntityComponents : IComponents<IEntityComponent> { }
+    public interface IEntityComponents : IComponents<IEntityComponent>
+    {
+        void LoadComponents();
+    }
 }

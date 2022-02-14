@@ -14,6 +14,6 @@ namespace Bloodeck
 
         IEntityTemplate LoadedTemplate { get; }
         
-        ITeam Team { get; }
+        ITeam Team { get; set; }
     }
 }

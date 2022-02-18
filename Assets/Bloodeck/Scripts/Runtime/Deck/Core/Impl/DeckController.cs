@@ -7,6 +7,7 @@ namespace Bloodeck
 {
     public class DeckController : IDeck
     {
+        public event Action<ICard> CardCreated;
         public event Action<ICard> Added;
         public event Action Changed;
 
@@ -93,13 +94,8 @@ namespace Bloodeck
 
         public void LoadTemplate(IDeckTemplate template)
         {
-            LoadTemplate(template, null);
-        }
-
-        public void LoadTemplate(IDeckTemplate template, Action<ICard> cardCreatedCallback)
-        {
             Clear();
-            CreateCards(template, cardCreatedCallback);
+            CreateCards(template);
             Shuffle();
             SetTemplate(template);
         }
@@ -133,17 +129,17 @@ namespace Bloodeck
         private ICard CreateCardFromTemplate(ICardTemplate cardTemplate)
         {
             ICard cardInstance = CardFromTemplateFactory.Create(cardTemplate);
-            Cards.Add(cardInstance);
+            Add(cardInstance);
 
             return cardInstance;
         }
 
-        private void CreateCards(IDeckTemplate template, Action<ICard> cardCreatedCallback)
+        private void CreateCards(IDeckTemplate template)
         {
             template.CardTemplates.ForEach(cardTemplate =>
             {
                 ICard cardInstance = CreateCardFromTemplate(cardTemplate);
-                cardCreatedCallback?.Invoke(cardInstance);
+                CardCreated?.Invoke(cardInstance);
             });
         }
 

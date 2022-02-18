@@ -28,6 +28,7 @@ namespace Bloodeck
         [SerializeField]
         private DeckTemplateSO _loadedTemplate;
 
+        public event Action<ICard> CardCreated;
         public event Action<ICard> Added;
         public event Action Changed;
 
@@ -73,13 +74,16 @@ namespace Bloodeck
             }
 
             _controller.Added += OnAdded;
+            _controller.CardCreated += OnCardCreated;
             _controller.Changed += OnChanged;
+
             SimpleTemplateLoader<DeckTemplateSO>.InitializationLoadTemplate(this);
         }
 
         private void OnDestroy()
         {
             _controller.Added -= OnAdded;
+            _controller.CardCreated -= OnCardCreated;
             _controller.Changed -= OnChanged;
         }
 
@@ -127,7 +131,7 @@ namespace Bloodeck
         public void LoadTemplate(IDeckTemplate template)
         {
             DestroyAllCards();
-            _controller.LoadTemplate(template, OnCardCreated);
+            _controller.LoadTemplate(template);
             ParentAllCardsToSelf();
         }
 
@@ -154,16 +158,19 @@ namespace Bloodeck
         private void OnAdded(ICard card)
         {
             Added?.Invoke(card);
-            ParentCard((CardMB) card);
+
+            CardMB cardMB = (CardMB) card;
+            ParentCard(cardMB);
+            cardMB.gameObject.SetActive(false);
         }
+
+        private void OnCardCreated(ICard card) { }
 
         private void OnChanged()
         {
             UpdateCountOutput();
             Changed?.Invoke();
         }
-
-        private void OnCardCreated(ICard card) { }
 
         private void ParentAllCardsToSelf()
         {

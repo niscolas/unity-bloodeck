@@ -1,11 +1,13 @@
-﻿namespace Bloodeck
+﻿using System;
+
+namespace Bloodeck
 {
-    public interface IMatch
+    public interface IMatch : IMatchData
     {
-        MatchState State { get; }
+        event Action<ITurn> TurnStarted;
+        event Action<ITurn> TurnEnded;
 
-        ICardPlayers Players { get; }
-
-        ITurn CurrentTurn { get; }
+        bool CheckAreOppositeTeams(ITeam team, ITeam otherTeam);
+        void SetTurn(ITeam cardPlayerTeam);
     }
 }

@@ -20,10 +20,10 @@ namespace Bloodeck
 
             Container.Bind<EntityAttackComponentController>()
                 .FromMethod(
-                    context =>
-                        new EntityAttackComponentController(context.ObjectInstance as IEntityAttackComponent))
+                    ctx =>
+                        new EntityAttackComponentController(ctx.ObjectInstance as IEntityAttackComponentHumbleObject))
                 .AsSingle()
-                .WhenInjectedInto(typeof(IEntityAttackComponent));
+                .WhenInjectedInto(typeof(IEntityAttackComponentHumbleObject));
 
             Container
                 .Bind<EntityHealthComponentController>()

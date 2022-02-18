@@ -6,6 +6,7 @@ namespace Bloodeck.View
 {
     public abstract class SlotDetectorMB : CachedMB
     {
+        [Header(HeaderTitles.Injections)]
         [Header(HeaderTitles.Debug)]
         [SerializeField]
         protected CardSlotMB _selectedSlot;

@@ -4,6 +4,7 @@ namespace Bloodeck
 {
     public class EntityAttackComponentController : IEntityAttackComponent
     {
+        public event Action<IEntity> AttackTriggered;
         public event Action<float> AttackValueChanged;
 
         public float AttackValue
@@ -16,11 +17,15 @@ namespace Bloodeck
             }
         }
 
+        public int AttacksPerTurn => _humbleObject.AttacksPerTurn;
+
+        public int AttacksLeftInTurn => _humbleObject.AttacksLeftInTurn;
+
         public IEntity OwnerEntity => _humbleObject.OwnerEntity;
 
-        private readonly IEntityAttackComponentData _humbleObject;
+        private readonly IEntityAttackComponentHumbleObject _humbleObject;
 
-        public EntityAttackComponentController(IEntityAttackComponentData humbleObject)
+        public EntityAttackComponentController(IEntityAttackComponentHumbleObject humbleObject)
         {
             _humbleObject = humbleObject;
         }
@@ -37,17 +42,50 @@ namespace Bloodeck
 
         public void Attack(IEntityHealthComponent target)
         {
+            if (!CheckCanAttack())
+            {
+                return;
+            }
+
             target.TakeDamage(AttackValue, OwnerEntity);
+            SetAttacksLeftInTurn(AttacksLeftInTurn - 1);
+            NotifyAttackTriggered(target);
+        }
+
+        public bool CheckCanAttack()
+        {
+            return AttacksLeftInTurn > 0;
         }
 
         public void LoadTemplate(IEntityAttackComponentTemplate template)
         {
             AttackValue = template.AttackValue;
+            SetAttacksPerTurn(template.AttacksPerTurn);
         }
 
         public void LoadCurrentTemplate()
         {
             this.TryLoadCurrentTemplate<IEntityAttackComponentTemplate, IEntityAttackComponent>();
+        }
+
+        public void OnTurnStarted()
+        {
+            SetAttacksLeftInTurn(AttacksPerTurn);
+        }
+
+        private void SetAttacksPerTurn(int value)
+        {
+            _humbleObject.SetAttacksPerTurn(value);
+        }
+
+        private void SetAttacksLeftInTurn(int value)
+        {
+            _humbleObject.SetAttacksLeftInTurn(value);
+        }
+
+        private void NotifyAttackTriggered(IEntityHealthComponent target)
+        {
+            AttackTriggered?.Invoke(target.OwnerEntity);
         }
     }
 }

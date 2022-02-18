@@ -247,7 +247,6 @@ namespace Bloodeck.View
 
         private void CardHand_OnRemoved(ICard card)
         {
-            _dataMap[card].CardMB.transform.SetParent(_deck.transform);
             _dataMap.Remove(card);
         }
 

@@ -13,7 +13,7 @@ namespace Bloodeck.View
         private CardSlotMB _selfCardSlot;
 
         [Inject, SerializeField]
-        private CardDeployerMB _cardDeployer;
+        private CardTableMB _cardTable;
 
         [Header(HeaderTitles.Events)]
         [SerializeField]

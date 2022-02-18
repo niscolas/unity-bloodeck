@@ -12,9 +12,6 @@ namespace Bloodeck.View
         private FloatReference _dragSpeed = new FloatReference(10f);
 
         [SerializeField]
-        private Vector3Reference _dragPositionOffset = new Vector3Reference(new Vector3(0, 0, -2));
-
-        [SerializeField]
         private BoolReference _isBeingDragged = new BoolReference();
 
         [Header(HeaderTitles.Injections)]
@@ -22,7 +19,7 @@ namespace Bloodeck.View
         private CardMB _selfCard;
 
         [Inject, SerializeField]
-        private CardDeployerMB _cardDeployer;
+        private CardTableMB _cardTable;
 
         [Inject, SerializeField]
         private CardGameEnvironmentMB _cardGameEnvironment;
@@ -79,9 +76,7 @@ namespace Bloodeck.View
 
         private Vector3 GetDragPosition()
         {
-            Vector3 result = _cardDeployer.GetPositionOnTable();
-            result += _transform.TransformVector(_dragPositionOffset);
-            return result;
+            return _cardTable.GetPointerPositionOnSurface();
         }
 
         public void EndDrag()

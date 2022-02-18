@@ -10,7 +10,7 @@ namespace Bloodeck.View
         public override void InstallBindings()
         {
             Container.Bind<CardDraggerMB>().FromMethod(FindObjectOfType<CardDraggerMB>).AsSingle();
-            Container.Bind<CardDeployerMB>().FromMethod(FindObjectOfType<CardDeployerMB>).AsSingle();
+            Container.Bind<CardTableMB>().FromMethod(FindObjectOfType<CardTableMB>).AsSingle();
             Container.Bind<CardViewerMB>().FromMethod(FindObjectOfType<CardViewerMB>).AsSingle();
         }
     }

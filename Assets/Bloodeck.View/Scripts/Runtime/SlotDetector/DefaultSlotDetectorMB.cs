@@ -1,5 +1,6 @@
 ﻿using UnityAtoms.BaseAtoms;
 using UnityEngine;
+using Zenject;
 
 namespace Bloodeck.View
 {
@@ -16,6 +17,10 @@ namespace Bloodeck.View
 
         [SerializeField]
         private FloatReference _cardSlotCheckRadius = new FloatReference(15f);
+
+        [Header(HeaderTitles.Injections)]
+        [Inject, SerializeField]
+        private CardMB _card;
 
         private void Update()
         {
@@ -37,7 +42,7 @@ namespace Bloodeck.View
                 return;
             }
 
-            if (slotHit == _selectedSlot)
+            if (!CheckCanBeDeployedOnSlot(slotHit) || slotHit == _selectedSlot)
             {
                 return;
             }
@@ -46,6 +51,11 @@ namespace Bloodeck.View
             _selectedSlot = slotHit;
             _selectableCardSlot = _selectedSlot.GetComponentInChildren<SelectableCardSlotMB>();
             _selectableCardSlot.Select();
+        }
+
+        private bool CheckCanBeDeployedOnSlot(CardSlotMB slotHit)
+        {
+            return _card.Ownable.Owner.CheckCanDeployCardOnSlot(_card, slotHit);
         }
 
         private bool TryDetectCardSlot(out RaycastHit hit)

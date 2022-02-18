@@ -25,7 +25,7 @@ namespace Bloodeck
                 return;
             }
 
-            card.Owner.Deck.ReturnCard(card);
+            card.Ownable.Owner.Deck.ReturnCard(card);
         }
     }
 }

@@ -7,10 +7,11 @@ namespace Bloodeck
 {
     public class DeckController : IDeck
     {
+        public event Action<ICard> Added;
         public event Action Changed;
 
         public int Count => _humbleObject.Count;
-        
+
         public ICardFromTemplateFactory CardFromTemplateFactory => _humbleObject.CardFromTemplateFactory;
 
         public IList<ICard> Cards => _humbleObject.Cards;
@@ -20,7 +21,6 @@ namespace Bloodeck
         public IDeckTemplate LoadedTemplate => _humbleObject.LoadedTemplate;
 
         private readonly IDeckHumbleObject _humbleObject;
-
 
         public DeckController(IDeckHumbleObject humbleObject)
         {
@@ -60,7 +60,7 @@ namespace Bloodeck
             }
 
             Cards.Add(card);
-            OnChanged();
+            OnAdded(card);
         }
 
         public bool Remove(ICard card)
@@ -109,9 +109,20 @@ namespace Bloodeck
             Cards.Clear();
         }
 
+        private void OnAdded(ICard card)
+        {
+            NotifyAdded(card);
+            OnChanged();
+        }
+
         private void OnChanged()
         {
             NotifyChanged();
+        }
+
+        private void NotifyAdded(ICard card)
+        {
+            Added?.Invoke(card);
         }
 
         private void NotifyChanged()

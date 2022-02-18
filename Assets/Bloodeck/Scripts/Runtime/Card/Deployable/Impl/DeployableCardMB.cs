@@ -60,7 +60,13 @@ namespace Bloodeck
 
         public bool TryDeploy(ICardSlot slot)
         {
-            return _controller.TryDeploy(slot);
+            bool result = _controller.TryDeploy(slot);
+            if (result)
+            {
+                _card.transform.SetParent(((CardSlotMB) slot).transform);
+            }
+
+            return result;
         }
 
         public bool TryUndeploy()

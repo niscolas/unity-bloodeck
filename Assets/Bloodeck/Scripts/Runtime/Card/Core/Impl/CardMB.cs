@@ -20,8 +20,11 @@ namespace Bloodeck
 
         [Header(HeaderTitles.Injections)]
         [Inject, SerializeField]
+        private OwnableCardMB _ownableCard;
+
+        [Inject, SerializeField]
         private DeployableCardMB _deployableCard;
-        
+
         [Inject, SerializeField]
         private EntityMB _entity;
 
@@ -39,7 +42,7 @@ namespace Bloodeck
 
         [SerializeField]
         private CardTemplateSO _loadedTemplate;
-        
+
         public event Action Destroyed;
 
         public int Cost
@@ -49,18 +52,14 @@ namespace Bloodeck
         }
 
         public IDeployableCard Deployable => _deployableCard;
-        
+
+        public IOwnableCard Ownable => _ownableCard;
+
         public IEntity SelfEntity => _entity;
 
         public ICardSlot Slot => _deployableCard.Slot;
-        
-        public ICardEffectMap Effects => _loadedTemplate.Effects;
 
-        public ICardPlayer Owner
-        {
-            get => _owner;
-            set => _owner = value as CardPlayerMB;
-        }
+        public ICardEffectMap Effects => _loadedTemplate.Effects;
 
         public ICardTemplate LoadedTemplate => _loadedTemplate;
 
@@ -132,6 +131,5 @@ namespace Bloodeck
         {
             name = $"Card-{_loadedTemplate.SelfEntityTemplate.Name}";
         }
-        
     }
 }

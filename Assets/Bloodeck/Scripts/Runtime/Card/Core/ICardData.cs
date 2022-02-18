@@ -6,7 +6,7 @@
         ICardEffectMap Effects { get; }
         IDeployableCard Deployable { get; }
         ICardTemplate LoadedTemplate { get; }
-        ICardPlayer Owner { get; set; }
+        IOwnableCard Ownable { get; }
         IEntity SelfEntity { get; }
         ICardSlot Slot { get; }
     }

@@ -23,6 +23,9 @@ namespace Bloodeck.View
         private FloatReference _deploySpeed = new FloatReference(40f);
 
         [SerializeField]
+        private Vector3Reference _deploySlotOffset = new Vector3Reference(new Vector3(0, 0, 10f));
+
+        [SerializeField]
         private FloatReference _maxDistanceFromSlot = new FloatReference(10);
 
         [Required, SerializeField]
@@ -116,7 +119,7 @@ namespace Bloodeck.View
                     return;
                 }
 
-                MoveTowardsSlot();
+                MoveTowardsDeployPosition();
             }
         }
 
@@ -157,10 +160,10 @@ namespace Bloodeck.View
         {
             return Vector3.Distance(
                 _transform.position,
-                SelectedSlot.transform.position) < _maxDistanceFromSlot.Value;
+                GetDeployPosition()) < _maxDistanceFromSlot.Value;
         }
 
-        private void MoveTowardsSlot()
+        private void MoveTowardsDeployPosition()
         {
             float t = _timeService.DeltaTime * _deploySpeed.Value;
             _transform.localScale = Vector3.Lerp(
@@ -170,8 +173,13 @@ namespace Bloodeck.View
 
             _transform.position = Vector3.Lerp(
                 _transform.position,
-                SelectedSlot.transform.position,
+                GetDeployPosition(),
                 t);
+        }
+
+        private Vector3 GetDeployPosition()
+        {
+            return SelectedSlot.transform.TransformPoint(_deploySlotOffset.Value);
         }
 
         private void OnDeployed()

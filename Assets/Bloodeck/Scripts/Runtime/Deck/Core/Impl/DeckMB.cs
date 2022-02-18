@@ -18,6 +18,9 @@ namespace Bloodeck
         [SerializeField]
         private IntReference _count = new IntReference();
 
+        [SerializeField]
+        private Transform _cardsParent;
+
         [Header(HeaderTitles.Debug)]
         [SerializeField]
         private ParentList<ICard, CardMB> _cards = new ParentList<ICard, CardMB>();
@@ -25,6 +28,7 @@ namespace Bloodeck
         [SerializeField]
         private DeckTemplateSO _loadedTemplate;
 
+        public event Action<ICard> Added;
         public event Action Changed;
 
         public int Count => Cards.Count;
@@ -63,12 +67,19 @@ namespace Bloodeck
 
         private void Start()
         {
+            if (!_cardsParent)
+            {
+                _cardsParent = _transform;
+            }
+
+            _controller.Added += OnAdded;
             _controller.Changed += OnChanged;
             SimpleTemplateLoader<DeckTemplateSO>.InitializationLoadTemplate(this);
         }
 
         private void OnDestroy()
         {
+            _controller.Added -= OnAdded;
             _controller.Changed -= OnChanged;
         }
 
@@ -85,13 +96,16 @@ namespace Bloodeck
         public void Add(ICard card)
         {
             _controller.Add(card);
-            GetCardInDeckComponent(card).Link(this);
+
+            CardInDeckMB cardInDeck = card.GetComponent<CardInDeckMB>();
+            cardInDeck.Link(this);
+            cardInDeck.transform.SetParent(_transform);
         }
 
         public bool Remove(ICard card)
         {
             bool result = _controller.Remove(card);
-            GetCardInDeckComponent(card).Unlink();
+            card.GetComponent<CardInDeckMB>().Unlink();
             return result;
         }
 
@@ -134,7 +148,13 @@ namespace Bloodeck
 
         private void DestroyAllCards()
         {
-            _cards.AsMBs.ForEach(x => _despawnService.Despawn(x));
+            _cards.AsChildClass.ForEach(x => _despawnService.Despawn(x));
+        }
+
+        private void OnAdded(ICard card)
+        {
+            Added?.Invoke(card);
+            ParentCard((CardMB) card);
         }
 
         private void OnChanged()
@@ -143,20 +163,16 @@ namespace Bloodeck
             Changed?.Invoke();
         }
 
-        private void OnCardCreated(ICard card)
-        {
-            CardMB cardMB = (CardMB) card;
-            cardMB.gameObject.SetActive(false);
-        }
+        private void OnCardCreated(ICard card) { }
 
         private void ParentAllCardsToSelf()
         {
-            _cards.AsMBs.ForEach(x => x.transform.SetParent(_transform));
+            _cards.AsChildClass.ForEach(ParentCard);
         }
 
-        private CardInDeckMB GetCardInDeckComponent(ICard card)
+        private void ParentCard(CardMB card)
         {
-            return ((CardMB) card).GetComponentInChildren<CardInDeckMB>();
+            card.transform.SetParent(_cardsParent);
         }
     }
 }

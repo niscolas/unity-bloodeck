@@ -12,6 +12,8 @@ namespace Bloodeck
             set => _humbleObject.Cost = value;
         }
 
+        public IOwnableCard Ownable => _humbleObject.Ownable;
+
         public IEntity SelfEntity => _humbleObject.SelfEntity;
 
         public ICardSlot Slot => _humbleObject.Slot;
@@ -19,12 +21,6 @@ namespace Bloodeck
         public ICardEffectMap Effects => _humbleObject.Effects;
 
         public IDeployableCard Deployable => _humbleObject.Deployable;
-
-        public ICardPlayer Owner
-        {
-            get => _humbleObject.Owner;
-            set => _humbleObject.Owner = value;
-        }
 
         public ICardTemplate LoadedTemplate => _humbleObject.LoadedTemplate;
 

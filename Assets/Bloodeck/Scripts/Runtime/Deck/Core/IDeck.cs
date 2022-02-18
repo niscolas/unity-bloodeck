@@ -4,6 +4,7 @@ namespace Bloodeck
 {
     public interface IDeck : IDeckData
     {
+        event Action<ICard> Added;
         event Action Changed;
         ICard DrawFromTop();
         void Add(ICard card);

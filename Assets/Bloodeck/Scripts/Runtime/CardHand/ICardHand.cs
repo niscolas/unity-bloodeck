@@ -6,6 +6,7 @@ namespace Bloodeck
     {
         event Action<ICard> Added;
         event Action<ICard> Removed;
+        
         bool CheckIsFull();
     }
 }

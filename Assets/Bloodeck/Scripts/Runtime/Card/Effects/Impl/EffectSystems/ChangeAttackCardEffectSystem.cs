@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using niscolas.UnityUtils.Core.Extensions;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace Bloodeck
         [SerializeField]
         private BoolReference _relativeChange = new BoolReference(true);
 
-        public void Apply(IEntities targets, ICard instigator = null)
+        public void Apply(IEnumerable<IEntity> targets, ICard instigator = null)
         {
             targets.ForEach(x => Apply(x, instigator));
         }

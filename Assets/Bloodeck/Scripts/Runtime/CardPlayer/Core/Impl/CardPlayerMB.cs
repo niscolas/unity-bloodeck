@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using niscolas.UnityUtils.Core;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
@@ -109,7 +110,6 @@ namespace Bloodeck
         private void Start()
         {
             _controller.CardDeployed += Controller_OnCardDeployed;
-            DrawInitialCards();
         }
 
         private void OnDestroy()
@@ -130,6 +130,11 @@ namespace Bloodeck
         public void DrawInitialCards()
         {
             _controller.DrawInitialCards();
+        }
+
+        public bool CheckOwnsCard(ICard card)
+        {
+            return _controller.CheckOwnsCard(card);
         }
 
         public bool CheckCanDeployCardOnSlot(ICard card, ICardSlot slot)

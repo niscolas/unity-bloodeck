@@ -80,9 +80,14 @@ namespace Bloodeck
             DrawInitialCardsAsync().Forget();
         }
 
+        public bool CheckOwnsCard(ICard card)
+        {
+            return Hand.Contains(card);
+        }
+
         public bool CheckCanDeployCardOnSlot(ICard card, ICardSlot slot)
         {
-            return CheckHasCard(card) &&
+            return CheckOwnsCard(card) &&
                    CheckOwnsSlot(slot) &&
                    CheckHaveEnergyToPlaceCard(card);
         }
@@ -126,12 +131,6 @@ namespace Bloodeck
         {
             x.Ownable.SetOwner((ICardPlayer) _humbleObject);
             x.SelfEntity.Team = SelfEntity.Team;
-        }
-
-        private bool CheckHasCard(ICard card)
-        {
-            bool result = Hand.Contains(card);
-            return result;
         }
 
         private bool CheckHaveEnergyToPlaceCard(ICard card)

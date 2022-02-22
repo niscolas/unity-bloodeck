@@ -33,6 +33,11 @@ namespace Bloodeck
             return _controller.CanPlaceCard(card);
         }
 
+        public bool CheckIsEmpty()
+        {
+            return _controller.CheckIsEmpty();
+        }
+
         public bool TrySetCard(ICard card)
         {
             return _controller.TrySetCard(card);

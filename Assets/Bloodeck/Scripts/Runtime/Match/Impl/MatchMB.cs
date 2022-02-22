@@ -39,6 +39,23 @@ namespace Bloodeck
         [Inject]
         private MatchController _controller;
 
+        private void OnEnable()
+        {
+            _controller.TurnStarted += Controller_OnTurnStarted;
+            _controller.TurnEnded += Controller_OnTurnEnded;
+        }
+
+        private void OnDisable()
+        {
+            _controller.TurnStarted -= Controller_OnTurnStarted;
+            _controller.TurnEnded -= Controller_OnTurnEnded;
+        }
+
+        public ICardPlayer GetOpponent(ICardPlayer cardPlayer)
+        {
+            return _controller.GetOpponent(cardPlayer);
+        }
+
         public bool CheckAreOppositeTeams(ITeam team, ITeam otherTeam)
         {
             return _controller.CheckAreOppositeTeams(team, otherTeam);
@@ -57,6 +74,16 @@ namespace Bloodeck
         public void SetTurnCount(int value)
         {
             _turnCountOutput.Value = value;
+        }
+
+        private void Controller_OnTurnStarted(ITurn turn)
+        {
+            TurnStarted?.Invoke(turn);
+        }
+
+        private void Controller_OnTurnEnded(ITurn turn)
+        {
+            TurnEnded?.Invoke(turn);
         }
     }
 }

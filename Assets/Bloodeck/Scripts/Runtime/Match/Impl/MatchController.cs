@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using niscolas.UnityUtils.Core.Extensions;
+using Zenject.SpaceFighter;
 
 namespace Bloodeck
 {
@@ -21,6 +22,14 @@ namespace Bloodeck
         public MatchController(IMatchHumbleObject humbleObject)
         {
             _humbleObject = humbleObject;
+        }
+
+        public ICardPlayer GetOpponent(ICardPlayer cardPlayer)
+        {
+            return Players.FirstOrDefault(
+                x => CheckAreOppositeTeams(
+                    x.SelfEntity.Team,
+                    cardPlayer.SelfEntity.Team));
         }
 
         public bool CheckAreOppositeTeams(ITeam team, ITeam otherTeam)

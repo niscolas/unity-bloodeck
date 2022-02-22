@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using niscolas.UnityUtils.Core.Extensions;
 using niscolas.UnityUtils.SerializeReference;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Bloodeck
 
         public void Trigger(IEntities rawTargets, ICard card)
         {
-            IEntities filteredTargets = _targetFilters.Filter(rawTargets, card.SelfEntity);
+            IEnumerable<IEntity> filteredTargets = _targetFilters.Filter(rawTargets, card.SelfEntity);
             this.ForEach(x => x.Apply(filteredTargets, card));
         }
     }

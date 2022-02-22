@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using niscolas.UnityUtils.Core.Extensions;
 
 namespace Bloodeck
@@ -6,7 +7,7 @@ namespace Bloodeck
     [Serializable]
     public class DestroyEntityCardEffectSystem : ICardEffectSystem
     {
-        public void Apply(IEntities targets, ICard instigator)
+        public void Apply(IEnumerable<IEntity> targets, ICard instigator = null)
         {
             targets.ForEach(x => Apply(x, instigator));
         }

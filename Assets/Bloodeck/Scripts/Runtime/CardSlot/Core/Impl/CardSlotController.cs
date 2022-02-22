@@ -21,12 +21,17 @@ namespace Bloodeck
 
         public bool CanPlaceCard(ICard card)
         {
-            if (!Card.IsUnityNull())
+            if (!CheckIsEmpty())
             {
                 return false;
             }
 
             return Restrictions.Validate(card);
+        }
+
+        public bool CheckIsEmpty()
+        {
+            return Card.IsUnityNull();
         }
 
         public bool TrySetCard(ICard card)
@@ -43,7 +48,7 @@ namespace Bloodeck
 
         public bool UnsetCard()
         {
-            if (Card.IsUnityNull())
+            if (!CheckIsEmpty())
             {
                 return false;
             }
@@ -51,7 +56,7 @@ namespace Bloodeck
             ICard oldCard = Card;
             Card = default;
             oldCard.Deployable.TryUndeploy();
-            
+
             return true;
         }
     }

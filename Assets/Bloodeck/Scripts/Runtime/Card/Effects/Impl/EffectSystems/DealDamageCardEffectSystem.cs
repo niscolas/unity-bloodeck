@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using niscolas.UnityUtils.Core.Extensions;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace Bloodeck
         [SerializeField]
         private FloatReference _ratio = new FloatReference(1);
 
-        public void Apply(IEntities targets, ICard instigator)
+        public void Apply(IEnumerable<IEntity> targets, ICard instigator = null)
         {
             targets.ForEach(x => Apply(x, instigator));
         }

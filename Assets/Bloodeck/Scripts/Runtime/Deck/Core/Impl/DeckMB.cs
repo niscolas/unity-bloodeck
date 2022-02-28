@@ -47,7 +47,6 @@ namespace Bloodeck
 
         public IDeckTemplate LoadedTemplate => _loadedTemplate;
 
-
         [Inject]
         private CardMBFromTemplateFactory _cardFromTemplateFactory;
 
@@ -58,7 +57,6 @@ namespace Bloodeck
         private IDespawnService _despawnService;
 
         private IDeck _asIDeck;
-
 
         protected override void Awake()
         {

@@ -48,7 +48,7 @@ namespace Bloodeck
 
         public bool UnsetCard()
         {
-            if (!CheckIsEmpty())
+            if (CheckIsEmpty())
             {
                 return false;
             }

@@ -15,15 +15,19 @@ namespace Bloodeck
 
         public CardHandMB Hand => _hand;
 
+        public bool IsLinked { get; private set; }
+
         public void LinkHand(CardHandMB hand)
         {
             _hand = hand;
+            IsLinked = true;
             Linked?.Invoke(hand);
         }
 
         public void UnlinkHand()
         {
             _hand = default;
+            IsLinked = false;
             Unlinked?.Invoke();
         }
     }

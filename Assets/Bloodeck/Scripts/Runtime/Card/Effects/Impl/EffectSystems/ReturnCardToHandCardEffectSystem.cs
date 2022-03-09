@@ -5,7 +5,7 @@ using niscolas.UnityUtils.Core.Extensions;
 namespace Bloodeck
 {
     [Serializable]
-    public class ReturnCardToDeckCardEffectSystem : ICardEffectSystem
+    public class ReturnCardToHandCardEffectSystem : ICardEffectSystem
     {
         public void Apply(IEnumerable<IEntity> targets, ICard instigator = null)
         {
@@ -26,7 +26,7 @@ namespace Bloodeck
                 return;
             }
 
-            card.Ownable.Owner.Deck.ReturnCard(card);
+            card.Ownable.Owner.Hand.Add(card);
         }
     }
 }

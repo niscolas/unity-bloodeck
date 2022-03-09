@@ -159,7 +159,6 @@ namespace Bloodeck
 
             CardMB cardMB = (CardMB) card;
             ParentCard(cardMB);
-            cardMB.gameObject.SetActive(false);
         }
 
         private void OnCardCreated(ICard card) { }

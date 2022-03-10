@@ -1,5 +1,4 @@
 ﻿using System;
-using NaughtyAttributes;
 using niscolas.UnityUtils.Core;
 using niscolas.UnityUtils.Core.Extensions;
 using UnityEngine;
@@ -23,8 +22,8 @@ namespace Bloodeck
         [SerializeReference]
         private IEntityTemplate _loadedTemplate;
 
-        [ShowNativeProperty]
-        private int _allEntitiesCountDebug => GetAllEntitiesCount();
+        [Inject(Id = ZenjectIds.AllEntitiesId), SerializeField]
+        private ParentCollection<IEntity, EntityMB> _allEntities;
 
         public event Action Destroyed;
 
@@ -48,9 +47,6 @@ namespace Bloodeck
 
         [Inject]
         private EntityController _controller;
-
-        [Inject(Id = ZenjectIds.AllEntitiesId)]
-        private IEntities _allEntities;
 
         [Inject]
         private IDespawnService _despawnService;

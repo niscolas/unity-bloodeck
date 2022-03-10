@@ -14,7 +14,7 @@ namespace Bloodeck
 
         public IEntityFilters TargetFilters => _targetFilters;
 
-        public void Trigger(IEntities rawTargets, ICard card)
+        public void Trigger(IEnumerable<IEntity> rawTargets, ICard card)
         {
             IEnumerable<IEntity> filteredTargets = _targetFilters.Filter(rawTargets, card.SelfEntity);
             this.ForEach(x => x.Apply(filteredTargets, card));

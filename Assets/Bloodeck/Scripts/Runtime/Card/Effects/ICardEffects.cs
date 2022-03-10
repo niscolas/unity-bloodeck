@@ -5,6 +5,6 @@ namespace Bloodeck
     public interface ICardEffects : ICollection<ICardEffectSystem>
     {
         IEntityFilters TargetFilters { get; }
-        void Trigger(IEntities rawTargets, ICard card);
+        void Trigger(IEnumerable<IEntity> rawTargets, ICard card);
     }
 }

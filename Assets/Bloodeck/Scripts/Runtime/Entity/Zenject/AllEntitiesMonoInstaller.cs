@@ -7,9 +7,8 @@ namespace Bloodeck
         public override void InstallBindings()
         {
             Container
-                .Bind<IEntities>()
+                .Bind<ParentCollection<IEntity, EntityMB>>()
                 .WithId(ZenjectIds.AllEntitiesId)
-                .To<SerializableEntities>()
                 .AsSingle();
         }
     }

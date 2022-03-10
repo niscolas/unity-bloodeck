@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using SerializableDictionary;
 
 namespace Bloodeck
 {
     [Serializable]
     public class SerializableCardEffectMap :
-        FakeSerializableDictionary<ICardEffectTrigger, ICardEffects, SerializeReferenceKeyValuePair<ICardEffectTrigger, ICardEffects>>,
+        FakeSerializableDictionary<ICardEffectTrigger, ICardEffects,
+            SerializeReferenceKeyValuePair<ICardEffectTrigger, ICardEffects>>,
         ICardEffectMap
     {
-        public void Trigger(ICardEffectTrigger trigger, IEntities rawTargets, ICard card)
+        public void Trigger(ICardEffectTrigger trigger, IEnumerable<IEntity> rawTargets, ICard card)
         {
             if (!TryGetValue(trigger, out ICardEffects effects))
             {

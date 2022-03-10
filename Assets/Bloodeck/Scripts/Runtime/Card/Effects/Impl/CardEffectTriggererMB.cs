@@ -10,8 +10,9 @@ namespace Bloodeck
         [Inject, SerializeField]
         private CardMB _selfCard;
 
-        [Inject(Id = ZenjectIds.AllEntitiesId)]
-        private IEntities _allEntities;
+        [Header(HeaderTitles.Debug)]
+        [Inject(Id = ZenjectIds.AllEntitiesId), SerializeField]
+        private ParentCollection<IEntity, EntityMB> _allEntities;
 
         public void Trigger(CardEffectTriggerSO trigger)
         {

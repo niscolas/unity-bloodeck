@@ -149,7 +149,8 @@ namespace Bloodeck
 
         public bool TryPlaceCard(ICard card, ICardSlot slot)
         {
-            return _controller.TryPlaceCard(card, slot);
+            bool placedCard = _controller.TryPlaceCard(card, slot);
+            return placedCard;
         }
 
         public void SetHasDrawnInitialCards(bool value)

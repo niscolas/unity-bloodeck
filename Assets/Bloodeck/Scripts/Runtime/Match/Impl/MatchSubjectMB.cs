@@ -1,6 +1,5 @@
 ﻿using System;
 using niscolas.UnityUtils.Core;
-using niscolas.UnityUtils.Core.Extensions;
 using UnityEngine;
 using Zenject;
 

@@ -14,9 +14,6 @@ namespace Bloodeck
         [SerializeField]
         private MatchState _state;
 
-        [SerializeField]
-        private SerializableTurn _currentTurn;
-
         [Header(HeaderTitles.Output)]
         [SerializeField]
         private IntReference _turnCountOutput = new IntReference(0);
@@ -24,6 +21,10 @@ namespace Bloodeck
         [Header(HeaderTitles.Injections)]
         [Inject, SerializeField]
         private List<CardPlayerMB> _players;
+
+        [Header(HeaderTitles.Debug)]
+        [SerializeField]
+        private SerializableTurn _currentTurn;
 
         public event Action<ITurn> TurnStarted;
         public event Action<ITurn> TurnEnded;
@@ -38,6 +39,12 @@ namespace Bloodeck
 
         [Inject]
         private MatchController _controller;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _currentTurn = default;
+        }
 
         private void OnEnable()
         {

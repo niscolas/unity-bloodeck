@@ -1,7 +1,9 @@
-﻿namespace Bloodeck
+﻿using System.Collections.Generic;
+
+namespace Bloodeck
 {
     public interface IEntityFilter
     {
-        IEntities Filter(IEntities entities, IEntity instigator = null);
+        IEnumerable<IEntity> Filter(IEnumerable<IEntity> entities, IEntity instigator = null);
     }
 }

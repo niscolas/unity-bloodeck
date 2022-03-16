@@ -10,9 +10,8 @@ namespace Bloodeck
     {
         public IEnumerable<IEntity> Filter(IEnumerable<IEntity> entities, IEntity instigator = null)
         {
-            IEntities result = new SerializableEntities(entities);
-            this.ForEach(x => { result = x.Filter(result, instigator); });
-            return result;
+            this.ForEach(x => { entities = x.Filter(entities, instigator); });
+            return entities;
         }
     }
 }

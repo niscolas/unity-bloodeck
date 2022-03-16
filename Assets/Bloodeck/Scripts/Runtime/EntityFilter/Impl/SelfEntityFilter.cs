@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Bloodeck
 {
     [Serializable]
     public class SelfEntityFilter : IEntityFilter
     {
-        public IEntities Filter(IEntities entities, IEntity instigator = null)
+        public IEnumerable<IEntity> Filter(IEnumerable<IEntity> entities, IEntity instigator = null)
         {
             return new SerializableEntities(instigator);
         }

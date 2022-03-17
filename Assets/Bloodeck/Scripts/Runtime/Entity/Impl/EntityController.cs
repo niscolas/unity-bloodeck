@@ -23,6 +23,8 @@ namespace Bloodeck
             set => _humbleObject.Team = value;
         }
 
+        public bool IsActiveInGame => _humbleObject.IsActiveInGame;
+
         private readonly IEntityHumbleObject _humbleObject;
 
         public EntityController(IEntityHumbleObject humbleObject)

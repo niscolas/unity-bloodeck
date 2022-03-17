@@ -1,6 +1,7 @@
 ﻿using System;
 using niscolas.UnityUtils.Core;
 using niscolas.UnityUtils.Core.Extensions;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using Zenject;
 
@@ -12,8 +13,8 @@ namespace Bloodeck
         [SerializeReference]
         private IEntityTemplate _templateToLoad;
 
-        [Inject, SerializeField]
-        private EntityComponentsMB _components;
+        [SerializeField]
+        private BoolReference _isActiveInGame;
 
         [Header(HeaderTitles.Debug)]
         [SerializeField]
@@ -21,6 +22,10 @@ namespace Bloodeck
 
         [SerializeReference]
         private IEntityTemplate _loadedTemplate;
+
+        [Header(HeaderTitles.Injections)]
+        [Inject, SerializeField]
+        private EntityComponentsMB _components;
 
         [Inject(Id = ZenjectIds.AllEntitiesId), SerializeField]
         private ParentCollection<IEntity, EntityMB> _allEntities;
@@ -45,19 +50,25 @@ namespace Bloodeck
             set => _team = value as TeamTypeSO;
         }
 
+        public bool IsActiveInGame => _isActiveInGame.Value;
+
         [Inject]
         private EntityController _controller;
 
         [Inject]
         private IDespawnService _despawnService;
 
-        private void Start()
+        private void OnEnable()
         {
-            SimpleTemplateLoader<IEntityTemplate>.InitializationLoadTemplate(this);
             _allEntities.Add(this);
         }
 
-        private void OnDestroy()
+        private void Start()
+        {
+            SimpleTemplateLoader<IEntityTemplate>.InitializationLoadTemplate(this);
+        }
+
+        private void OnDisable()
         {
             _allEntities.Remove(this);
         }

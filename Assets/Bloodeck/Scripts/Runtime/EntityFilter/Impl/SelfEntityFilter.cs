@@ -8,7 +8,7 @@ namespace Bloodeck
     {
         public IEnumerable<IEntity> Filter(IEnumerable<IEntity> entities, IEntity instigator = null)
         {
-            return new SerializableEntities(instigator);
+            yield return instigator;
         }
     }
 }

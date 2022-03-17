@@ -58,9 +58,14 @@ namespace Bloodeck
             _controller.TurnEnded -= Controller_OnTurnEnded;
         }
 
-        public ICardPlayer GetOpponent(ICardPlayer cardPlayer)
+        public ICardPlayer GetOpponentCardPlayer(ICardPlayer cardPlayer)
         {
-            return _controller.GetOpponent(cardPlayer);
+            return _controller.GetOpponentCardPlayer(cardPlayer);
+        }
+
+        public ITeam GetOpponentTeam(ITeam team)
+        {
+            return _controller.GetOpponentTeam(team);
         }
 
         public bool CheckAreOppositeTeams(ITeam team, ITeam otherTeam)

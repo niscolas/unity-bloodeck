@@ -7,7 +7,8 @@ namespace Bloodeck
         event Action<ITurn> TurnStarted;
         event Action<ITurn> TurnEnded;
 
-        ICardPlayer GetOpponent(ICardPlayer cardPlayer);
+        ICardPlayer GetOpponentCardPlayer(ICardPlayer cardPlayer);
+        ITeam GetOpponentTeam(ITeam team);
         bool CheckAreOppositeTeams(ITeam team, ITeam otherTeam);
         void SetTurn(ITeam cardPlayerTeam);
     }

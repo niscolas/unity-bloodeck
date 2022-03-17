@@ -24,12 +24,19 @@ namespace Bloodeck
             _humbleObject = humbleObject;
         }
 
-        public ICardPlayer GetOpponent(ICardPlayer cardPlayer)
+        public ICardPlayer GetOpponentCardPlayer(ICardPlayer cardPlayer)
         {
-            return Players.FirstOrDefault(
-                x => CheckAreOppositeTeams(
-                    x.SelfEntity.Team,
-                    cardPlayer.SelfEntity.Team));
+            return Players
+                .FirstOrDefault(x => CheckAreOppositeTeams(
+                    cardPlayer.SelfEntity.Team,
+                    x.SelfEntity.Team));
+        }
+
+        public ITeam GetOpponentTeam(ITeam team)
+        {
+            return Players
+                .Select(x => x.SelfEntity.Team)
+                .FirstOrDefault(x => CheckAreOppositeTeams(x, team));
         }
 
         public bool CheckAreOppositeTeams(ITeam team, ITeam otherTeam)

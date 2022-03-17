@@ -10,12 +10,19 @@ namespace Bloodeck
     {
         [SerializeField]
         private TeamTypeSO _team;
-        
+
         public IEnumerable<IEntity> Filter(IEnumerable<IEntity> entities, IEntity instigator = null)
         {
-            IEnumerable<IEntity> filteredEntities = entities
-                .Where(x => ReferenceEquals(_team, x.Team));
-            return new SerializableEntities(filteredEntities);
+            return Filter(entities, _team, instigator);
+        }
+
+        public IEnumerable<IEntity> Filter(IEnumerable<IEntity> entities, ITeam team, IEntity instigator = null)
+        {
+            IEnumerable<IEntity> result = entities
+                .Where(x =>
+                    x.IsActiveInGame &&
+                    ReferenceEquals(team, x.Team));
+            return result;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Bloodeck
 {
-    public interface IEntityHealthComponentData : 
+    public interface IEntityHealthComponentData :
         IEntityComponent, IEntityComponentWithTemplate<IEntityHealthTemplate>
     {
         bool CanHeal { get; set; }

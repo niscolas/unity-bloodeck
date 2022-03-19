@@ -1,11 +1,11 @@
-﻿using niscolas.UnityUtils.Core.Extensions;
-using UnityEngine;
+﻿using System;
+using niscolas.UnityUtils.Core;
+using niscolas.UnityUtils.Core.Extensions;
 
 namespace Bloodeck
 {
-    [AddComponentMenu(Constants.AddComponentMenuPrefix + "Entity Components")]
     public class EntityComponentsMB :
-        InjectableParentCollectionMB<IEntityComponent, EntityComponentMB>,
+        ParentCollectionMB<IEntityComponent, EntityComponentMB>,
         IEntityComponents,
         IEntityTemplateLoadedCallbackReceiver
     {
@@ -17,6 +17,11 @@ namespace Bloodeck
         public bool TryGet<T>(out T value) where T : IEntityComponent
         {
             return _content.TryGetFirstOfType(out value);
+        }
+
+        public bool TryGet(Type type, out IEntityComponent value)
+        {
+            return _content.TryGetFirstOfType(type, out value);
         }
 
         public void LoadComponents()

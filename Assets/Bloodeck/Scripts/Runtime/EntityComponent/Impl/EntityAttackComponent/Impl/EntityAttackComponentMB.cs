@@ -7,7 +7,6 @@ using Zenject;
 
 namespace Bloodeck
 {
-    [AddComponentMenu(Constants.AddComponentMenuPrefix + "Entity Attack")]
     public class EntityAttackComponentMB :
         EntityComponentWithTemplateMB, IEntityAttackComponent, IEntityAttackComponentHumbleObject
     {
@@ -63,14 +62,14 @@ namespace Bloodeck
             _controller.AttackValueChanged -= Controller_OnAttackValueChanged;
         }
 
-        public void Attack(IEntity target)
+        public bool Attack(IEntity target)
         {
-            _controller.Attack(target);
+            return _controller.Attack(target);
         }
 
-        public void Attack(IEntityHealthComponent target)
+        public bool Attack(IEntityHealthComponent target)
         {
-            _controller.Attack(target);
+            return _controller.Attack(target);
         }
 
         public bool CheckCanAttack()
@@ -108,8 +107,6 @@ namespace Bloodeck
         {
             _controller.OnTurnStarted();
         }
-
-        private void Match_OnTurnEnded(ITurn turn) { }
 
         private void Controller_OnAttackTriggered(IEntity target)
         {

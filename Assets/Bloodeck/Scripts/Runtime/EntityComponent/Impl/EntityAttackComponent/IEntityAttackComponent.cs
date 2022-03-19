@@ -6,9 +6,9 @@ namespace Bloodeck
     {
         event Action<IEntity> AttackTriggered;
         event Action<float> AttackValueChanged;
-        
-        void Attack(IEntity target);
-        void Attack(IEntityHealthComponent target);
+
+        bool Attack(IEntity target);
+        bool Attack(IEntityHealthComponent target);
         bool CheckCanAttack();
     }
 }

@@ -30,26 +30,28 @@ namespace Bloodeck
             _humbleObject = humbleObject;
         }
 
-        public void Attack(IEntity target)
+        public bool Attack(IEntity target)
         {
             if (!target.Components.TryGet(out IEntityHealthComponent entityHealth))
             {
-                return;
+                return false;
             }
 
-            Attack(entityHealth);
+            return Attack(entityHealth);
         }
 
-        public void Attack(IEntityHealthComponent target)
+        public bool Attack(IEntityHealthComponent target)
         {
             if (!CheckCanAttack())
             {
-                return;
+                return false;
             }
 
             target.TakeDamage(AttackValue, OwnerEntity);
             SetAttacksLeftInTurn(AttacksLeftInTurn - 1);
             NotifyAttackTriggered(target);
+
+            return true;
         }
 
         public bool CheckCanAttack()

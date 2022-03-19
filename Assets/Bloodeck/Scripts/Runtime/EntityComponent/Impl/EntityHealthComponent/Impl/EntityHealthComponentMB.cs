@@ -1,4 +1,5 @@
-﻿using Healthy;
+﻿using System;
+using Healthy;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using Zenject;
@@ -17,6 +18,8 @@ namespace Bloodeck
         [Header(HeaderTitles.Injections)]
         [Inject, SerializeField]
         private HealthMB _health;
+
+        public event Action Died;
 
         public bool CanHeal
         {
@@ -60,11 +63,13 @@ namespace Bloodeck
         private void Start()
         {
             _controller.ValueChanged += OnHealthValueChanged;
+            _controller.Died += OnDied;
         }
 
         private void OnDestroy()
         {
             _controller.ValueChanged -= OnHealthValueChanged;
+            _controller.Died -= OnDied;
         }
 
         public void TakeDamage(float damageValue, IEntity instigator = null)
@@ -90,6 +95,11 @@ namespace Bloodeck
         private void OnHealthValueChanged(float value)
         {
             _current.Value = value;
+        }
+
+        private void OnDied()
+        {
+            Died?.Invoke();
         }
 
         private void OnMaxHealthChanged()

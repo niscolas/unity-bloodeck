@@ -9,8 +9,6 @@ namespace Bloodeck
     {
         public override void InstallBindings()
         {
-            Container.Bind<EntityComponentMB>().FromComponentsInHierarchy().AsSingle();
-
             Container
                 .Bind<IHealth>()
                 .To<HealthController>()

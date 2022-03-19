@@ -16,5 +16,10 @@ namespace Bloodeck
         {
             return _content.TryGetFirstOfType(out value);
         }
+
+        public bool TryGet(Type type, out IEntityComponentTemplate value)
+        {
+            return _content.TryGetFirstOfType(type, out value);
+        }
     }
 }

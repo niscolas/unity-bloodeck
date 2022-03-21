@@ -40,18 +40,20 @@ namespace Bloodeck
         public void GlobalTrigger(CardEffectTriggerSO trigger)
         {
             IEnumerable<CardEffectTriggererMB> triggerers = Triggerers
-                .Where(x => x != this);
+                .Where(x =>
+                    x._selfCard.SelfEntity.IsActiveInGame &&
+                    x != this);
 
-            Trigger(triggerers, trigger);
+            Trigger(triggerers.ToArray(), trigger);
         }
 
         public void GlobalTriggerWithSelf(CardEffectTriggerSO trigger)
         {
-            Trigger(Triggerers, trigger);
+            Trigger(Triggerers.ToArray(), trigger);
         }
 
         public static void Trigger(
-            IEnumerable<CardEffectTriggererMB> triggerers,
+            CardEffectTriggererMB[] triggerers,
             CardEffectTriggerSO trigger)
         {
             triggerers.ForEach(x => x.Trigger(trigger));
@@ -59,7 +61,13 @@ namespace Bloodeck
 
         public void Trigger(CardEffectTriggerSO trigger)
         {
-            _selfCard.Effects.Trigger(trigger, _allEntities, _selfCard);
+            _selfCard.Effects.Trigger(trigger, GetFilteredEntities(), _selfCard);
+        }
+
+        private IEnumerable<IEntity> GetFilteredEntities()
+        {
+            IEnumerable<IEntity> filteredEntities = _allEntities.Where(x => x.IsActiveInGame);
+            return filteredEntities;
         }
     }
 }

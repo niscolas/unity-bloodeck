@@ -29,10 +29,10 @@ namespace Bloodeck
 
         public void LinkHand(CardHandMB hand)
         {
-            TimesLinked++;
             _hand = hand;
             IsLinked = true;
             Linked?.Invoke(hand);
+            TimesLinked++;
         }
 
         public void UnlinkHand()

@@ -72,12 +72,7 @@ namespace Bloodeck
         {
             return _controller.GetOpponentTeam(team);
         }
-
-        public bool CheckAreOppositeTeams(ITeam team, ITeam otherTeam)
-        {
-            return _controller.CheckAreOppositeTeams(team, otherTeam);
-        }
-
+        
         public void SetTurn(ITeam cardPlayerTeam)
         {
             _controller.SetTurn(cardPlayerTeam);

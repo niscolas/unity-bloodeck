@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using niscolas.UnityUtils.Core.Extensions;
-using Zenject.SpaceFighter;
 
 namespace Bloodeck
 {
@@ -31,8 +30,8 @@ namespace Bloodeck
 
         public ICardPlayer GetOpponentCardPlayer(ICardPlayer cardPlayer)
         {
-            return Players
-                .FirstOrDefault(x => CheckAreOppositeTeams(
+            return Players.FirstOrDefault(
+                x => MatchUtility.CheckAreOppositeTeams(
                     cardPlayer.SelfEntity.Team,
                     x.SelfEntity.Team));
         }
@@ -41,12 +40,7 @@ namespace Bloodeck
         {
             return Players
                 .Select(x => x.SelfEntity.Team)
-                .FirstOrDefault(x => CheckAreOppositeTeams(x, team));
-        }
-
-        public bool CheckAreOppositeTeams(ITeam team, ITeam otherTeam)
-        {
-            return team != otherTeam;
+                .FirstOrDefault(x => MatchUtility.CheckAreOppositeTeams(x, team));
         }
 
         public void SetTurn(ITeam cardPlayerTeam)

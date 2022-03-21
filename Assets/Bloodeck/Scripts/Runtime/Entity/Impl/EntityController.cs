@@ -5,7 +5,7 @@ namespace Bloodeck
 {
     public class EntityController : IEntity
     {
-        public event Action Destroyed;
+        public event Action<IEntity> Destroyed;
 
         public IEntityComponents Components => _humbleObject.Components;
 
@@ -39,7 +39,7 @@ namespace Bloodeck
 
         public void Destroy(IEntity instigator)
         {
-            NotifyDestroyed();
+            NotifyDestroyed(instigator);
         }
 
         private void SetTemplate(IEntityTemplate template)
@@ -47,9 +47,9 @@ namespace Bloodeck
             _humbleObject.SetHumbleObjectLoadedTemplate(template);
         }
 
-        private void NotifyDestroyed()
+        private void NotifyDestroyed(IEntity instigator)
         {
-            Destroyed?.Invoke();
+            Destroyed?.Invoke(instigator);
         }
     }
 }

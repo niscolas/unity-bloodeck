@@ -20,7 +20,7 @@
         public bool CheckCanAttackWithCard(ICard attackerCard, IEntity target)
         {
             return SelfCardPlayer.CheckOwnsCard(attackerCard) &&
-                   Match.CheckAreOppositeTeams(
+                   MatchUtility.CheckAreOppositeTeams(
                        SelfCardPlayer.SelfEntity.Team,
                        target.Team);
         }

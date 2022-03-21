@@ -6,7 +6,7 @@ namespace Bloodeck.Zenject
     {
         public override void InstallBindings()
         {
-            Container.Bind<ByTeamEntityFilter>().AsSingle();
+            Container.Bind<OpponentsOnlyEntityFilter>().AsSingle();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Bloodeck
         [Inject(Id = ZenjectIds.AllEntitiesId), SerializeField]
         private ParentCollection<IEntity, EntityMB> _allEntities;
 
-        public event Action Destroyed;
+        public event Action<IEntity> Destroyed;
 
         public IEntityComponents Components => _components;
 
@@ -57,6 +57,12 @@ namespace Bloodeck
 
         [Inject]
         private IDespawnService _despawnService;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _controller.Destroyed += OnDestroyed;
+        }
 
         private void OnEnable()
         {
@@ -109,6 +115,11 @@ namespace Bloodeck
             }
 
             return _allEntities.Count;
+        }
+
+        private void OnDestroyed(IEntity instigator)
+        {
+            Destroyed?.Invoke(instigator);
         }
     }
 }

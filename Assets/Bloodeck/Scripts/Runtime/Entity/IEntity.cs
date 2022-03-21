@@ -4,7 +4,7 @@ namespace Bloodeck
 {
     public interface IEntity : IEntityData
     {
-        event Action Destroyed;
+        event Action<IEntity> Destroyed;
         void LoadTemplate(IEntityTemplate template);
         void Destroy(IEntity instigator = null);
     }

@@ -14,7 +14,6 @@ namespace Bloodeck
         [Inject, SerializeField]
         private MatchMB _match;
 
-        public event Action<ITurn> TurnStarted;
         public event Action<ITurn> SelfTurnStarted;
         public event Action<ITurn> OpponentTurnStarted;
 
@@ -30,9 +29,7 @@ namespace Bloodeck
 
         private void Match_OnTurnStarted(ITurn turn)
         {
-            TurnStarted?.Invoke(turn);
-
-            if (_match.CheckAreOppositeTeams(_selfEntity.Team, turn.Team))
+            if (MatchUtility.CheckAreOppositeTeams(_selfEntity.Team, turn.Team))
             {
                 OpponentTurnStarted?.Invoke(turn);
             }

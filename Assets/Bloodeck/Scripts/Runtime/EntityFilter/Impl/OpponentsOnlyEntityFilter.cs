@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bloodeck
 {
     [Serializable]
-    public class AllEntityFilter : IEntityFilter
+    public class OpponentsOnlyEntityFilter : IEntityFilter
     {
         public IEnumerable<IEntity> Filter(IEnumerable<IEntity> entities, IEntity instigator = null)
         {
-            return entities;
+            IEnumerable<IEntity> result = entities
+                .Where(x => instigator.Team != x.Team);
+            return result;
         }
     }
 }

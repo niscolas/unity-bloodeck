@@ -10,7 +10,6 @@ namespace Bloodeck
         ICardPlayer GetPlayerOfTeam(ITeam team);
         ICardPlayer GetOpponentCardPlayer(ICardPlayer cardPlayer);
         ITeam GetOpponentTeam(ITeam team);
-        bool CheckAreOppositeTeams(ITeam team, ITeam otherTeam);
         void SetTurn(ITeam cardPlayerTeam);
     }
 }

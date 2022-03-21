@@ -6,6 +6,7 @@ namespace Bloodeck
 {
     public class EntityHealthComponentController : IEntityHealthComponent, IHealth
     {
+        public event Action<object> Attacked;
         public event Action<float> DamageTaken;
         public event Action<(float, float)> DamageTakenWithHistory;
         public event Action Died;
@@ -119,6 +120,7 @@ namespace Bloodeck
             Action<(float, float)> damageTakenWithHistoryCallback = null,
             Action deathCallback = null)
         {
+            Attacked?.Invoke(instigator);
             _healthController.TakeDamage(
                 damageValue, instigator, damageTakenWithHistoryCallback, deathCallback);
         }

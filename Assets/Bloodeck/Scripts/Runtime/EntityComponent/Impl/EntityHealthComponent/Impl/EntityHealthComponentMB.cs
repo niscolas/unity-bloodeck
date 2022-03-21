@@ -19,8 +19,9 @@ namespace Bloodeck
         [Inject, SerializeField]
         private HealthMB _health;
 
+        public event Action<object> Attacked;
+        public event Action<float> DamageTaken;
         public event Action Died;
-
         public event Action<float> ValueChanged;
 
         public bool CanHeal
@@ -64,14 +65,16 @@ namespace Bloodeck
 
         private void Start()
         {
-            _controller.ValueChanged += OnHealthValueChanged;
+            _controller.Attacked += OnAttacked;
+            _controller.DamageTaken += OnDamageTaken;
             _controller.Died += OnDied;
             _controller.ValueChanged += OnValueChanged;
         }
 
         private void OnDestroy()
         {
-            _controller.ValueChanged -= OnHealthValueChanged;
+            _controller.Attacked -= OnAttacked;
+            _controller.DamageTaken -= OnDamageTaken;
             _controller.Died -= OnDied;
             _controller.ValueChanged -= OnValueChanged;
         }
@@ -96,19 +99,25 @@ namespace Bloodeck
             _controller.LoadCurrentTemplate();
         }
 
-        private void OnHealthValueChanged(float value)
+        private void OnValueChanged(float value)
         {
             _current.Value = value;
+            ValueChanged?.Invoke(value);
+        }
+
+        private void OnAttacked(object instigator)
+        {
+            Attacked?.Invoke(instigator);
+        }
+
+        private void OnDamageTaken(float value)
+        {
+            DamageTaken?.Invoke(value);
         }
 
         private void OnDied()
         {
             Died?.Invoke();
-        }
-
-        private void OnValueChanged(float value)
-        {
-            ValueChanged?.Invoke(value);
         }
 
         private void OnMaxHealthChanged()

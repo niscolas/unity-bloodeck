@@ -1,10 +1,8 @@
 ﻿using Healthy;
-using UnityEngine;
 using Zenject;
 
 namespace Bloodeck
 {
-    [AddComponentMenu(Constants.InstallersAddComponentMenuPrefix + "Entity Installer")]
     public class EntityMonoInstaller : MonoInstaller<EntityMonoInstaller>
     {
         public override void InstallBindings()

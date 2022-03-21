@@ -24,6 +24,11 @@ namespace Bloodeck
             _humbleObject = humbleObject;
         }
 
+        public ICardPlayer GetPlayerOfTeam(ITeam team)
+        {
+            return Players.FirstOrDefault(x => x.SelfEntity.Team == team);
+        }
+
         public ICardPlayer GetOpponentCardPlayer(ICardPlayer cardPlayer)
         {
             return Players
@@ -46,7 +51,7 @@ namespace Bloodeck
 
         public void SetTurn(ITeam cardPlayerTeam)
         {
-            ICardPlayer cardPlayer = GetCardPlayerInTeam(cardPlayerTeam);
+            ICardPlayer cardPlayer = GetPlayerOfTeam(cardPlayerTeam);
             if (cardPlayer.IsUnityNull())
             {
                 return;
@@ -74,11 +79,6 @@ namespace Bloodeck
         private void NotifyTurnStarted()
         {
             TurnStarted?.Invoke(CurrentTurn);
-        }
-
-        private ICardPlayer GetCardPlayerInTeam(ITeam cardPlayerTeam)
-        {
-            return Players.FirstOrDefault(x => x.SelfEntity.Team == cardPlayerTeam);
         }
 
         private void SetTurnCount(int value)

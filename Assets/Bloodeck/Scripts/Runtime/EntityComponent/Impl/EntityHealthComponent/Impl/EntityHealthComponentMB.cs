@@ -21,6 +21,8 @@ namespace Bloodeck
 
         public event Action Died;
 
+        public event Action<float> ValueChanged;
+
         public bool CanHeal
         {
             get => _health.CanHeal;
@@ -64,12 +66,14 @@ namespace Bloodeck
         {
             _controller.ValueChanged += OnHealthValueChanged;
             _controller.Died += OnDied;
+            _controller.ValueChanged += OnValueChanged;
         }
 
         private void OnDestroy()
         {
             _controller.ValueChanged -= OnHealthValueChanged;
             _controller.Died -= OnDied;
+            _controller.ValueChanged -= OnValueChanged;
         }
 
         public void TakeDamage(float damageValue, IEntity instigator = null)
@@ -100,6 +104,11 @@ namespace Bloodeck
         private void OnDied()
         {
             Died?.Invoke();
+        }
+
+        private void OnValueChanged(float value)
+        {
+            ValueChanged?.Invoke(value);
         }
 
         private void OnMaxHealthChanged()

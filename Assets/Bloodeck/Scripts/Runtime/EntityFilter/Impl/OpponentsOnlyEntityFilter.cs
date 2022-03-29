@@ -10,7 +10,8 @@ namespace Bloodeck
         public IEnumerable<IEntity> Filter(IEnumerable<IEntity> entities, IEntity instigator = null)
         {
             IEnumerable<IEntity> result = entities
-                .Where(x => instigator.Team != x.Team);
+                .Where(x => 
+                    x.IsActiveInGame && instigator.Team != x.Team);
             return result;
         }
     }

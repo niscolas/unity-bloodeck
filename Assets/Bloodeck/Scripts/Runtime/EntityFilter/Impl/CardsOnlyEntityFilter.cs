@@ -11,6 +11,11 @@ namespace Bloodeck
         {
             entities = entities.Where(x =>
             {
+                if (!x.IsActiveInGame)
+                {
+                    return false;
+                }
+
                 bool isCard = x.Components.TryGet(out CardEntityLinkComponentMB _);
                 return isCard;
             });

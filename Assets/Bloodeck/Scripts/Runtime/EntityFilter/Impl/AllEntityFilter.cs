@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bloodeck
 {
@@ -8,7 +9,7 @@ namespace Bloodeck
     {
         public IEnumerable<IEntity> Filter(IEnumerable<IEntity> entities, IEntity instigator = null)
         {
-            return entities;
+            return entities.Where(x => x.IsActiveInGame);
         }
     }
 }
